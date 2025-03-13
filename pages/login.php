@@ -90,7 +90,7 @@ session_start();
                         <label class="form-check-label" for="jobSeekerRemember">Remember Me</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
-                    <a href="#" class="btn btn-link">Forgot Password?</a>
+                    <a href="forgot_password.php" class="btn btn-link">Forgot Password?</a>
                 </form>
             </div>
             <div class="tab-pane fade" id="employer" role="tabpanel" aria-labelledby="employer-tab">
