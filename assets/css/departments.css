@@ -1,0 +1,37 @@
+.hero {
+    background: url('https://labour.gov.in/sites/default/files/styles/inner_page_banner/public/2023-10/Labour_Welfare_Banner.jpg?itok=zQ72L34U') no-repeat center center/cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    font-size: 2rem;
+}
+.section-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+.carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+.btn-custom {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.section-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+.container {
+    max-width: 900px; /* Adjust as needed */
+    margin: 0 auto; /* Center the container */
+}

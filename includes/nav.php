@@ -28,12 +28,12 @@
                         Departments
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="pages/labour.php">Labour Welfare</a></li>
-                        <li><a class="dropdown-item" href="pages/skill-development.php">Skill Development</a></li>
-                        <li><a class="dropdown-item" href="pages/employment.php">Employment Services</a></li>
-                        <li><a class="dropdown-item" href="pages/apprenticeship.php">Apprenticeship Training</a></li>
-                        <li><a class="dropdown-item" href="pages/social-security.php">Social Security & Welfare</a></li>
-                        <li><a class="dropdown-item" href="pages/industrial-relations.php">Industrial Relations & Safety</a></li>
+                        <li><a class="dropdown-item" href="labour.php">Labour Welfare</a></li>
+                        <li><a class="dropdown-item" href="skill-development.php">Skill Development</a></li>
+                        <li><a class="dropdown-item" href="employment.php">Employment Services</a></li>
+                        <li><a class="dropdown-item" href="apprenticeship.php">Apprenticeship Training</a></li>
+                        <li><a class="dropdown-item" href="social-security.php">Social Security & Welfare</a></li>
+                        <li><a class="dropdown-item" href="industrial-relations.php">Industrial Relations & Safety</a></li>
                     </ul>
                 </li>
 
@@ -43,13 +43,13 @@
                         Services
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="pages/job-search.php">Job Search</a></li>
-                        <li><a class="dropdown-item" href="pages/training-programs.php">Training Programs</a></li>
-                        <li><a class="dropdown-item" href="pages/certifications.php">Certifications & Skill Assessments</a></li>
-                        <li><a class="dropdown-item" href="pages/grievances.php">Labour Grievance Redressal</a></li>
-                        <li><a class="dropdown-item" href="pages/migrant-workers.php">Migrant Workers Support</a></li>
-                        <li><a class="dropdown-item" href="pages/employer-services.php">Employer Services & Registrations</a></li>
-                        <li><a class="dropdown-item" href="pages/wage-calculator.php">Minimum Wage Calculator</a></li>
+                        <li><a class="dropdown-item" href="job-search.php">Job Search</a></li>
+                        <li><a class="dropdown-item" href="training-programs.php">Training Programs</a></li>
+                        <li><a class="dropdown-item" href="certifications.php">Certifications & Skill Assessments</a></li>
+                        <li><a class="dropdown-item" href="grievances.php">Labour Grievance Redressal</a></li>
+                        <li><a class="dropdown-item" href="migrant-workers.php">Migrant Workers Support</a></li>
+                        <li><a class="dropdown-item" href="employer-services.php">Employer Services & Registrations</a></li>
+                        <li><a class="dropdown-item" href="wage-calculator.php">Minimum Wage Calculator</a></li>
                     </ul>
                 </li>
 
@@ -59,18 +59,18 @@
                         Resources
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="pages/labour-laws.php">Labour Laws & Regulations</a></li>
-                        <li><a class="dropdown-item" href="pages/skill-policies.php">Skill Development Policies</a></li>
-                        <li><a class="dropdown-item" href="pages/financial-aid.php">Financial Aid for Training</a></li>
-                        <li><a class="dropdown-item" href="pages/reports.php">Employment Reports & Statistics</a></li>
-                        <li><a class="dropdown-item" href="pages/workplace-safety.php">Workplace Safety Guidelines</a></li>
-                        <li><a class="dropdown-item" href="pages/entrepreneur-support.php">Entrepreneurship & Startup Support</a></li>
+                        <li><a class="dropdown-item" href="labour-laws.php">Labour Laws & Regulations</a></li>
+                        <li><a class="dropdown-item" href="skill-policies.php">Skill Development Policies</a></li>
+                        <li><a class="dropdown-item" href="financial-aid.php">Financial Aid for Training</a></li>
+                        <li><a class="dropdown-item" href="reports.php">Employment Reports & Statistics</a></li>
+                        <li><a class="dropdown-item" href="workplace-safety.php">Workplace Safety Guidelines</a></li>
+                        <li><a class="dropdown-item" href="entrepreneur-support.php">Entrepreneurship & Startup Support</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item"><a class="nav-link" href="pages/contact.php">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="pages/login.php">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="pages/register.php">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.php">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
             </ul>
         </div>
     </div>
