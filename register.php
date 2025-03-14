@@ -257,6 +257,32 @@ document.querySelectorAll(".input-group-text i").forEach(icon => {
             $("#registrationForm").html(formContent);
         });
     });
+
+    $(document).on("click", "#togglePassword", function () {
+    let passwordField = $("#password");
+    let icon = $(this);
+
+    if (passwordField.attr("type") === "password") {
+        passwordField.attr("type", "text");
+        icon.removeClass("fa-eye").addClass("fa-eye-slash");
+    } else {
+        passwordField.attr("type", "password");
+        icon.removeClass("fa-eye-slash").addClass("fa-eye");
+    }
+});
+
+$(document).on("click", "#toggleConfirmPassword", function () {
+    let confirmPasswordField = $("#confirmPassword");
+    let icon = $(this);
+
+    if (confirmPasswordField.attr("type") === "password") {
+        confirmPasswordField.attr("type", "text");
+        icon.removeClass("fa-eye").addClass("fa-eye-slash");
+    } else {
+        confirmPasswordField.attr("type", "password");
+        icon.removeClass("fa-eye-slash").addClass("fa-eye");
+    }
+});
 </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
