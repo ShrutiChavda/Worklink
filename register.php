@@ -1,13 +1,30 @@
 <?php
-require 'includes/db.php'; 
+require 'includes/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userType = $_POST['userType'];
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
+    $phone = $_POST['countryCode'] . $_POST['phone'];
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirmPassword'];
 
+    // Check if passwords match
+    if ($password !== $confirmPassword) {
+        echo json_encode(["status" => "error", "message" => "Passwords do not match!"]);
+        exit();
+    }
+
+    // Validate phone number (only digits allowed)
+    if (!isset($_POST['phone']) || !preg_match('/^\d+$/', $_POST['phone'])) {
+        echo json_encode(["status" => "error", "message" => "Invalid phone number! Only digits allowed."]);
+        exit();
+    }
+    
+
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Check if email already exists
     $checkEmail = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
     $checkEmail->execute();
@@ -18,17 +35,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Insert user details into users table
     $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $userType, $fullName, $email, $phone, $password);
+    $stmt->bind_param("sssss", $userType, $fullName, $email, $phone, $hashedPassword);
 
     if ($stmt->execute()) {
         $userId = $stmt->insert_id;
 
         if ($userType == "jobSeeker") {
-            $resume = $_FILES['resume']['name'];
-            move_uploaded_file($_FILES['resume']['tmp_name'], "uploads/" . $resume);
-            $query = $conn->prepare("INSERT INTO job_seekers (user_id, resume) VALUES (?, ?)");
-            $query->bind_param("is", $userId, $resume);
+            if (!empty($_FILES['resume']['name'])) {
+                $fileType = pathinfo($_FILES['resume']['name'], PATHINFO_EXTENSION);
+                $allowedTypes = ['pdf'];
+                $fileSize = $_FILES['resume']['size'];
+
+                // Check file type and size
+                if (!in_array(strtolower($fileType), $allowedTypes) || $fileSize > 2 * 1024 * 1024) {
+                    echo json_encode(["status" => "error", "message" => "Invalid file! Only PDF allowed, max size 2MB."]);
+                    exit();
+                }
+
+                // Save file
+                $resume = uniqid() . "_" . $_FILES['resume']['name'];
+                if (!move_uploaded_file($_FILES['resume']['tmp_name'], "uploads/" . $resume)) {
+                    echo json_encode(["status" => "error", "message" => "Failed to upload resume."]);
+                    exit();
+                }
+
+                // Insert into job_seekers table
+                $query = $conn->prepare("INSERT INTO job_seekers (user_id, resume) VALUES (?, ?)");
+                $query->bind_param("is", $userId, $resume);
+            }
         } elseif ($userType == "employer") {
             $companyName = $_POST['companyName'];
             $industry = $_POST['industry'];
@@ -52,6 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,140 +118,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="login.php" class="btn btn-primary">Already have an account? Login Here</a>
         </div>
     </div>
-    <div class="container">
-    <div class="user-type-select">
-        <label for="userType" class="form-label">Select User Type</label>
-        <select class="form-select" id="userType" name="userType" required>
-            <option value="">Select User Type</option>
-            <option value="jobSeeker">Job Seeker</option>
-            <option value="employer">Employer</option>
-            <option value="trainingProvider">Training Provider</option>
-            <option value="governmentOfficial">Government Official</option>
-        </select>
-    </div>
-    
-    <div class="register-card">
-        <form id="registrationForm">
-            <h2>User Information</h2>
-            <div class="mb-3">
-                <label for="fullName" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="fullName" name="fullName" required>
-                <span class="text-danger" id="fullNameError"></span>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-                <span class="text-danger" id="emailError"></span>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <span class="text-danger" id="passwordError"></span>
-            </div>
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                <span class="text-danger" id="confirmPasswordError"></span>
-            </div>
-            <button type="submit" class="btn btn-success">Register</button>
-        </form>
-    </div>
-</div>
-
-
-
-<br><br>
-    <?php include 'includes/footer.php'; ?>
-
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Worklink Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+        <h2 class="text-center">Register</h2>
+        <form id="registrationForm">
+            <div class="mb-3">
+                <label for="userType" class="form-label">Select User Type</label>
+                <select class="form-select" id="userType" name="userType" required>
+                    <option value="">Select User Type</option>
+                    <option value="jobSeeker">Job Seeker</option>
+                    <option value="employer">Employer</option>
+                    <option value="trainingProvider">Training Provider</option>
+                    <option value="governmentOfficial">Government Official</option>
+                </select>
+            </div>
 
-<script>
-document.getElementById("registrationForm").addEventListener("submit", function(event) {
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
-    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    let passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-    document.getElementById("emailError").innerText = emailRegex.test(email) ? "" : "Invalid email format";
-    document.getElementById("passwordError").innerText = passwordRegex.test(password) ? "" : "Password must be at least 8 characters, include a number and special character";
-    document.getElementById("confirmPasswordError").innerText = password === confirmPassword ? "" : "Passwords do not match";
-
-    if (!emailRegex.test(email) || !passwordRegex.test(password) || password !== confirmPassword) {
-        event.preventDefault();
-    }
-});
-</script>
-
-<script>
-$(document).ready(function () {
-    $("#registrationForm").on("submit", function (event) {
-        event.preventDefault();
-
-        var formData = new FormData(this);
-
-        $.ajax({
-            url: "register.php",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            processData: false,
-            dataType: "json",
-            success: function (response) {
-                if (response.status === "success") {
-                    alert(response.message);
-                    window.location.href = "login.php"; // Redirect after success
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function () {
-                alert("Something went wrong! Please try again.");
-            }
-        });
-    });
-});
-</script>
-
-
-<script>
-document.querySelectorAll(".input-group-text i").forEach(icon => {
-    icon.addEventListener("click", function() {
-        let input = this.parentElement.previousElementSibling;
-        input.type = input.type === "password" ? "text" : "password";
-        this.classList.toggle("fa-eye");
-        this.classList.toggle("fa-eye-slash");
-    });
-});
-</script>
-<script>
-    $(document).ready(function () {
-        $("#userType").on("change", function () {
-            let userType = $(this).val();
-            $(".register-card").show(); // Ensure the form container is visible
-
-            let jobSeekerFields = `
-                <h2>Job Seeker Details</h2>
-                <div class="mb-3">
-                    <label for="resume" class="form-label">Resume Upload</label>
-                    <input type="file" class="form-control" id="resume" name="resume">
-                </div>
-            `;
-
-            let employerFields = `
-                <h2>Employer Details</h2>
-                <div class="mb-3">
-                    <label for="companyName" class="form-label">Company Name</label>
-                    <input type="text" class="form-control" id="companyName" name="companyName">
-                </div>
-                <div class="mb-3">
-                    <label for="industry" class="form-label">Industry</label>
-                    <input type="text" class="form-control" id="industry" name="industry">
-                </div>
-            `;
-
-            let formContent = `
-                <h2>User Information</h2>
+            <div id="formFields" style="display: none;">
                 <div class="mb-3">
                     <label for="fullName" class="form-label">Full Name</label>
                     <input type="text" class="form-control" id="fullName" name="fullName" required>
@@ -220,9 +152,16 @@ document.querySelectorAll(".input-group-text i").forEach(icon => {
                     <label for="email" class="form-label">Email Address</label>
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                    <div class="input-group">
+                        <select class="form-select" id="countryCode" name="countryCode">
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+91" selected>🇮🇳 +91</option>
+                        </select>
+                        <input type="tel" class="form-control" id="phone" name="phone" required>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -238,56 +177,83 @@ document.querySelectorAll(".input-group-text i").forEach(icon => {
                         <span class="input-group-text"><i class="fa fa-eye" id="toggleConfirmPassword"></i></span>
                     </div>
                 </div>
-            `;
 
-            if (userType === "jobSeeker") {
-                formContent += jobSeekerFields;
-            } else if (userType === "employer") {
-                formContent += employerFields;
-            }
+                <div id="additionalFields"></div>
 
-            formContent += `
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
-                    <label class="form-check-label" for="terms">I agree to the Terms & Conditions</label>
+                <button type="submit" class="btn btn-success w-100">Register</button>
+            </div>
+        </form>
+    </div>
+
+<script>$(document).ready(function () {
+    $("#userType").on("change", function () {
+        let userType = $(this).val();
+        $("#formFields").toggle(userType !== "");
+
+        let additionalFields = "";
+
+        if (userType === "jobSeeker") {
+            additionalFields = `
+                <div class="mb-3">
+                    <label for="resume" class="form-label">Upload Resume (PDF, max 2MB)</label>
+                    <input type="file" class="form-control" id="resume" name="resume" accept="application/pdf">
                 </div>
-                <button type="submit" class="btn btn-success">Register</button>
             `;
+        } else if (userType === "employer") {
+            additionalFields = `
+                <div class="mb-3">
+                    <label for="companyName" class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="companyName" name="companyName">
+                </div>
+                <div class="mb-3">
+                    <label for="industry" class="form-label">Industry</label>
+                    <input type="text" class="form-control" id="industry" name="industry">
+                </div>
+            `;
+        }
 
-            $("#registrationForm").html(formContent);
+        $("#additionalFields").html(additionalFields);
+    });
+
+    $("#registrationForm").on("submit", function (event) {
+        event.preventDefault();
+
+        let formData = new FormData(this);
+      
+        $.ajax({
+            url: "register.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (response) {
+                console.log(response); // Debugging: Check response in console
+                alert(response.message);
+                if (response.status === "success") {
+                    window.location.href = "login.php";
+                }
+            },
+           
         });
     });
 
-    $(document).on("click", "#togglePassword", function () {
-    let passwordField = $("#password");
-    let icon = $(this);
-
-    if (passwordField.attr("type") === "password") {
-        passwordField.attr("type", "text");
-        icon.removeClass("fa-eye").addClass("fa-eye-slash");
-    } else {
-        passwordField.attr("type", "password");
-        icon.removeClass("fa-eye-slash").addClass("fa-eye");
-    }
+    // Toggle password visibility
+    $(document).on("click", "#togglePassword, #toggleConfirmPassword", function () {
+        let input = $(this).closest(".input-group").find("input");
+        input.attr("type", input.attr("type") === "password" ? "text" : "password");
+        $(this).toggleClass("fa-eye fa-eye-slash");
+    });
 });
 
-$(document).on("click", "#toggleConfirmPassword", function () {
-    let confirmPasswordField = $("#confirmPassword");
-    let icon = $(this);
-
-    if (confirmPasswordField.attr("type") === "password") {
-        confirmPasswordField.attr("type", "text");
-        icon.removeClass("fa-eye").addClass("fa-eye-slash");
-    } else {
-        confirmPasswordField.attr("type", "password");
-        icon.removeClass("fa-eye-slash").addClass("fa-eye");
-    }
-});
 </script>
+</body>
+</html>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.js"></script>
+
+<br><br>
+    <?php include 'includes/footer.php'; ?>
+
 
 </body>
 </html>
