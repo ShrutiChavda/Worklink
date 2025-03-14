@@ -11,8 +11,8 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/departments.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/departments.css">
     <style>
         .hero {
             background: url('https://www.skillindiadigital.gov.in/assets/images/home-page/hero-banner.webp') no-repeat center center/cover;
@@ -77,7 +77,7 @@ session_start();
 </head>
 <body>
 
-<?php include '../includes/nav.php'; ?>
+<?php include 'includes/nav.php'; ?>
 
 <div class="hero animate__animated animate__fadeIn">
     <h1>Skill Development</h1>
@@ -174,7 +174,7 @@ session_start();
 
 <div class="popup-overlay" id="popupOverlay"></div>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>

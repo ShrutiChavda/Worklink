@@ -12,12 +12,12 @@ session_start();
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="../assets/css/styles.css"> 
-    <link rel="icon" type="image/x-icon" href="../assets/images/team.jpg">
+    <link rel="stylesheet" href="assets/css/styles.css"> 
+    <link rel="icon" type="image/x-icon" href="images/team.jpg">
 </head>
 <body>
 
-<?php include '../includes/nav.php'; ?>
+<?php include 'includes/nav.php'; ?>
 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -26,21 +26,21 @@ session_start();
     </div>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="../assets/images/skills.jpg" class="d-block a" alt="Job Opportunities">
+            <img src="assets/images/skills.jpg" class="d-block a" alt="Job Opportunities">
             <div class="carousel-caption d-none d-md-block m-5">
                 <h2 class="b">Empowering Job Seekers</h2>
                 <p class="ba">Find the best opportunities for your career growth.</p>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../assets/images/it.jpg" class="d-block a" alt="Skill Development">
+            <img src="assets/images/it.jpg" class="d-block a" alt="Skill Development">
             <div class="carousel-caption d-none d-md-block m-5">
                 <h2 class="b">Skill Development Programs</h2>
                 <p class="ba">Enroll in government-certified training programs.</p>
             </div>
         </div>
         <div class="carousel-item">
-            <img src="../assets/images/team.jpg" class="d-block a" alt="Labour Welfare">
+            <img src="assets/images/team.jpg" class="d-block a" alt="Labour Welfare">
             <div class="carousel-caption d-none d-md-block m-5">
                 <h2 class="b">Labour Welfare & Rights</h2>
                 <p class="ba">Ensuring fair wages and workplace safety.</p>
@@ -54,7 +54,7 @@ session_start();
         <span class="carousel-control-next-icon"></span>
     </button>
 </div>
-<?php include '../includes/header.php'; ?><br><br>
+<?php include 'includes/header.php'; ?><br><br>
 
 <section class="announcements container wow fadeInUp" data-wow-duration="1s">
     <h2>Latest Announcements</h2>
@@ -68,8 +68,8 @@ session_start();
 <section class="login-register container text-center wow zoomIn" data-wow-duration="1s">
     <h2>Get Started</h2>
     <p>Register or login to access job listings, training programs, and labour support</p>
-    <a href="../pages/register.php" class="btn btn-success">Register</a>
-    <a href="../pages/login.php" class="btn btn-warning">Login</a>
+    <a href="pages/register.php" class="btn btn-success">Register</a>
+    <a href="pages/login.php" class="btn btn-warning">Login</a>
 </section><br><br>
 
 <section class="services container">
@@ -81,7 +81,7 @@ session_start();
                     <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
                     <h3>Job Search</h3>
                     <p>Find government and private sector jobs matching your skills.</p>
-                    <a href="../pages/job-search.php" class="btn btn-primary">Explore</a>
+                    <a href="pages/job-search.php" class="btn btn-primary">Explore</a>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@ session_start();
                     <i class="fas fa-chalkboard-teacher fa-3x text-success mb-3"></i>
                     <h3>Skill Development</h3>
                     <p>Enroll in certified skill development programs and vocational training.</p>
-                    <a href="../pages/training-programs.php" class="btn btn-success">Learn More</a>
+                    <a href="pages/training-programs.php" class="btn btn-success">Learn More</a>
                 </div>
             </div>
         </div>
@@ -101,7 +101,7 @@ session_start();
                     <i class="fas fa-balance-scale fa-3x text-warning mb-3"></i>
                     <h3>Labour Welfare</h3>
                     <p>Get support for workplace rights, wages, and safety regulations.</p>
-                    <a href="../pages/labour.php" class="btn btn-warning">Read More</a>
+                    <a href="pages/labour.php" class="btn btn-warning">Read More</a>
                 </div>
             </div>
         </div>
@@ -133,19 +133,19 @@ session_start();
 <section class="resources container wow fadeIn" data-wow-duration="1s">
     <h2>Resources</h2>
     <ul>
-        <li><a href="../pages/labour-laws.php">Labour Laws & Regulations</a></li>
-        <li><a href="../pages/skill-policies.php">Skill Development Policies</a></li>
-        <li><a href="../pages/financial-aid.php">Financial Aid for Training</a></li>
-        <li><a href="../pages/reports.php">Employment Reports & Statistics</a></li>
+        <li><a href="pages/labour-laws.php">Labour Laws & Regulations</a></li>
+        <li><a href="pages/skill-policies.php">Skill Development Policies</a></li>
+        <li><a href="pages/financial-aid.php">Financial Aid for Training</a></li>
+        <li><a href="pages/reports.php">Employment Reports & Statistics</a></li>
     </ul>
 </section>
 
-<?php include '../includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-<script src="../assets/js/script.js"></script> 
+<script src="assets/js/script.js"></script> 
 
 <script>
     new WOW().init();
