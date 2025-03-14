@@ -191,10 +191,6 @@ body {
     transition: transform 0.3s ease;
 }
 
-.services .card:hover {
-    transform: translateY(-10px);
-}
-
 .services .card-body {
     text-align: center;
 }

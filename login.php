@@ -14,38 +14,7 @@ session_start();
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-
-    <style>
-        .hero {
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-            font-size: 2rem;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?digital,login') no-repeat center center/cover;
-            text-align: center;
-        }
-
-        .login-card {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 30px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-        }
-
-        .social-login {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .social-login a {
-            margin: 0 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/pages.css">
 </head>
 <body>
 <?php include 'includes/nav.php'; ?>
@@ -89,7 +58,7 @@ session_start();
                         <input type="checkbox" class="form-check-input" id="jobSeekerRemember">
                         <label class="form-check-label" for="jobSeekerRemember">Remember Me</label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary text-center">Login</button>
                     <a href="forgot_password.php" class="btn btn-link">Forgot Password?</a>
                 </form>
             </div>
@@ -148,19 +117,7 @@ session_start();
                 </form>
             </div>
         </div>
-        <div class="social-login">
-            <p>Login with your social media accounts:</p>
-            <div class="d-flex justify-content-center">
-                <a href="#" class="btn btn-social-icon btn-facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="btn btn-social-icon btn-twitter">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="btn btn-social-icon btn-google">
-                    <i class="fab fa-google"></i>
-                </a>
-            </div>
+       
             <p class="mt-3">Don't have an account? <a href="register.php">Sign up now</a></p>
         </div>
     </div>
