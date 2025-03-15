@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2025 at 01:07 PM
+-- Generation Time: Mar 15, 2025 at 02:16 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -243,6 +243,20 @@ INSERT INTO `skill_policies` (`id`, `policy_name`, `eligibility`, `benefits`, `r
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `token1`
+--
+
+CREATE TABLE `token1` (
+  `token_id` int(11) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `s_time` datetime DEFAULT NULL,
+  `token` varchar(1000) DEFAULT NULL,
+  `otp` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `training_providers`
 --
 
@@ -298,7 +312,7 @@ INSERT INTO `users` (`id`, `user_type`, `full_name`, `email`, `phone`, `password
 (18, 'jobSeeker', 'aSDASD', 'shruti@gmail.com', '+911234567890', '456'),
 (19, 'jobSeeker', 'asdsad', 'shruti@gmail.comasdasd', '+911234567890', '456'),
 (20, 'jobSeeker', 'asd', 'asdasd@asd.sd', '+911234567890', '$2y$10$MrAF6SLTooruEy5K/QZwWOyMRZoWq43shWQxI4X.QbxX5iNvt1Kde'),
-(21, 'jobSeeker', 'shruti chavda', 'shrutic889@gmail.com', '1234567890', '123'),
+(21, 'jobSeeker', 'shruti chavda', 'shrutic889@gmail.com', '1234567890', 'SHRuti@19#'),
 (22, 'jobSeeker', 'asdas', 'shrutic889@gmail.commmm', '1234567890', '$2y$10$0pI36wa.HsWOR1O3G228CO7jFUyW1TL1KTvNW.W7RzPtOGVE7kAyW'),
 (23, 'jobSeeker', 'asdsad', 'asd@sd.sdf', '1234567890', '123'),
 (24, 'jobSeeker', 'asdsad', 'asdas@asd.sdfr', '1234567890', '12'),
@@ -407,6 +421,12 @@ ALTER TABLE `skill_policies`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `token1`
+--
+ALTER TABLE `token1`
+  ADD PRIMARY KEY (`token_id`);
+
+--
 -- Indexes for table `training_providers`
 --
 ALTER TABLE `training_providers`
@@ -483,6 +503,12 @@ ALTER TABLE `job_seekers`
 --
 ALTER TABLE `skill_policies`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `token1`
+--
+ALTER TABLE `token1`
+  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `training_providers`
