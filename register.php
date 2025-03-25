@@ -1,6 +1,14 @@
 <?php
 require 'includes/db.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+require 'PHPMailer/Exception.php';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userType = $_POST['userType'];
     $fullName = $_POST['fullName'];
@@ -19,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    // Check if email already exists
     $checkEmail = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
     $checkEmail->execute();
@@ -29,12 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $userType, $fullName, $email, $phone, $password);
+    // Hash password and generate a verification token
+    // $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    $token = bin2hex(random_bytes(32));
+
+    $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password, status, token) VALUES (?, ?, ?, ?, ?, 'inactive', ?)");
+    $stmt->bind_param("ssssss", $userType, $fullName, $email, $phone, $password, $token);
 
     if ($stmt->execute()) {
         $userId = $stmt->insert_id;
 
+        // Handle additional user data based on user type
         if ($userType == "jobSeeker" && !empty($_FILES['resume']['name'])) {
             $uploadDir = "uploads/resumes/";
             if (!is_dir($uploadDir)) {
@@ -84,12 +98,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        echo json_encode(["status" => "success", "message" => "Registration successful!"]);
+        // Send Verification Email
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'chavdashruti516@gmail.com'; // Store email in environment variables
+            $mail->Password = 'ikcm jbpr tcxm rhsz';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+
+            $mail->setFrom('chavdashruti516@gmail.com', 'Shruti Chavda'); // Sender's email address and name
+            $mail->addAddress($email, $fullName);
+
+            // Email content
+            $mail->isHTML(true);
+            $mail->Subject = 'Email Verification - Worklink Dashboard';
+            $mail->Body = "Hello $fullName,<br><br>
+                            Thank you for registering on Worklink Dashboard!<br>
+                            Please verify your email by clicking the link below:<br><br>
+                            <a href='http://localhost/worklink/verify_account.php?email=$email&token=$token' style='padding:10px; background-color:#007bff; color:white; text-decoration:none; border-radius:5px;'>Verify Email</a><br><br>
+                            If you did not register, please ignore this email.<br><br>
+                            Regards,<br>Worklink Team";
+
+            if ($mail->send()) {
+                echo json_encode(["status" => "success", "message" => "Registration successful! Check your email to verify your account."]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Registration successful, but email sending failed."]);
+            }
+        } catch (Exception $e) {
+            echo json_encode(["status" => "error", "message" => "Email could not be sent. Mailer Error: " . $mail->ErrorInfo]);
+        }
     } else {
         echo json_encode(["status" => "error", "message" => "Error registering user."]);
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -122,7 +168,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="container mt-5">
         <h2 class="text-center">Register</h2>
-        <form id="registrationForm">
+        <form action="http://localhost/Worklink/register.php" method="POST">
             <div class="mb-3">
                 <label for="userType" class="form-label">Select User Type</label>
                 <select class="form-select" id="userType" name="userType" required>
@@ -167,10 +213,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
 
+                <input type="text" name="token" value="<?php echo uniqid().uniqid(); ?>" id="token1" name="token"
+                    hidden>
                 <div id="additionalFields"></div>
 
-                <button type="submit" class="btn btn-success w-100">Register</button>
-            </div>
+                <button class="btn btn--radius btn-success" name="register" type="submit"
+                value="Login">Register</button>         
         </form>
     </div>
 
@@ -267,30 +315,30 @@ if (userType === "jobSeeker") {
 }
 
             
-        let formData = new FormData(this);
+//         let formData = new FormData(this);
       
-        $.ajax({
-    url: "register.php",
-    type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
-    dataType: "json",
-    success: function (response) {
-        console.log(response); // Debugging: Check response in console
+//         $.ajax({
+//     url: "register.php",
+//     type: "POST",
+//     data: formData,
+//     contentType: false,
+//     processData: false,
+//     dataType: "json",
+//     success: function (response) {
+//         console.log(response); // Debugging: Check response in console
         
-        if (response.status === "success") {
-            alert("Registration successful! Redirecting to login page...");
-            window.location.href = "login.php";
-        } else {
-            alert(response.message); // Show error message
-        }
-    },
-    error: function () {
-        alert("Registration successful! Redirecting to login page...");
-        window.location.href = "login.php";
-    }
-});
+//         if (response.status === "success") {
+//             alert("Registration successful! Redirecting to login page...");
+//             window.location.href = "login.php";
+//         } else {
+//             alert(response.message); // Show error message
+//         }
+//     },
+//     error: function () {
+//         alert("Registration successful! Redirecting to login page...");
+//         window.location.href = "login.php";
+//     }
+// });
 
     });
 
