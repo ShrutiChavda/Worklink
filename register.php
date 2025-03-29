@@ -16,29 +16,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
-
+    
     if ($password !== $confirmPassword) {
-        echo json_encode(["status" => "error", "message" => "Passwords do not match!"]);
-        exit();
+        echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
+        exit;
+    }
+    
+    if (!preg_match('/^\d{10}$/', $phone)) {
+        echo "<script>alert('Invalid phone number! Only 10 digits allowed.'); window.history.back();</script>";
+        exit;
     }
 
-    if (!preg_match('/^\d{10}$/', $_POST['phone'])) {
-        echo json_encode(["status" => "error", "message" => "Invalid phone number! Only 10 digits allowed."]);
-        exit();
-    }
-
-    // Check if email already exists
     $checkEmail = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
     $checkEmail->execute();
     $checkEmail->store_result();
 
     if ($checkEmail->num_rows > 0) {
-        echo json_encode(["status" => "error", "message" => "Email already registered!"]);
-        exit();
+        echo "<script>alert('Email already registered!'); window.history.back();</script>";
+        exit;
     }
 
-    // Hash password and generate a verification token
     // $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $token = bin2hex(random_bytes(32));
 
@@ -48,11 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         $userId = $stmt->insert_id;
 
-        // Handle additional user data based on user type
         if ($userType == "jobSeeker" && !empty($_FILES['resume']['name'])) {
             $uploadDir = "uploads/resumes/";
-            if (!is_dir($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
+            if (!file_exists($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+                echo "<script>alert('Failed to create upload directory.'); window.history.back();</script>";
+                exit;
             }
 
             $fileType = pathinfo($_FILES['resume']['name'], PATHINFO_EXTENSION);
@@ -60,42 +58,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fileSize = $_FILES['resume']['size'];
 
             if (!in_array(strtolower($fileType), $allowedTypes) || $fileSize > 2 * 1024 * 1024) {
-                echo json_encode(["status" => "error", "message" => "Invalid file! Only PDF allowed, max size 2MB."]);
-                exit();
+                echo "<script>alert('Invalid file! Only PDF allowed, max size 2MB.'); window.history.back();</script>";
+                exit;
             }
 
             $resume = uniqid() . "_" . basename($_FILES['resume']['name']);
             $resumePath = $uploadDir . $resume;
 
             if (!move_uploaded_file($_FILES['resume']['tmp_name'], $resumePath)) {
-                echo json_encode(["status" => "error", "message" => "Failed to upload resume."]);
-                exit();
+                echo "<script>alert('Failed to upload resume.'); window.history.back();</script>";
+                exit;
             }
 
             $query = $conn->prepare("INSERT INTO job_seekers (user_id, resume) VALUES (?, ?)");
             $query->bind_param("is", $userId, $resume);
-        } elseif ($userType == "employer") {
-            $companyName = $_POST['companyName'];
-            $industry = $_POST['industry'];
-
-            $query = $conn->prepare("INSERT INTO employers (user_id, company_name, industry) VALUES (?, ?, ?)");
-            $query->bind_param("iss", $userId, $companyName, $industry);
-        } elseif ($userType == "trainingProvider") {
-            $trainingInstituteName = $_POST['trainingInstituteName'];
-
-            $query = $conn->prepare("INSERT INTO training_providers (user_id, institute_name) VALUES (?, ?)");
-            $query->bind_param("is", $userId, $trainingInstituteName);
-        } elseif ($userType == "governmentOfficial") {
-            $department = $_POST['department'];
-            $designation = $_POST['designation'];
-
-            $query = $conn->prepare("INSERT INTO government_officials (user_id, department, designation) VALUES (?, ?, ?)");
-            $query->bind_param("iss", $userId, $department, $designation);
+            $query->execute();
         }
 
-        if (isset($query) && !$query->execute()) {
-            echo json_encode(["status" => "error", "message" => "Error inserting additional user data."]);
-            exit();
+        if ($userType == "governmentOfficial") {
+            $department = $_POST['department'];
+            $designation = $_POST['designation'];
+            $query = $conn->prepare("INSERT INTO government_officials (user_id, department, designation) VALUES (?, ?, ?)");
+            $query->bind_param("iss", $userId, $department, $designation);
+            $query->execute();
+        }
+
+        if ($userType == "employer") {
+            $companyName = $_POST['companyName'];
+            $industry = $_POST['industry'];
+            $query = $conn->prepare("INSERT INTO employers (user_id, company_name, industry) VALUES (?, ?, ?)");
+            $query->bind_param("iss", $userId, $companyName, $industry);
+            $query->execute();
         }
 
         // Send Verification Email
@@ -104,38 +97,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'chavdashruti516@gmail.com'; // Store email in environment variables
+            $mail->Username = 'chavdashruti516@gmail.com';
             $mail->Password = 'ikcm jbpr tcxm rhsz';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
 
-            $mail->setFrom('chavdashruti516@gmail.com', 'Shruti Chavda'); // Sender's email address and name
+            $mail->setFrom('chavdashruti516@gmail.com', 'Shruti Chavda');
             $mail->addAddress($email, $fullName);
 
-            // Email content
             $mail->isHTML(true);
             $mail->Subject = 'Email Verification - Worklink Dashboard';
             $mail->Body = "Hello $fullName,<br><br>
-                            Thank you for registering on Worklink Dashboard!<br>
-                            Please verify your email by clicking the link below:<br><br>
-                            <a href='http://localhost/worklink/verify_account.php?email=$email&token=$token' style='padding:10px; background-color:#007bff; color:white; text-decoration:none; border-radius:5px;'>Verify Email</a><br><br>
-                            If you did not register, please ignore this email.<br><br>
-                            Regards,<br>Worklink Team";
+                             Thank you for registering on Worklink Dashboard!<br>
+                             Please verify your email by clicking the link below:<br><br>
+                             <a href='http://localhost/worklink/verify_account.php?email=$email&token=$token' style='padding:10px; background-color:#007bff; color:white; text-decoration:none; border-radius:5px;'>Verify Email</a><br><br>
+                             If you did not register, please ignore this email.<br><br>
+                             Regards,<br>Worklink Team";
 
             if ($mail->send()) {
-                echo json_encode(["status" => "success", "message" => "Registration successful! Check your email to verify your account."]);
+                echo "<script>alert('Registration successful! Check your email to verify your account.'); window.location.href='login.php';</script>";
             } else {
-                echo json_encode(["status" => "error", "message" => "Registration successful, but email sending failed."]);
+                echo "<script>alert('Registration successful, but email sending failed.'); window.history.back();</script>";
             }
         } catch (Exception $e) {
-            echo json_encode(["status" => "error", "message" => "Email could not be sent. Mailer Error: " . $mail->ErrorInfo]);
+            echo "<script>alert('Email could not be sent. Mailer Error: " . $mail->ErrorInfo . "'); window.history.back();</script>";
         }
     } else {
-        echo json_encode(["status" => "error", "message" => "Error registering user."]);
+        echo "<script>alert('Error registering user.'); window.history.back();</script>";
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -168,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="container mt-5">
         <h2 class="text-center">Register</h2>
-        <form action="http://localhost/Worklink/register.php" method="POST">
+        <form action="http://localhost/Worklink/register.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="userType" class="form-label">Select User Type</label>
                 <select class="form-select" id="userType" name="userType" required>
@@ -224,8 +215,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <script>
  $(document).ready(function () {
-    $("#userType").on("change", function () {
-        let userType = $(this).val();
+    function handleUserTypeChange() {
+        let userType = $("#userType").val();
         $("#formFields").toggle(userType !== "");
         let additionalFields = "";
 
@@ -247,19 +238,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" class="form-control" id="industry" name="industry" required>
                 </div>
             `;
-        }
-        else if (userType === "governmentOfficial") {
+        } else if (userType === "governmentOfficial") {
             additionalFields = `
                 <div class="mb-3">
-                  <label for="department" class="form-label">Department:</label>
-    <select class="form-select" id="department" name="department" required>
-        <option value="">Select Department</option>
-        <option value="Labour Department">Labour Department</option>
-        <option value="Employment Department">Employment Department</option>
-        <option value="Skill Development Department">Skill Development Department</option>
-        <option value="Education Department">Education Department</option>
-        <option value="Ministry of Finance">Ministry of Finance</option>
-    </select>
+                    <label for="department" class="form-label">Department:</label>
+                    <select class="form-select" id="department" name="department" required>
+                        <option value="">Select Department</option>
+                        <option value="Labour Department">Labour Department</option>
+                        <option value="Employment Department">Employment Department</option>
+                        <option value="Skill Development Department">Skill Development Department</option>
+                        <option value="Education Department">Education Department</option>
+                        <option value="Ministry of Finance">Ministry of Finance</option>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="designation" class="form-label">Designation:</label>
@@ -267,81 +257,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             `;
         }
-                $("#additionalFields").html(additionalFields);
-            });
 
-    $("#registrationForm").on("submit", function (event) {
-
-        event.preventDefault();
-
-let email = $("#email").val();
-let phone = $("#phone").val();
-let userType = $("#userType").val();
-let resume = $("#resume")[0]?.files[0];
-
-let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-let phoneRegex = /^\d{10}$/;
-
-if (!emailRegex.test(email)) {
-    alert("Invalid email format!");
-    return;
-}
-
-if (!phoneRegex.test(phone)) {
-    alert("Invalid phone number! Only 10 digits allowed.");
-    return;
-}
-
-// Resume validation for Job Seekers
-if (userType === "jobSeeker") {
-    if (!resume) {
-        alert("Resume field can't be empty!");
-        return;
+        $("#additionalFields").html(additionalFields);
     }
 
-    let fileType = resume.name.split('.').pop().toLowerCase();
-    let allowedTypes = ['pdf'];
-    let fileSize = resume.size;
+    $("#userType").on("change", handleUserTypeChange);
 
-    if (!allowedTypes.includes(fileType)) {
-        alert("Invalid file type! Only PDF is allowed.");
-        return;
-    }
-
-    if (fileSize > 2 * 1024 * 1024) {
-        alert("File size exceeds 2MB! Please upload a smaller file.");
-        return;
-    }
-}
-
-            
-//         let formData = new FormData(this);
-      
-//         $.ajax({
-//     url: "register.php",
-//     type: "POST",
-//     data: formData,
-//     contentType: false,
-//     processData: false,
-//     dataType: "json",
-//     success: function (response) {
-//         console.log(response); // Debugging: Check response in console
-        
-//         if (response.status === "success") {
-//             alert("Registration successful! Redirecting to login page...");
-//             window.location.href = "login.php";
-//         } else {
-//             alert(response.message); // Show error message
-//         }
-//     },
-//     error: function () {
-//         alert("Registration successful! Redirecting to login page...");
-//         window.location.href = "login.php";
-//     }
-// });
-
-    });
-
+    // Trigger change event on page load if value is pre-selected
+    handleUserTypeChange();
 
     // Toggle password visibility
     $(document).on("click", "#togglePassword, #toggleConfirmPassword", function () {
@@ -350,7 +273,6 @@ if (userType === "jobSeeker") {
         $(this).toggleClass("fa-eye fa-eye-slash");
     });
 });
-
 
 </script>
 

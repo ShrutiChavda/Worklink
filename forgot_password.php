@@ -91,37 +91,26 @@ if (isset($_POST['sub'])) {
 			$token = hash('sha512', $s_time);
 			$otp = mt_rand(100000, 999999);
 			$ins_token = "INSERT INTO token1 VALUES ('','$em','$s_time','$token',$otp)";
-			// echo "$ins_token";
-			//$db_time = date("Y-m-d G:i:s", strtotime("+ 1 min"));
-			//$_SESSION['db_time'] = $db_time;
+			
 			if (mysqli_query($conn, $ins_token)) {
 				$link = "http://localhost/Worklink/verify_otp.php?email=$em&token=$token";
 				//echo $link;
 				$mail = new PHPMailer(true);
 				try {
-					$mail->isSMTP(); // Set mailer to use SMTP
-                $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
-                $mail->SMTPAuth = true; // Enable SMTP authentication
-                $mail->Username = 'chavdashruti516@gmail.com'; // SMTP username
-                $mail->Password = 'ikcm jbpr tcxm rhsz'; // SMTP password
-                $mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
-                $mail->Port = 465; // TCP port to connect to
-                $mail->SMTPDebug = 0;                               //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+					$mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; 
+                $mail->SMTPAuth = true; 
+                $mail->Username = 'chavdashruti516@gmail.com'; 
+                $mail->Password = 'ikcm jbpr tcxm rhsz'; 
+                $mail->SMTPSecure = 'ssl'; 
+                $mail->Port = 465; 
+                $mail->SMTPDebug = 0;                           
 
-					//Recipients
-					$mail->setFrom('chavdashruti516@gmail.com', 'Worlink');
-					$mail->addAddress($em, 'Shruti');     //Add a recipient
-					//$mail->addAddress('ellen@example.com');               //Name is optional
+					$mail->setFrom('chavdashruti516@gmail.com', 'Worklink');
+					$mail->addAddress($em, 'Shruti');    
 					$mail->addReplyTo('chavdashruti516@gmail.com', 'Reply');
-					//$mail->addCC('cc@example.com');
-					// $mail->addBCC('bcc@example.com');
-
-					//Attachments
-					// $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-					//  $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
-					//Content
-					$mail->isHTML(true);                                  //Set email format to HTML
+				
+					$mail->isHTML(true);                              
 					$mail->Subject = 'Password reset link for User';
 					$mail->Body    = 'OTP for password reset is ' . $otp . ' <br/>This is the password reset link for your account. The link is valid for 1 minute.=>   ' . @$link .  "<br/> Please use forgot password facility again if the link has expired";
 					$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

@@ -23,22 +23,20 @@ $em = $_SESSION['em'];
 
             $mail = new PHPMailer(true);
             try {
-                $mail->isSMTP(); // Set mailer to use SMTP
-                $mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
-                $mail->SMTPAuth = true; // Enable SMTP authentication
-                $mail->Username = 'chavdashruti516@gmail.com'; // SMTP username
-                $mail->Password = 'xwig fjqp gnea fqml'; // SMTP password
-                $mail->SMTPSecure = 'ssl'; // Enable TLS encryption, `ssl` also accepted
-                $mail->Port = 465; // TCP port to connect to
-                $mail->SMTPDebug = 0; //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+                $mail->isSMTP(); 
+                $mail->Host = 'smtp.gmail.com'; 
+                $mail->SMTPAuth = true; 
+                $mail->Username = 'chavdashruti516@gmail.com'; 
+                $mail->Password = 'xwig fjqp gnea fqml'; 
+                $mail->SMTPSecure = 'ssl'; 
+                $mail->Port = 465; 
+                $mail->SMTPDebug = 0; 
 
-                //Recipients
                 $mail->setFrom('chavdashruti516@gmail.com', 'Worklink');
-                $mail->addAddress($em, 'Shruti'); //Add a recipient
+                $mail->addAddress($em, 'Shruti'); 
                 $mail->addReplyTo('chavdashruti516@gmail.com', 'Reply');
 
-                //Content
-                $mail->isHTML(true); //Set email format to HTML
+                $mail->isHTML(true); 
                 $mail->Subject = 'Password reset link for user';
                 $mail->Body    = 'OTP for password reset is ' . $otp . ' <br/>This is the password reset link for your account. The link is valid for 1 minute.=> ' . @$link .  "<br/> Please use forgot password facility again if the link has expired";
                 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

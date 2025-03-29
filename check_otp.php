@@ -1,6 +1,5 @@
 <?php
 session_start();
-// include_once("header.php");
 require 'includes/db.php';
 if (isset($_POST['submit']))
 {

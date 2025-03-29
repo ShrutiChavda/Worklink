@@ -78,14 +78,14 @@ if (!isset($_POST['submit'])) {
 <?php include 'includes/footer.php'; ?>
 
 <script>
-    var timerInterval; // Variable to hold the interval reference
-    var initialTime; // Variable to store the initial time
+    var timerInterval; 
+    var initialTime; 
 
     function startTimer(duration, display) {
         var timer = duration,
             minutes, seconds;
         
-        initialTime = duration; // Store the initial time
+        initialTime = duration; 
 
         timerInterval = setInterval(function () {
             minutes = parseInt(timer / 60, 10);
@@ -97,15 +97,15 @@ if (!isset($_POST['submit'])) {
             display.textContent = minutes + ":" + seconds;
 
             if (--timer < 0) {
-                clearInterval(timerInterval); // Clear the interval when the timer reaches 00:00
-                showAlert(); // Show alert when timer runs out
+                clearInterval(timerInterval); 
+                showAlert(); 
             }
         }, 1000);
     }
 
     window.onload = function () {
         var oneMinute = 60,
-            display = document.getElementById('timer'); // Remove '#' from ID
+            display = document.getElementById('timer'); 
 
         startTimer(oneMinute, display);
     };
@@ -118,7 +118,7 @@ if (!isset($_POST['submit'])) {
 
     function showAlert() {
         alert("Token has expired");
-        enable_reset_btn(); // Call enable_reset_btn to enable the reset button
+        enable_reset_btn(); 
     }
 
     document.getElementById("pass").addEventListener("blur", function () {

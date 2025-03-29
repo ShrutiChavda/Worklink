@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginInput = $_POST['email']; 
     $password = $_POST['password'];
 
-    // Fetch user details including full_name and status
     $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, status FROM users WHERE email = ?");
     $stmt->bind_param("s", $loginInput);
     $stmt->execute();
@@ -22,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->fetch();
     $stmt->close();
 
-    // Check if the account is activated
     if ($status === 'inactive') {
         echo json_encode(["status" => "error", "message" => "Your account is not activated. Check your email and activate your account!"]);
         exit();
@@ -38,14 +36,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Store user details in session
     $_SESSION['user_id'] = $userId;
     $_SESSION['user_type'] = $userType;
     $_SESSION['email'] = $dbEmail;
     $_SESSION['full_name'] = $fullName;
     $_SESSION['password'] = $password;
 
-    // Redirect all users to their respective dashboards
     echo json_encode(["status" => "success", "message" => "Login successful!", "redirect" => $_SESSION['user_type']."/index.php"]);
     exit();
 }
@@ -218,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             data: form.serialize(),
             dataType: "json",
             success: function (response) {
-                console.log(response); // Debugging output
+                console.log(response); 
 
                 if (response.status === "success") {
                     alert(response.message);
