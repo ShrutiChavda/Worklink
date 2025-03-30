@@ -14,8 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
+    $birthday = $_POST['birthday'];
+$gender = $_POST['gender'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
+    
     
     if ($password !== $confirmPassword) {
         echo "<script>alert('Passwords do not match!'); window.history.back();</script>";
@@ -50,8 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $token = bin2hex(random_bytes(32));
 
-    $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password, status, token) VALUES (?, ?, ?, ?, ?, 'inactive', ?)");
-    $stmt->bind_param("ssssss", $userType, $fullName, $email, $phone, $password, $token);
+    $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password, birthday, gender, status, token) VALUES (?, ?, ?, ?, ?, ?, ?, 'inactive', ?)");
+    $stmt->bind_param("ssssssss", $userType, $fullName, $email, $phone, $password, $birthday, $gender, $token);
+    
 
     if ($stmt->execute()) {
         $userId = $stmt->insert_id;
@@ -141,6 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,18 +161,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="assets/css/pages.css">
 
 </head>
+
 <body>
-<?php include 'includes/nav.php'; ?>
+    <?php include 'includes/nav.php'; ?>
 
 
-<div class="hero animate__animated animate__fadeIn">
-    <h1>Already have an account?</h1>
-    <div class="mt-3">
-        <a href="login.php" class="btn btn-primary">Login here</a>
+    <div class="hero animate__animated animate__fadeIn">
+        <h1>Already have an account?</h1>
+        <div class="mt-3">
+            <a href="login.php" class="btn btn-primary">Login here</a>
+        </div>
     </div>
-</div>
 
-<div class="container mt-5">
+    <div class="container mt-5">
         <h2 class="text-center">Register</h2>
         <form action="http://localhost/Worklink/register.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
@@ -199,6 +205,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="tel" class="form-control" id="phone" name="phone" required>
                     </div>
                 </div>
+
+                <div class="mb-1">
+                    <label class="form-label">Gender</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" required>
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" required>
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="birthday" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="birthday" name="birthday" required>
+                </div>
+
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <div class="input-group">
@@ -209,7 +233,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                     <div class="input-group">
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                            required>
                         <span class="input-group-text"><i class="fa fa-eye" id="toggleConfirmPassword"></i></span>
                     </div>
                 </div>
@@ -218,27 +243,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     hidden>
                 <div id="additionalFields"></div>
 
-                <button class="btn btn--radius btn-success" name="register" type="submit"
-                value="Login">Register</button>         
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success btn--radius d-flex" name="register" type="submit" value="Register">
+                        Register
+                    </button>
+                </div>
+
         </form>
     </div>
 
-<script>
- $(document).ready(function () {
-    function handleUserTypeChange() {
-        let userType = $("#userType").val();
-        $("#formFields").toggle(userType !== "");
-        let additionalFields = "";
+    <script>
+    $(document).ready(function() {
+        function handleUserTypeChange() {
+            let userType = $("#userType").val();
+            $("#formFields").toggle(userType !== "");
+            let additionalFields = "";
 
-        if (userType === "jobSeeker") {
-            additionalFields = `
+            if (userType === "jobSeeker") {
+                additionalFields = `
                 <div class="mb-3">
                     <label for="resume" class="form-label">Upload Resume (PDF, max 2MB)</label>
                     <input type="file" class="form-control" id="resume" name="resume" accept="application/pdf" required>
                 </div>
             `;
-        } else if (userType === "employer") {
-            additionalFields = `
+            } else if (userType === "employer") {
+                additionalFields = `
                 <div class="mb-3">
                     <label for="companyName" class="form-label">Company Name</label>
                     <input type="text" class="form-control" id="companyName" name="companyName" required>
@@ -248,8 +277,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" class="form-control" id="industry" name="industry" required>
                 </div>
             `;
-        } else if (userType === "governmentOfficial") {
-            additionalFields = `
+            } else if (userType === "governmentOfficial") {
+                additionalFields = `
                 <div class="mb-3">
                     <label for="department" class="form-label">Department:</label>
                     <select class="form-select" id="department" name="department" required>
@@ -266,33 +295,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="text" class="form-control" id="designation" name="designation" required>
                 </div>
             `;
+            }
+
+            $("#additionalFields").html(additionalFields);
         }
 
-        $("#additionalFields").html(additionalFields);
-    }
+        $("#userType").on("change", handleUserTypeChange);
 
-    $("#userType").on("change", handleUserTypeChange);
+        // Trigger change event on page load if value is pre-selected
+        handleUserTypeChange();
 
-    // Trigger change event on page load if value is pre-selected
-    handleUserTypeChange();
-
-    // Toggle password visibility
-    $(document).on("click", "#togglePassword, #toggleConfirmPassword", function () {
-        let input = $(this).closest(".input-group").find("input");
-        input.attr("type", input.attr("type") === "password" ? "text" : "password");
-        $(this).toggleClass("fa-eye fa-eye-slash");
+        // Toggle password visibility
+        $(document).on("click", "#togglePassword, #toggleConfirmPassword", function() {
+            let input = $(this).closest(".input-group").find("input");
+            input.attr("type", input.attr("type") === "password" ? "text" : "password");
+            $(this).toggleClass("fa-eye fa-eye-slash");
+        });
     });
-});
+    </script>
 
-</script>
+    </div>
+    <?php include 'includes/footer.php'; ?>
 
-<?php include 'includes/footer.php'; ?>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-<script src="assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    <script src="assets/js/script.js"></script>
 
 </body>
+
 </html>
