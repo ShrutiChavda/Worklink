@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2025 at 02:16 PM
+-- Generation Time: Mar 30, 2025 at 12:08 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -30,6 +30,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
   `full_name` varchar(50) NOT NULL,
+  `user_name` varchar(200) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `pic` varchar(500) NOT NULL,
+  `status` varchar(50) NOT NULL DEFAULT 'Inactive',
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `user_type` enum('admin') NOT NULL DEFAULT 'admin',
@@ -41,14 +45,14 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `full_name`, `email`, `password`, `user_type`, `phone`, `created_at`) VALUES
-(1, 'shruti chavda', 'schavda684@rku.ac.in', '123', 'admin', 1234567890, '2025-03-15 10:33:04');
+INSERT INTO `admin` (`id`, `full_name`, `user_name`, `gender`, `pic`, `status`, `email`, `password`, `user_type`, `phone`, `created_at`) VALUES
+(1, 'Shruti Chavda', 'schavda684', 'female', 'undraw_profile.jpg', 'Inactive', 'schavda684@rku.ac.in', '123', 'admin', 1234567890, '2025-03-26 17:36:51');
 
 --
 -- Triggers `admin`
 --
 DELIMITER $$
-CREATE TRIGGER ` after_admin_insert` AFTER INSERT ON `admin` FOR EACH ROW BEGIN  
+CREATE TRIGGER `after_admin_insert` AFTER INSERT ON `admin` FOR EACH ROW BEGIN  
     INSERT INTO users (user_type, full_name, email, phone, password)  
     VALUES ('admin', NEW.full_name, NEW.email, NEW.phone, NEW.password);  
 END
@@ -96,9 +100,7 @@ CREATE TABLE `employers` (
 --
 
 INSERT INTO `employers` (`id`, `user_id`, `company_name`, `industry`) VALUES
-(1, 1, 'ASD', 'AWD'),
-(2, 17, 'asd', 'asd'),
-(3, 39, 'ASD', 'asd');
+(2, 2, 'RKU', 'tech');
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,7 @@ CREATE TABLE `government_officials` (
 --
 
 INSERT INTO `government_officials` (`id`, `user_id`, `department`, `designation`) VALUES
-(1, 42, 'Education Department', 'asd');
+(2, 4, 'Skill Development Department', 'Training Manager');
 
 -- --------------------------------------------------------
 
@@ -205,16 +207,9 @@ CREATE TABLE `job_seekers` (
 --
 
 INSERT INTO `job_seekers` (`id`, `user_id`, `resume`) VALUES
-(1, 2, ''),
-(2, 8, '67d482f62414a_6CEA (1).pdf'),
-(3, 9, '67d4831442454_6CEA (1).pdf'),
-(4, 19, 'uploads/resumes/67d52e1bdc9c6_6CEA (1).pdf'),
-(5, 20, '67d53177de3c7_6CEA (1).pdf'),
-(6, 21, '67d5326670815_6CEA (1).pdf'),
-(7, 22, '67d5328dc9867_6CEA (1).pdf'),
-(8, 23, '67d532f3b6814_6CEA (1).pdf'),
-(9, 24, '67d5334a382d9_6CEA (1).pdf'),
-(10, 38, '67d53d84c257f_6CEA (1).pdf');
+(2, 1, '67e9099576d5a_Practical time table for BTECH_VI_RG.pdf'),
+(3, 5, NULL),
+(4, 5, '67e917999ed19_Practical time table for BTECH_VI_RG.pdf');
 
 -- --------------------------------------------------------
 
@@ -270,7 +265,7 @@ CREATE TABLE `training_providers` (
 --
 
 INSERT INTO `training_providers` (`id`, `user_id`) VALUES
-(1, 16);
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -282,59 +277,59 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `user_type` enum('jobSeeker','employer','trainingProvider','governmentOfficial','admin') NOT NULL,
   `full_name` varchar(255) NOT NULL,
+  `user_name` varchar(200) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `gender` varchar(100) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `birthday` date DEFAULT NULL,
+  `pic` varchar(50) DEFAULT 'undraw_profile.jpg',
+  `password` varchar(255) NOT NULL,
+  `status` varchar(255) DEFAULT 'inactive',
+  `token` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `user_type`, `full_name`, `email`, `phone`, `password`) VALUES
-(1, 'employer', 'SDF', 'SDF@F.SDF', 'ASD', '456'),
-(2, 'jobSeeker', 'asdsdf', 'shruti@asd.sdf', '123', '456'),
-(3, 'jobSeeker', 'sdasd', 'shruti@asd.asd', '+9112', '$2y$10$NyvXMQB9BJOZUlpGudXNrOC/kGWhROxAjCaWxNplksfsXaefa9836'),
-(4, 'jobSeeker', 'sdasd', 'skdf@asd.asdf', '+911234567890', '$2y$10$qlLlk5vLkQJFrafp6qj9kerPuhr2wT5fKv3dpOZDXmJBRuChrZVJS'),
-(5, 'jobSeeker', 'sdasd', 'sdasd@sfsdf.sdfsdf', '+911234567890', '$2y$10$7Ig5wveGC4uicB6YxOLcJedYh.gKqVF3aHqLeaZxxTlS6wVHCrbFe'),
-(6, 'jobSeeker', 'sdasd', 'sdas@sdf.sdf', '+911234567890', '$2y$10$erutHxgOk5nLaTFBRnokxe7.y1i6XsIuDSYQklyN4ozcTH/vqOEw.'),
-(7, 'jobSeeker', 'asd', 'shruti@sdf.sdffggh', '+911234567890', '$2y$10$6a4tLPOT2UsXOJ0dJesDsuxJPiEyMa7ZqajxjRSnGOkuzaLUdgsmG'),
-(8, 'jobSeeker', 'asd', 'shruti@sdf.sdffgghasdsdf', '+911234567890', '$2y$10$5sCpupE3XZUUJhL7nBBImO3qtLw8hBpV0Rniw/nl1swto5TSkQ3qS'),
-(9, 'jobSeeker', 'asd', 'shruti@sdf.sdffgghasdsdfsdsdf', '+911234567', '$2y$10$VlnYl/EqnjdiMzlrCYb8meq8p4EpvKjMZTxUcYOr8iiDhoLr/WZFW'),
-(10, 'jobSeeker', 'asdasdf', 'shruti@as.qw', '+9112', '$2y$10$00Hs0CXfmtqLMfYbqogiFuJEyNShPAU64KASW7iGNzpTMJ5T0YDtW'),
-(11, 'jobSeeker', 'asdasdf', 'shruti@as.qw.asdf', '+911234567890', '$2y$10$hy7q199tSQ3iA6i9hyH.QOcyNs99f3pjglf96PA8tUwv2gnN7zgNi'),
-(12, 'jobSeeker', 'asdasdf', 'shruti@as.qw.asdfasdas', '+911234567890', '456'),
-(13, 'jobSeeker', 'asdsdf', 'shruti@ssa.edf', '+9112345678', '456'),
-(14, 'jobSeeker', 'zsdsdf', 'shruti@qqq.q', '+91123456', '456'),
-(15, 'jobSeeker', 'zsdsdf', 'shruti@qqq.qs', '+911234567890', '456'),
-(16, 'trainingProvider', 'aSDASD', 'ASD@ASD', '+911234567', '456'),
-(17, 'employer', 'aSDASD', 'ASD@ASD.asd', '1234567890', '456'),
-(18, 'jobSeeker', 'aSDASD', 'shruti@gmail.com', '+911234567890', '456'),
-(19, 'jobSeeker', 'asdsad', 'shruti@gmail.comasdasd', '+911234567890', '456'),
-(20, 'jobSeeker', 'asd', 'asdasd@asd.sd', '+911234567890', '$2y$10$MrAF6SLTooruEy5K/QZwWOyMRZoWq43shWQxI4X.QbxX5iNvt1Kde'),
-(21, 'jobSeeker', 'shruti chavda', 'shrutic889@gmail.com', '1234567890', 'SHRuti@19#'),
-(22, 'jobSeeker', 'asdas', 'shrutic889@gmail.commmm', '1234567890', '$2y$10$0pI36wa.HsWOR1O3G228CO7jFUyW1TL1KTvNW.W7RzPtOGVE7kAyW'),
-(23, 'jobSeeker', 'asdsad', 'asd@sd.sdf', '1234567890', '123'),
-(24, 'jobSeeker', 'asdsad', 'asdas@asd.sdfr', '1234567890', '12'),
-(25, 'employer', 'adasd', 'asdas@sdf.sdfsdf', '1234567890', '123'),
-(26, 'employer', 'adasd', 'asdas@sdf.sdfsdfasd', '1234567890', '123'),
-(27, 'employer', 'adasd', 'asdas@sdf.sdfsdfasdsdf', '1234567890', '123'),
-(28, 'employer', 'sdf', 'asd@sedf.sdf', '1234567890', '123'),
-(29, 'employer', 'asd', 'asd@sdf.sdf', '1234567890', '123'),
-(30, 'employer', 'asd', 'asd@sdf.sdfsdfsdf', '1234567890', '123'),
-(31, 'employer', 'asd', 'asd@sdf.sdfsdfsdfsdsd', '1234567890', '123'),
-(32, 'employer', 'asd', 'asd@sdf.sdfsdfsdfsdsdasdsdf', '1234567890', '123'),
-(33, 'employer', 'asd', 'asd@sdf.sdfsdfsdfsdsdasdsdfasdasdd', '1234567890', '1234'),
-(34, 'employer', 'asd', 'asd@sdf.sdfsdfsdfsdsdasdsdfasdasddasdsdf', '1234567890', '1234'),
-(35, 'employer', 'asdasd', 'gw@asd.asd', '1234567890', '123'),
-(36, 'trainingProvider', 'asd', 'asd@asd.asdf', '1234567890', '123'),
-(37, 'governmentOfficial', 'asd', 'asd@s.dfsdf', '1234567890', '123'),
-(38, 'jobSeeker', 'asdsad', 'as@ASD.ASDQWE', '1234567890', '123'),
-(39, 'employer', 'ASD', 'ASD@ASD.SG', '1234567890', '123'),
-(40, 'trainingProvider', 'ASD', 'ASD@AS.DFSDF', '1234567890', '1234'),
-(41, 'governmentOfficial', 'asdsad', 'ASD@H.WE', '1234567890', '123'),
-(42, 'governmentOfficial', 'asdsad', 'asd@sdf.sdfasdfsdfsdfsdf', '1234567890', '123'),
-(45, 'admin', 'shruti chavda', 'schavda684@rku.ac.in', '1234567890', '123');
+INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
+(1, 'jobSeeker', 'Shruti Chavda', 'chadvashruti516', 'chadvashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'active', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
+(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
+(3, 'trainingProvider', 'Urisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'active', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
+(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'active', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
+(5, 'jobSeeker', 'test', 'test', 'test@gmail.com', 'Female', '4532767898', '2001-03-04', 'undraw_profile.jpg', '123', 'active', 'eda4894c401dfaa1079d34d782d03f679787cd013716b159f124717616192754');
+
+--
+-- Triggers `users`
+--
+DELIMITER $$
+CREATE TRIGGER `after_user_insert` AFTER INSERT ON `users` FOR EACH ROW BEGIN
+    IF NEW.user_type = 'jobSeeker' THEN
+        INSERT INTO job_seekers (user_id) VALUES (NEW.id);
+    END IF;
+    
+    IF NEW.user_type = 'employer' THEN
+        INSERT INTO employers (user_id) VALUES (NEW.id);
+    END IF;
+    
+    IF NEW.user_type = 'trainingProvider' THEN
+        INSERT INTO training_providers (user_id) VALUES (NEW.id);
+    END IF;
+
+    IF NEW.user_type = 'governmentOfficial' THEN
+        INSERT INTO government_officials (user_id, department, designation) 
+        VALUES (NEW.id, '', ''); -- Assuming default values, modify as needed
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `before_insert_users` BEFORE INSERT ON `users` FOR EACH ROW BEGIN
+    -- Extract the part before '@' from the email and set it as the username
+    SET NEW.user_name = SUBSTRING_INDEX(NEW.email, '@', 1);
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -466,7 +461,7 @@ ALTER TABLE `contact_requests`
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `employment_reports`
@@ -490,13 +485,13 @@ ALTER TABLE `financial_aid`
 -- AUTO_INCREMENT for table `government_officials`
 --
 ALTER TABLE `government_officials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `job_seekers`
 --
 ALTER TABLE `job_seekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `skill_policies`
@@ -508,7 +503,7 @@ ALTER TABLE `skill_policies`
 -- AUTO_INCREMENT for table `token1`
 --
 ALTER TABLE `token1`
-  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `training_providers`
@@ -520,7 +515,7 @@ ALTER TABLE `training_providers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `workplace_safety`
