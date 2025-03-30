@@ -69,7 +69,7 @@
                         $res = mysqli_query($con, $q);
                         while ($row = mysqli_fetch_array($res)) { ?>
                           <span class="mr-2 d-none d-lg-inline text-gray-600 small"><b><?php echo $row['2']; ?></b></span>
-                          <img class="img-profile rounded-circle" src="img/Uploads/<?php echo $row['6'];?>"><?php  }  ?>
+                          <img class="img-profile rounded-circle" src="img/Uploads/<?php echo $row['8'];?>"><?php  }  ?>
                       </a>
                       <!-- Dropdown - User Information -->
                       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

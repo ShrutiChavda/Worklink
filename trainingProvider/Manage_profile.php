@@ -59,7 +59,7 @@
                                 While($row = mysqli_fetch_array($res)) { ?>
                                 
                             <div>
-                            <img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['6']; ?>"/>
+                            <img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['8']; ?>"/>
                             
                             </div><br>
 
@@ -83,14 +83,23 @@
                                 <span><?php echo $row['4']; ?></span>
                             </div>
 
-                    
+                            <div class="profile-item">
+                                <label>Gender:</label>
+                                <span><?php echo $row['5']; ?></span>
+                            </div>
+                            
+                            <div class="profile-item">
+                                <label>Date Of Birth:</label>
+                                <span><?php echo $row['7']; ?></span>
+                            </div>
+
                             <div class="profile-item">
                                 <label>Contact Number:</label>
-                                <span><?php echo $row['5']; ?></span>
+                                <span><?php echo $row['6']; ?></span>
                             </div>
 
                             <div class="p-t-20">
-                            <a href="profile.php?edit=<?php echo $row['id']; ?>">
+                            <a href="edit_profile.php?edit=<?php echo $row['id']; ?>">
                                     <button class="btn btn--radius btn-success" type="button">Update Info</button>
                                 </a>
                                 <?php  }  ?>
@@ -146,7 +155,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-success"
-                        href="http://localhost/worklink/jobSeeker/logout.php">Logout</a>
+                        href="http://localhost/worklink/trainingProvider/logout.php">Logout</a>
                 </div>
             </div>
         </div>

@@ -1,13 +1,17 @@
 <?php
 session_start();
-require 'includes/db.php'; 
+require 'includes/db.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $userType = $_POST['userType'];
-    $loginInput = $_POST['email']; 
+    $userType = isset($_POST['userType']) ? $_POST['userType'] : '';
+    $loginInput = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, user_name, status FROM users WHERE email = ?");
+    // Prepare SQL query
+    $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, user_name, gender, birthday, status FROM users WHERE email = ?");
     $stmt->bind_param("s", $loginInput);
     $stmt->execute();
     $stmt->store_result();
@@ -17,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $stmt->bind_result($userId, $fullname, $dbPassword, $dbUserType, $dbEmail, $username, $status);
+    $stmt->bind_result($userId, $fullname, $dbPassword, $dbUserType, $dbEmail, $username, $dbgender, $dbbirthday, $status);
     $stmt->fetch();
     $stmt->close();
 
@@ -30,20 +34,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["status" => "error", "message" => "Invalid user type selected!"]);
         exit();
     }
-
+    
     if ($password !== $dbPassword) {
         echo json_encode(["status" => "error", "message" => "Invalid password!"]);
         exit();
-    }    
+    }
+    
 
     $_SESSION['user_id'] = $userId;
     $_SESSION['username'] = $username;
     $_SESSION['user_type'] = $userType;
     $_SESSION['email'] = $dbEmail;
+    $_SESSION['gender'] = $dbgender;
+    $_SESSION['birthday'] = $dbbirthday;
     $_SESSION['fullname'] = $fullname;
-    $_SESSION['password'] = $password;
 
-    echo json_encode(["status" => "success", "message" => "Login successful!", "redirect" => $_SESSION['user_type']."/index.php"]);
+    echo json_encode(["status" => "success", "message" => "Login successful!", "redirect" => $_SESSION['user_type'] . "/index.php"]);
     exit();
 }
 ?>
@@ -108,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="tab-content" id="userTypeTabsContent">
     <!-- Job Seeker Tab -->
     <div class="tab-pane fade show active" id="jobSeeker" role="tabpanel" aria-labelledby="jobSeeker-tab">
-        <form id="loginForm">
+        <form class="loginForm">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control" id="email" name="email" required>
@@ -201,13 +207,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include 'includes/footer.php'; ?>
 
     <script>
- $(document).ready(function () {
-    $("form").submit(function (event) {
+$(document).ready(function () {
+    $(".loginForm").submit(function (event) {
         event.preventDefault();
 
         let activeTab = $(".nav-tabs .nav-link.active").attr("id").replace("-tab", "");
-        let form = $(".tab-pane.active form");
-        form.find("#userType").val(activeTab);
+        let form = $(".tab-pane.active .loginForm");
+        form.find("input[name='userType']").val(activeTab);
 
         $.ajax({
             type: "POST",
@@ -215,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             data: form.serialize(),
             dataType: "json",
             success: function (response) {
-                console.log(response); 
+                console.log(response);
 
                 if (response.status === "success") {
                     alert(response.message);
@@ -224,12 +230,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     alert(response.message);
                 }
             },
-            error: function () {
-                alert("Something went wrong. Please try again!");
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                alert("Something went wrong. Check the console for details.");
             }
         });
     });
 });
+
 
     </script>
 

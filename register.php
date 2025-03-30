@@ -239,7 +239,7 @@ $gender = $_POST['gender'];
                     </div>
                 </div>
 
-                <input type="text" name="token" value="<?php echo uniqid().uniqid(); ?>" id="token1" name="token"
+                <input type="text" value="<?php echo uniqid().uniqid(); ?>" id="token1" name="token"
                     hidden>
                 <div id="additionalFields"></div>
 
@@ -312,6 +312,11 @@ $gender = $_POST['gender'];
             $(this).toggleClass("fa-eye fa-eye-slash");
         });
     });
+
+    $("form").on("submit", function(e) {
+    $("button[name='register']").prop("disabled", true);
+});
+
     </script>
 
     </div>

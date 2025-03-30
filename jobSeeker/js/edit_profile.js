@@ -1,8 +1,5 @@
 $(document).ready(function () {
-    $.validator.addMethod("fnregex", function (value, element) {
-        var regex = /^[a-zA-Z]+$/;
-        return regex.test(value);
-    }, "First name must contain only letters");
+  
 
     $.validator.addMethod("emregex", function (value1, element1) {
         var regex1 = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -43,9 +40,9 @@ $(document).ready(function () {
         },
         messages: {
             fn: {
-                required: "First Name is a required field",
-                minlength: "First Name must have at least two characters",
-                maxlength: "First Name can have a maximum of 30 characters"
+                required: "Full Name is a required field",
+                minlength: "Full Name must have at least two characters",
+                maxlength: "Full Name can have a maximum of 30 characters"
             },
             em: {
                 required: "Email is a required field",

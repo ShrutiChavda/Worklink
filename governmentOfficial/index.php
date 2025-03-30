@@ -13,7 +13,7 @@ include('connection.php');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>JobSeeker Dashboard</title>
+    <title>governmentOfficial Dashboard</title>
     <link href="img/favicon.png" rel="icon">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@ include('connection.php');
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-success"
-                        href="http://localhost/worklink/jobSeeker/logout.php">Logout</a>
+                        href="http://localhost/worklink/governmentOfficial/logout.php">Logout</a>
                 </div>
             </div>
         </div>

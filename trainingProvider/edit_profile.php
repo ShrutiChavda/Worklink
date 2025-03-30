@@ -5,7 +5,7 @@ include('connection.php');
 if(isset($_GET['edit']))
 {
     $a=$_GET['edit'];
-    $res=mysqli_query($con,"select * from admin where id='$a'");
+    $res=mysqli_query($con,"select * from users where id='$a'");
     $rec=mysqli_fetch_array($res);
 }
 ?>
@@ -57,10 +57,10 @@ if(isset($_GET['edit']))
                         <div class="card-body">
                             <h2 class="title">Edit Profile</h2>
 
-                                <p>First Name</p>
+                                <p>Full Name</p>
                                 <div class="input-group1">
-                                    <input class="input--style-1" type="text" placeholder="First Name" name="fn"
-                                        value="<?php echo $rec['user_name']; ?>" />
+                                    <input class="input--style-1" type="text" placeholder="Full Name" name="fn"
+                                        value="<?php echo $rec['full_name']; ?>" />
                                     <span id="fn_err" class="error1 p-1"></span>
                                 </div>
 
@@ -68,7 +68,7 @@ if(isset($_GET['edit']))
                                 <p>Email</p>
                                 <div class="input-group1">
                                     <input class="input--style-1" type="email" placeholder="Email" name="em"
-                                        value="<?php echo $rec['email']; ?>" />
+                                        value="<?php echo $rec['email']; ?>" readonly/>
                                     <span id="em_err" class="error1 p-1"></span>
                                 </div>
 
@@ -91,7 +91,7 @@ if(isset($_GET['edit']))
 
                                 <p>Contact Number</p>
                                 <div class="input-group1">
-                                    <input class="input--style-1" type="number" value="<?php echo $rec['contact']; ?>"
+                                    <input class="input--style-1" type="number" value="<?php echo $rec['phone']; ?>"
                                         placeholder="Contact Number" name="pn" />
                                     <span id="pn_err" class="error1 p-1"></span>
                                 </div>
@@ -103,10 +103,10 @@ if(isset($_GET['edit']))
 if(isset($_GET['edit']))
 {
 $id= $_GET['edit'];
-$q = "select * from admin where id='$id'";
+$q = "select * from users where id='$id'";
 $res = mysqli_query($con, $q);
 while ($row = mysqli_fetch_array($res)) { ?>
-<img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['5']; ?>"/><?php  }}  ?>
+<img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['8']; ?>"/><?php  }}  ?>
 
 <div class="input-group1">
     <input class="input--style-1" type="file" placeholder="Upload Image" name="f1"
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
         $gen1 = $_POST['gender'];
 
         // Include the code to update other fields in the database
-        $ins = "UPDATE admin SET `user_name`='$un1', `email`='$em1', `gender`='$gen1', `contact`='$cn1'";
+        $ins = "UPDATE users SET `full_name`='$un1', `email`='$em1', `gender`='$gen1', `phone`='$cn1'";
         if (!empty($unique_filename)) {
             // If a new file is uploaded, include it in the update query
             $ins .= ", `pic`='$unique_filename'";
@@ -169,7 +169,7 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_query($con, $ins)) {
             echo "<script>alert('Form updated successfully!');</script>";
-            echo "<script>window.location.href='http://localhost/Employee%20Management%20System/admin_panel/Manage_profile.php';</script>";
+            echo "<script>window.location.href='http://localhost/worklink/trainingProvider/Manage_profile.php';</script>";
         } else {
             echo "Error: ";
         }
@@ -221,7 +221,7 @@ if (isset($_POST['submit'])) {
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-success"
-                        href="http://localhost/worklink/jobSeeker/logout.php">Logout</a>
+                        href="http://localhost/worklink/trainingProvider/logout.php">Logout</a>
                 </div>
             </div>
         </div>
