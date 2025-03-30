@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginInput = $_POST['email']; 
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, status FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, user_name, status FROM users WHERE email = ?");
     $stmt->bind_param("s", $loginInput);
     $stmt->execute();
     $stmt->store_result();
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $stmt->bind_result($userId, $fullName, $dbPassword, $dbUserType, $dbEmail, $status);
+    $stmt->bind_result($userId, $fullname, $dbPassword, $dbUserType, $dbEmail, $username, $status);
     $stmt->fetch();
     $stmt->close();
 
@@ -34,12 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($password !== $dbPassword) {
         echo json_encode(["status" => "error", "message" => "Invalid password!"]);
         exit();
-    }
+    }    
 
     $_SESSION['user_id'] = $userId;
+    $_SESSION['username'] = $username;
     $_SESSION['user_type'] = $userType;
     $_SESSION['email'] = $dbEmail;
-    $_SESSION['full_name'] = $fullName;
+    $_SESSION['fullname'] = $fullname;
     $_SESSION['password'] = $password;
 
     echo json_encode(["status" => "success", "message" => "Login successful!", "redirect" => $_SESSION['user_type']."/index.php"]);

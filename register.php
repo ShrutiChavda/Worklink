@@ -37,6 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    $checkPhone = $conn->prepare("SELECT id FROM users WHERE phone = ?");
+    $checkPhone->bind_param("s", $phone);
+    $checkPhone->execute();
+    $checkPhone->store_result();
+
+    if ($checkPhone->num_rows > 0) {
+        echo "<script>alert('Phone number already registered!'); window.history.back();</script>";
+        exit;
+    }
+
     // $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $token = bin2hex(random_bytes(32));
 
