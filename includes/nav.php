@@ -8,7 +8,6 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
 
-                <!-- About Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="aboutDropdown" role="button" data-bs-toggle="dropdown">
                         About
@@ -22,7 +21,6 @@
                     </ul>
                 </li>
 
-                <!-- Departments Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="departmentsDropdown" role="button" data-bs-toggle="dropdown">
                         Departments
@@ -31,13 +29,9 @@
                         <li><a class="dropdown-item" href="labour.php">Labour Welfare</a></li>
                         <li><a class="dropdown-item" href="skill-development.php">Skill Development</a></li>
                         <li><a class="dropdown-item" href="employment.php">Employment Services</a></li>
-                        <li><a class="dropdown-item" href="apprenticeship.php">Apprenticeship Training</a></li>
-                        <li><a class="dropdown-item" href="social-security.php">Social Security & Welfare</a></li>
-                        <li><a class="dropdown-item" href="industrial-relations.php">Industrial Relations & Safety</a></li>
                     </ul>
                 </li>
 
-                <!-- Services Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
                         Services
@@ -46,14 +40,11 @@
                         <li><a class="dropdown-item" href="job-search.php">Job Search</a></li>
                         <li><a class="dropdown-item" href="training-programs.php">Training Programs</a></li>
                         <li><a class="dropdown-item" href="certifications.php">Certifications & Skill Assessments</a></li>
-                        <li><a class="dropdown-item" href="grievances.php">Labour Grievance Redressal</a></li>
-                        <li><a class="dropdown-item" href="migrant-workers.php">Migrant Workers Support</a></li>
                         <li><a class="dropdown-item" href="employer-services.php">Employer Services & Registrations</a></li>
                         <li><a class="dropdown-item" href="wage-calculator.php">Minimum Wage Calculator</a></li>
                     </ul>
                 </li>
 
-                <!-- Resources Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown">
                         Resources
@@ -61,10 +52,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="labour-laws.php">Labour Laws & Regulations</a></li>
                         <li><a class="dropdown-item" href="skill-policies.php">Skill Development Policies</a></li>
-                        <li><a class="dropdown-item" href="financial-aid.php">Financial Aid for Training</a></li>
                         <li><a class="dropdown-item" href="reports.php">Employment Reports & Statistics</a></li>
-                        <li><a class="dropdown-item" href="workplace-safety.php">Workplace Safety Guidelines</a></li>
-                        <li><a class="dropdown-item" href="entrepreneur-support.php">Entrepreneurship & Startup Support</a></li>
                     </ul>
                 </li>
 

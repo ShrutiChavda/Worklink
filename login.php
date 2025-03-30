@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $loginInput = $_POST['email'];
     $password = $_POST['password'];
 
-    // Prepare SQL query
     if ($userType === 'admin') {
         $stmt = $conn->prepare("SELECT id, full_name, user_name, gender, pic, status, email, password, user_type, phone, created_at FROM admin WHERE email = ?");
     } else {
@@ -50,7 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Store session data
     $_SESSION['user_id'] = $userId;
     $_SESSION['username'] = $username;
     $_SESSION['user_type'] = $userType;

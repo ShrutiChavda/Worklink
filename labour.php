@@ -14,7 +14,16 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/departments.css">
-
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("button").forEach(element => {
+            element.addEventListener("click", function(event) {
+                event.preventDefault();
+                window.location.href = "login.php";
+            });
+        });
+    });
+    </script>
 </head>
 
 <body>
@@ -33,7 +42,8 @@ session_start();
             <section class="mt-4 text-center">
                 <h2>Workers' Rights</h2>
                 <p>Understand your rights as a worker, including fair wages, working hours, and benefits.</p>
-                <img src="https://thumbs.dreamstime.com/b/labor-rights-protection-blue-gradient-concept-icon-labor-rights-protection-blue-gradient-concept-icon-employee-health-safety-192804509.jpg" class="section-image img-fluid">
+                <img src="https://thumbs.dreamstime.com/b/labor-rights-protection-blue-gradient-concept-icon-labor-rights-protection-blue-gradient-concept-icon-employee-health-safety-192804509.jpg"
+                    class="section-image img-fluid">
                 <a href="login.php" class="btn btn-primary btn-custom">Learn More</a>
             </section>
         </div>
@@ -50,7 +60,8 @@ session_start();
             <section class="mt-4 text-center">
                 <h2>Workplace Safety</h2>
                 <p>Learn about safety regulations, accident prevention, and emergency protocols at work.</p>
-                <img src="https://static.vecteezy.com/system/resources/previews/011/060/381/non_2x/workplace-safety-flat-style-illustration-design-free-vector.jpg" class="section-image img-fluid">
+                <img src="https://static.vecteezy.com/system/resources/previews/011/060/381/non_2x/workplace-safety-flat-style-illustration-design-free-vector.jpg"
+                    class="section-image img-fluid">
                 <a href="login.php" class="btn btn-warning btn-custom">View Safety Guidelines</a>
             </section>
         </div>
@@ -67,7 +78,8 @@ session_start();
             <section class="mt-4 text-center">
                 <h2>Government Schemes & Benefits</h2>
                 <p>Check various government welfare schemes available for workers.</p>
-                <img src="https://www.ethika.co.in/wp-content/uploads/2022/06/govt-help-scheme-1200x900.png" class="section-image img-fluid">
+                <img src="https://www.ethika.co.in/wp-content/uploads/2022/06/govt-help-scheme-1200x900.png"
+                    class="section-image img-fluid">
                 <a href="login.php" class="btn btn-success btn-custom">Explore Schemes</a>
             </section>
         </div>
@@ -78,14 +90,16 @@ session_start();
                 <div id="successCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="https://thumbs.dreamstime.com/b/employee-survey-customer-feedback-rating-performance-review-five-stars-service-best-experience-feedback-engagement-356263053.jpg" class="d-block w-100" alt="Success Story 1">
+                            <img src="https://thumbs.dreamstime.com/b/employee-survey-customer-feedback-rating-performance-review-five-stars-service-best-experience-feedback-engagement-356263053.jpg"
+                                class="d-block w-100" alt="Success Story 1">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>Empowering Workers</h5>
                                 <p>How government initiatives transformed lives.</p>
                             </div>
                         </div>
                         <div class="carousel-item">
-                            <img src="https://res.cloudinary.com/people-matters/image/upload/fl_immutable_cache,w_624,h_351,q_auto,f_auto/v1536251178/1536251033.jpg" class="d-block w-100" alt="Success Story 2">
+                            <img src="https://res.cloudinary.com/people-matters/image/upload/fl_immutable_cache,w_624,h_351,q_auto,f_auto/v1536251178/1536251033.jpg"
+                                class="d-block w-100" alt="Success Story 2">
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>Skill Training Impact</h5>
                                 <p>From laborer to entrepreneur: A success story.</p>
