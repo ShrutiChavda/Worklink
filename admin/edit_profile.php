@@ -91,7 +91,7 @@ if(isset($_GET['edit']))
 
                                 <p>Contact Number</p>
                                 <div class="input-group1">
-                                    <input class="input--style-1" type="number" value="<?php echo $rec['contact']; ?>"
+                                    <input class="input--style-1" type="number" value="<?php echo $rec['phone']; ?>"
                                         placeholder="Contact Number" name="pn" />
                                     <span id="pn_err" class="error1 p-1"></span>
                                 </div>
@@ -106,7 +106,7 @@ $id= $_GET['edit'];
 $q = "select * from admin where id='$id'";
 $res = mysqli_query($con, $q);
 while ($row = mysqli_fetch_array($res)) { ?>
-<img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['5']; ?>"/><?php  }}  ?>
+<img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['4']; ?>"/><?php  }}  ?>
 
 <div class="input-group1">
     <input class="input--style-1" type="file" placeholder="Upload Image" name="f1"
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
         $gen1 = $_POST['gender'];
 
         // Include the code to update other fields in the database
-        $ins = "UPDATE admin SET `user_name`='$un1', `email`='$em1', `gender`='$gen1', `contact`='$cn1'";
+        $ins = "UPDATE admin SET `user_name`='$un1', `email`='$em1', `gender`='$gen1', `phone`='$cn1'";
         if (!empty($unique_filename)) {
             // If a new file is uploaded, include it in the update query
             $ins .= ", `pic`='$unique_filename'";
@@ -169,7 +169,7 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_query($con, $ins)) {
             echo "<script>alert('Form updated successfully!');</script>";
-            echo "<script>window.location.href='http://localhost/Employee%20Management%20System/admin_panel/Manage_profile.php';</script>";
+            echo "<script>window.location.href='http://localhost/worklink/admin/Manage_profile.php';</script>";
         } else {
             echo "Error: ";
         }
@@ -221,7 +221,7 @@ if (isset($_POST['submit'])) {
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-success"
-                        href="http://localhost/Employee%20Management%20System/admin_panel/logout.php">Logout</a>
+                        href="http://localhost/worklink/admin/logout.php">Logout</a>
                 </div>
             </div>
         </div>

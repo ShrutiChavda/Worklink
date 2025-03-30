@@ -11,7 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     // Prepare SQL query
-    $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, user_name, gender, birthday, status FROM users WHERE email = ?");
+    if ($userType === 'admin') {
+        $stmt = $conn->prepare("SELECT id, full_name, user_name, gender, pic, status, email, password, user_type, phone, created_at FROM admin WHERE email = ?");
+    } else {
+        $stmt = $conn->prepare("SELECT id, full_name, password, user_type, email, user_name, gender, birthday, status FROM users WHERE email = ?");
+    }
+
     $stmt->bind_param("s", $loginInput);
     $stmt->execute();
     $stmt->store_result();
@@ -21,7 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $stmt->bind_result($userId, $fullname, $dbPassword, $dbUserType, $dbEmail, $username, $dbgender, $dbbirthday, $status);
+    if ($userType === 'admin') {
+        $stmt->bind_result($userId, $fullname, $username, $gender, $pic, $status, $dbEmail, $dbPassword, $dbUserType, $phone, $created_at);
+    } else {
+        $stmt->bind_result($userId, $fullname, $dbPassword, $dbUserType, $dbEmail, $username, $dbgender, $dbbirthday, $status);
+    }
+
     $stmt->fetch();
     $stmt->close();
 
@@ -34,27 +44,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(["status" => "error", "message" => "Invalid user type selected!"]);
         exit();
     }
-    
+
     if ($password !== $dbPassword) {
         echo json_encode(["status" => "error", "message" => "Invalid password!"]);
         exit();
     }
-    
 
+    // Store session data
     $_SESSION['user_id'] = $userId;
     $_SESSION['username'] = $username;
     $_SESSION['user_type'] = $userType;
     $_SESSION['email'] = $dbEmail;
-    $_SESSION['gender'] = $dbgender;
-    $_SESSION['birthday'] = $dbbirthday;
     $_SESSION['fullname'] = $fullname;
 
-    echo json_encode(["status" => "success", "message" => "Login successful!", "redirect" => $_SESSION['user_type'] . "/index.php"]);
+    if ($userType === 'admin') {
+        $_SESSION['user_id'] = $userId;
+        $_SESSION['username'] = $username;
+        $_SESSION['user_type'] = $userType;
+        $_SESSION['email'] = $dbEmail;
+        $_SESSION['fullname'] = $fullname;
+        echo json_encode(["status" => "success", "message" => "Admin Login successful!", "redirect" => "admin/index.php"]);
+    } else {
+        $_SESSION['gender'] = $dbgender;
+        $_SESSION['birthday'] = $dbbirthday;
+        echo json_encode(["status" => "success", "message" => "Login successful!", "redirect" => $_SESSION['user_type'] . "/index.php"]);
+    }
     exit();
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -207,13 +224,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include 'includes/footer.php'; ?>
 
     <script>
-$(document).ready(function () {
-    $(".loginForm").submit(function (event) {
+ $(document).ready(function () {
+    $("form").submit(function (event) {
         event.preventDefault();
 
         let activeTab = $(".nav-tabs .nav-link.active").attr("id").replace("-tab", "");
-        let form = $(".tab-pane.active .loginForm");
-        form.find("input[name='userType']").val(activeTab);
+        let form = $(".tab-pane.active form");
+        form.find("#userType").val(activeTab);
 
         $.ajax({
             type: "POST",
@@ -221,7 +238,7 @@ $(document).ready(function () {
             data: form.serialize(),
             dataType: "json",
             success: function (response) {
-                console.log(response);
+                console.log(response); 
 
                 if (response.status === "success") {
                     alert(response.message);
@@ -230,14 +247,12 @@ $(document).ready(function () {
                     alert(response.message);
                 }
             },
-            error: function (xhr, status, error) {
-                console.log(xhr.responseText);
-                alert("Something went wrong. Check the console for details.");
+            error: function () {
+                alert("Something went wrong. Please try again!");
             }
         });
     });
 });
-
 
     </script>
 

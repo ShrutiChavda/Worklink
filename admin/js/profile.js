@@ -1,8 +1,5 @@
 $(document).ready(function () {
-    $.validator.addMethod("fnregex", function (value, element) {
-        var regex = /^[a-zA-Z]+$/;
-        return regex.test(value);
-    }, "First name must contain only letters");
+
 
     $.validator.addMethod("emregex", function (value1, element1) {
         var regex1 = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

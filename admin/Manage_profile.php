@@ -47,6 +47,7 @@
                             <tr>
                                 <th>Admin ID</th>
                                 <th>Admin Name</th>
+                                <th>User Name</th>
                                 <th>Email</th>
                                 <th>Gender</th>
                                 <th>Contact</th>
@@ -72,9 +73,10 @@
                                 <td><?php echo $row[0]; ?></td>
                                 <td><?php echo $row[1]; ?></td>
                                 <td><?php echo $row[2]; ?></td>
+                                <td><?php echo $row[6]; ?></td>
                                 <td><?php echo $row[3]; ?></td>
-                                <td><?php echo $row[4]; ?></td>
-                                <td><img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row[5]; ?>"/></td>
+                                <td><?php echo $row[9]; ?></td>
+                                <td><img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row[4]; ?>"/></td>
                                 <td>
                                     <a href="edit_profile.php?edit=<?php echo $row['id']; ?>"
                                         class="btn btn-success btn-circle btn-sm">
@@ -132,7 +134,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-success"
-                        href="http://localhost/Employee%20Management%20System/admin_panel/logout.php">Logout</a>
+                        href="http://localhost/worklink/admin/logout.php">Logout</a>
                 </div>
             </div>
         </div>

@@ -17,6 +17,6 @@ if (isset($_SESSION['username'])) {
 // session_destroy();
 
 // Redirect the user to the login page
-header("Location: http://localhost/Employee%20Management%20System/login.php");
+header("Location: http://localhost/worklink/login.php");
 exit();
 ?>

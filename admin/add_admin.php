@@ -71,10 +71,15 @@ include('connection.php');
                         <div class="card-body">
                             <h2 class="title">Add admin</h2>
 
-                                <p>First Name</p>
+                                <p>Full Name</p>
                                 <div class="input-group1">
-                                    <input class="input--style-1" type="text" placeholder="First Name" name="fn" />
+                                    <input class="input--style-1" type="text" placeholder="Full Name" name="fn" />
                                     <span id="fn_err" class="error1 p-1"></span>
+                                </div>
+
+                                <p>User Name</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" placeholder="User Name" name="un" />
                                 </div>
 
                                 <p>Email</p>
@@ -170,7 +175,8 @@ if (isset($_POST['submit'])) {
     }
 
     if ($file_uploaded) {
-        $un1 = $_POST['fn'];
+        $un1 = $_POST['un'];
+        $fn1 = $_POST['fn'];
         $em1 = $_POST['em'];
         $cn1 = $_POST['pn'];
         $gen1 = $_POST['gender'];
@@ -188,11 +194,11 @@ if (isset($_POST['submit'])) {
             echo "<script>alert('Error: Admin with this username already exists');</script>";
         } else {
 
-            $ins = "INSERT INTO admin (user_name, email, gender, contact, pic, password) VALUES ('$un1', '$em1', '$gen1', '$cn1', '$unique_filename', '$password')";
+            $ins = "INSERT INTO admin (user_name, full_name, email, gender, phone, pic, password) VALUES ('$un1', '$fn1',  '$em1', '$gen1', '$cn1', '$unique_filename', '$password')";
 
             if (mysqli_query($con, $ins)) {
                 echo "<script>alert('Registered successfully!');</script>";
-                echo "<script>window.location.href='http://localhost/Employee%20Management%20System/admin_panel/Manage_profile.php';</script>";
+                echo "<script>window.location.href='http://localhost/worklink/admin/Manage_profile.php';</script>";
             }
         }
     }
@@ -240,7 +246,7 @@ if (isset($_POST['submit'])) {
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-success"
-                        href="http://localhost/Employee%20Management%20System/admin_panel/logout.php">Logout</a>
+                        href="http://localhost/worklink/admin/logout.php">Logout</a>
                 </div>
             </div>
         </div>
