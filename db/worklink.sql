@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 01:32 PM
+-- Generation Time: Mar 30, 2025 at 05:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -46,7 +46,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `full_name`, `user_name`, `gender`, `pic`, `status`, `email`, `password`, `user_type`, `phone`, `created_at`) VALUES
-(1, 'Shruti Chavda', 'schavda684', 'female', 'undraw_profile.jpg', 'Inactive', 'schavda684@rku.ac.in', '123', 'admin', 1234567890, '2025-03-26 17:36:51');
+(1, 'Shruti Chavda', 'schavda684', 'Female', '67e938d4ca81f_Avatar.png', 'Inactive', 'schavda684@rku.ac.in', '123', 'admin', 1234567890, '2025-03-26 17:36:51'),
+(3, 'test admin', 'test', 'Female', '67e93b4ad9b8c_profile.jpg', 'Inactive', 'testadmin@gmail.com', 'ADmin@12', 'admin', 2147483647, '2025-03-30 12:38:34');
 
 --
 -- Triggers `admin`
@@ -58,29 +59,6 @@ CREATE TRIGGER `after_admin_insert` AFTER INSERT ON `admin` FOR EACH ROW BEGIN
 END
 $$
 DELIMITER ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contact_requests`
---
-
-CREATE TABLE `contact_requests` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `message` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `contact_requests`
---
-
-INSERT INTO `contact_requests` (`id`, `name`, `email`, `phone`, `message`, `created_at`) VALUES
-(1, 'Amit Kumar', 'amit@example.com', '9876543210', 'Looking for job opportunities', '2025-03-14 15:54:25'),
-(2, 'Suman Sharma', 'suman@example.com', '9786543210', 'Need details on PMKVY scheme', '2025-03-14 15:54:25');
 
 -- --------------------------------------------------------
 
@@ -100,75 +78,8 @@ CREATE TABLE `employers` (
 --
 
 INSERT INTO `employers` (`id`, `user_id`, `company_name`, `industry`) VALUES
-(2, 2, 'RKU', 'tech');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `employment_reports`
---
-
-CREATE TABLE `employment_reports` (
-  `id` int(11) NOT NULL,
-  `report_title` varchar(255) NOT NULL,
-  `sector` varchar(100) DEFAULT NULL,
-  `report_year` int(11) NOT NULL,
-  `statistics` text NOT NULL,
-  `download_link` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `employment_reports`
---
-
-INSERT INTO `employment_reports` (`id`, `report_title`, `sector`, `report_year`, `statistics`, `download_link`) VALUES
-(1, 'IT Sector Growth Report', 'IT', 2024, '25% increase in IT job hiring', 'reports/it_growth_2024.pdf'),
-(2, 'Manufacturing Employment Trends', 'Manufacturing', 2023, '10% rise in industrial jobs', 'reports/manufacturing_2023.pdf');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `entrepreneurship_support`
---
-
-CREATE TABLE `entrepreneurship_support` (
-  `id` int(11) NOT NULL,
-  `scheme_name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `funding_options` text NOT NULL,
-  `application_process` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `entrepreneurship_support`
---
-
-INSERT INTO `entrepreneurship_support` (`id`, `scheme_name`, `description`, `funding_options`, `application_process`) VALUES
-(1, 'Startup India', 'Govt program for startups', 'Tax Benefits, Easy Loans', 'Register via Startup India Portal'),
-(2, 'Mudra Loan', 'Loan for micro-businesses', '₹50,000 to ₹10 Lakh', 'Apply via Bank or Online');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `financial_aid`
---
-
-CREATE TABLE `financial_aid` (
-  `id` int(11) NOT NULL,
-  `scheme_name` varchar(255) NOT NULL,
-  `eligibility` text NOT NULL,
-  `benefits` text NOT NULL,
-  `application_process` text NOT NULL,
-  `category` enum('Scholarship','Loan','Employer-Sponsored','Govt-Scheme') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `financial_aid`
---
-
-INSERT INTO `financial_aid` (`id`, `scheme_name`, `eligibility`, `benefits`, `application_process`, `category`) VALUES
-(1, 'NSDC Loan Program', 'Unemployed Youth', 'Low-interest skill loans', 'Apply via NSDC website', 'Loan'),
-(2, 'Standup India', 'SC/ST & Women Entrepreneurs', '₹10 Lakh to ₹1 Crore Loan', 'Register via Bank', 'Govt-Scheme');
+(2, 2, 'RKU', 'tech'),
+(5, 2, 'Tech Corp', 'IT');
 
 -- --------------------------------------------------------
 
@@ -193,6 +104,93 @@ INSERT INTO `government_officials` (`id`, `user_id`, `department`, `designation`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `government_schemes`
+--
+
+CREATE TABLE `government_schemes` (
+  `id` int(11) NOT NULL,
+  `scheme_name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `eligibility` text NOT NULL,
+  `benefits` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `government_schemes`
+--
+
+INSERT INTO `government_schemes` (`id`, `scheme_name`, `description`, `eligibility`, `benefits`, `created_at`) VALUES
+(1, 'Skill Development Program', 'A program aimed at enhancing technical and vocational skills.', 'All job seekers', 'Free training and certification', '2025-03-30 14:46:07'),
+(2, 'Women Empowerment Initiative', 'Financial assistance and training for women entrepreneurs.', 'Female job seekers and employers', 'Subsidized loans and business training', '2025-03-30 14:46:07'),
+(3, 'Youth Employment Program', 'Internship opportunities for young graduates.', 'Job seekers under 30', 'Paid internships and skill development', '2025-03-30 14:46:07'),
+(4, 'Rural Job Assistance', 'Employment support for rural job seekers.', 'Job seekers from rural areas', 'Guaranteed job placement assistance', '2025-03-30 14:46:07'),
+(5, 'Senior Citizen Employment Scheme', 'Part-time job opportunities for senior citizens.', 'Job seekers aged 60+', 'Flexible work hours and pension benefits', '2025-03-30 14:46:07'),
+(6, 'Startup India Support', 'Financial and infrastructural support for new businesses.', 'Employers and entrepreneurs', 'Funding and mentorship programs', '2025-03-30 14:46:07'),
+(7, 'Digital Skills Training', 'Online courses for software and IT skills.', 'All job seekers and training providers', 'Free courses and certifications', '2025-03-30 14:46:07'),
+(8, 'Government Internship Scheme', 'Internships within government departments.', 'Job seekers and students', 'Work experience and stipend', '2025-03-30 14:46:07'),
+(9, 'Employment for Disabled Persons', 'Job placement for individuals with disabilities.', 'Job seekers with disabilities', 'Special hiring preferences and training', '2025-03-30 14:46:07'),
+(10, 'Apprenticeship Training Program', 'Workplace training for fresh graduates.', 'Job seekers and training providers', 'Practical experience and job placement', '2025-03-30 14:46:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` int(11) NOT NULL,
+  `employer_id` int(11) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `salary` decimal(10,2) DEFAULT NULL,
+  `status` enum('open','closed') DEFAULT 'open',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `employer_id`, `title`, `description`, `location`, `salary`, `status`, `created_at`) VALUES
+(12, 2, 'Software Developer', 'Develop and maintain web applications.', 'Ahmedabad', '600000.00', 'open', '2025-03-30 14:52:01'),
+(13, 5, 'Data Analyst', 'Analyze large datasets and generate reports.', 'Mumbai', '500000.00', 'open', '2025-03-30 14:52:01'),
+(14, 2, 'Graphic Designer', 'Create visual concepts and branding materials.', 'Delhi', '400000.00', 'open', '2025-03-30 14:52:01'),
+(15, 5, 'HR Executive', 'Manage recruitment and employee relations.', 'Bangalore', '450000.00', 'open', '2025-03-30 14:52:01'),
+(16, 2, 'Digital Marketing Specialist', 'Plan and execute digital marketing campaigns.', 'Pune', '550000.00', 'open', '2025-03-30 14:52:01'),
+(17, 5, 'Mechanical Engineer', 'Design and develop mechanical systems.', 'Chennai', '650000.00', 'open', '2025-03-30 14:52:01'),
+(18, 5, 'Cyber Security Analyst', 'Ensure security of IT infrastructure.', 'Hyderabad', '700000.00', 'open', '2025-03-30 14:52:01'),
+(19, 5, 'AI/ML Engineer', 'Develop AI-based solutions and models.', 'Noida', '800000.00', 'open', '2025-03-30 14:52:01'),
+(20, 2, 'Project Manager', 'Manage and oversee IT projects.', 'Kolkata', '900000.00', 'open', '2025-03-30 14:52:01'),
+(21, 2, 'Content Writer', 'Write blogs, articles, and marketing copies.', 'Surat', '350000.00', 'open', '2025-03-30 14:52:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `job_applications`
+--
+
+CREATE TABLE `job_applications` (
+  `id` int(11) NOT NULL,
+  `job_seeker_id` int(11) DEFAULT NULL,
+  `job_id` int(11) DEFAULT NULL,
+  `status` enum('applied','interview','hired','rejected') DEFAULT 'applied',
+  `applied_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `job_applications`
+--
+
+INSERT INTO `job_applications` (`id`, `job_seeker_id`, `job_id`, `status`, `applied_at`) VALUES
+(1, 2, 12, 'applied', '2025-03-30 14:58:16'),
+(2, 7, 13, 'hired', '2025-03-30 14:58:16'),
+(3, 8, 14, 'rejected', '2025-03-30 14:58:16');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `job_seekers`
 --
 
@@ -208,31 +206,32 @@ CREATE TABLE `job_seekers` (
 
 INSERT INTO `job_seekers` (`id`, `user_id`, `resume`) VALUES
 (2, 1, '67e9099576d5a_Practical time table for BTECH_VI_RG.pdf'),
-(7, 8, '67e929199fd8d_Practical time table for BTECH_VI_RG.pdf');
+(7, 8, '67e929199fd8d_Practical time table for BTECH_VI_RG.pdf'),
+(8, 1, 'alice_resume.pdf');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `skill_policies`
+-- Table structure for table `messages`
 --
 
-CREATE TABLE `skill_policies` (
+CREATE TABLE `messages` (
   `id` int(11) NOT NULL,
-  `policy_name` varchar(255) NOT NULL,
-  `eligibility` text NOT NULL,
-  `benefits` text NOT NULL,
-  `registration_process` text NOT NULL,
-  `training_centers` text NOT NULL,
-  `success_stories` text NOT NULL
+  `sender_id` int(11) DEFAULT NULL,
+  `receiver_id` int(11) DEFAULT NULL,
+  `message` text NOT NULL,
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `skill_policies`
+-- Dumping data for table `messages`
 --
 
-INSERT INTO `skill_policies` (`id`, `policy_name`, `eligibility`, `benefits`, `registration_process`, `training_centers`, `success_stories`) VALUES
-(1, 'Skill India', 'All Indian citizens above 18 years', 'Stipends, Job Placement Assistance', 'Online Registration via NSDC', 'NSDC Approved Institutes', 'Arun Kumar – Placed as Electrician'),
-(2, 'PMKVY', 'Unemployed youth', 'Free training, Skill certification', 'Enroll via PMKVY portal', 'PMKVY Training Centers', 'Priya Singh – Beautician Course Success');
+INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `sent_at`) VALUES
+(1, 1, 2, 'Hello, I am interested in your job posting.', '2025-03-30 15:08:02'),
+(2, 2, 1, 'Thank you for reaching out! Please share your resume.', '2025-03-30 15:08:02'),
+(3, 8, 12, 'I want to know more about your company.', '2025-03-30 15:08:02'),
+(4, 12, 8, 'Sure! Our company specializes in IT services and hiring.', '2025-03-30 15:08:02');
 
 -- --------------------------------------------------------
 
@@ -251,6 +250,31 @@ CREATE TABLE `token1` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `training_programs`
+--
+
+CREATE TABLE `training_programs` (
+  `id` int(11) NOT NULL,
+  `provider_id` int(11) DEFAULT NULL,
+  `course_name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `duration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `training_programs`
+--
+
+INSERT INTO `training_programs` (`id`, `provider_id`, `course_name`, `description`, `duration`) VALUES
+(1, 1, 'Full Stack Web Development', 'Learn frontend and backend web development.', 6),
+(2, 2, 'Data Science Bootcamp', 'Comprehensive training in data analysis and machine learning.', 4),
+(3, 1, 'Digital Marketing Mastery', 'Advanced strategies for SEO, PPC, and content marketing.', 3),
+(4, 2, 'Cyber Security Essentials', 'Fundamentals of network security and ethical hacking.', 5),
+(5, 1, 'Graphic Design Fundamentals', 'Learn Adobe Photoshop, Illustrator, and UI/UX design.', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `training_providers`
 --
 
@@ -264,7 +288,8 @@ CREATE TABLE `training_providers` (
 --
 
 INSERT INTO `training_providers` (`id`, `user_id`) VALUES
-(1, 3);
+(1, 3),
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -292,11 +317,16 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
-(1, 'jobSeeker', 'Shruti Chavda', 'chadvashruti516', 'chadvashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'active', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
-(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', '67e921af1b548_Avatar.png', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
-(3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'active', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
+(1, 'jobSeeker', 'Shruti Chavda', 'chadvashruti516', 'chadvashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
+(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', '67e921af1b548_Avatar.png', '123', 'Inactive', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
+(3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
 (4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'active', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
-(8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '0012-12-12', '67e92b629b1c0_Avatar.png', '123', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63');
+(8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', '67e92b629b1c0_Avatar.png', '123', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
+(9, 'jobSeeker', 'abc', 'abc123', 'abc@gmail.com', 'Male', '1234567890', '2003-10-10', 'undraw_profile.jpg', 'ADmin12@', 'inactive', '174317426d19744d3c996sdfs7f902029a67da47db47cd9843987201d40f4fed0b63'),
+(10, 'jobSeeker', 'test abc', 'testanc', 'testabc@gmail.com', 'Male', '2147483647', '2005-12-12', 'undraw_profile.jpg', 'ADmin@12', 'inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
+(11, 'jobSeeker', 'Alice Johnson', 'alice', 'alice@gmail.com', 'Female', '1234567890', '2001-01-01', 'undraw_profile.jpg', 'pass123', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
+(12, 'employer', 'Tech Corp', 'techcorp', 'techcorp@gmail.com', 'Male', '9876543210', '2001-08-09', 'undraw_profile.jpg', 'pass456', 'active', '174317426d19744d3c9967f90202sdfs9a67da47db47cd9843987201d40f4fed0b63'),
+(13, 'trainingProvider', 'Skill Academy', 'skillacademy', 'skillacademy@gmail.com', 'Male', '5555555555', '2002-10-10', 'undraw_profile.jpg', 'pass789', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63');
 
 --
 -- Triggers `users`
@@ -331,27 +361,6 @@ END
 $$
 DELIMITER ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `workplace_safety`
---
-
-CREATE TABLE `workplace_safety` (
-  `id` int(11) NOT NULL,
-  `category` varchar(255) NOT NULL,
-  `guidelines` text NOT NULL,
-  `complaint_process` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `workplace_safety`
---
-
-INSERT INTO `workplace_safety` (`id`, `category`, `guidelines`, `complaint_process`) VALUES
-(1, 'Factory Safety Laws', 'Mandatory PPE, Fire Exits', 'File complaint via Govt Labour Portal'),
-(2, 'Ergonomic Safety', 'Proper chair adjustments, posture tips', 'HR Department Complaint Box');
-
 --
 -- Indexes for dumped tables
 --
@@ -365,35 +374,11 @@ ALTER TABLE `admin`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `contact_requests`
---
-ALTER TABLE `contact_requests`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `employers`
 --
 ALTER TABLE `employers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `employment_reports`
---
-ALTER TABLE `employment_reports`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `entrepreneurship_support`
---
-ALTER TABLE `entrepreneurship_support`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `financial_aid`
---
-ALTER TABLE `financial_aid`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `government_officials`
@@ -403,6 +388,27 @@ ALTER TABLE `government_officials`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `government_schemes`
+--
+ALTER TABLE `government_schemes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `employer_id` (`employer_id`);
+
+--
+-- Indexes for table `job_applications`
+--
+ALTER TABLE `job_applications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `job_seeker_id` (`job_seeker_id`),
+  ADD KEY `job_id` (`job_id`);
+
+--
 -- Indexes for table `job_seekers`
 --
 ALTER TABLE `job_seekers`
@@ -410,16 +416,25 @@ ALTER TABLE `job_seekers`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `skill_policies`
+-- Indexes for table `messages`
 --
-ALTER TABLE `skill_policies`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sender_id` (`sender_id`),
+  ADD KEY `receiver_id` (`receiver_id`);
 
 --
 -- Indexes for table `token1`
 --
 ALTER TABLE `token1`
   ADD PRIMARY KEY (`token_id`);
+
+--
+-- Indexes for table `training_programs`
+--
+ALTER TABLE `training_programs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `provider_id` (`provider_id`);
 
 --
 -- Indexes for table `training_providers`
@@ -436,12 +451,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indexes for table `workplace_safety`
---
-ALTER TABLE `workplace_safety`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -449,37 +458,13 @@ ALTER TABLE `workplace_safety`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `contact_requests`
---
-ALTER TABLE `contact_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `employment_reports`
---
-ALTER TABLE `employment_reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `entrepreneurship_support`
---
-ALTER TABLE `entrepreneurship_support`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `financial_aid`
---
-ALTER TABLE `financial_aid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `government_officials`
@@ -488,16 +473,34 @@ ALTER TABLE `government_officials`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `government_schemes`
+--
+ALTER TABLE `government_schemes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `job_applications`
+--
+ALTER TABLE `job_applications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `job_seekers`
 --
 ALTER TABLE `job_seekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `skill_policies`
+-- AUTO_INCREMENT for table `messages`
 --
-ALTER TABLE `skill_policies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `token1`
@@ -506,22 +509,22 @@ ALTER TABLE `token1`
   MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `training_programs`
+--
+ALTER TABLE `training_programs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `training_providers`
 --
 ALTER TABLE `training_providers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `workplace_safety`
---
-ALTER TABLE `workplace_safety`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
@@ -540,10 +543,36 @@ ALTER TABLE `government_officials`
   ADD CONSTRAINT `government_officials_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD CONSTRAINT `jobs_ibfk_1` FOREIGN KEY (`employer_id`) REFERENCES `employers` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `job_applications`
+--
+ALTER TABLE `job_applications`
+  ADD CONSTRAINT `job_applications_ibfk_1` FOREIGN KEY (`job_seeker_id`) REFERENCES `job_seekers` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `job_applications_ibfk_2` FOREIGN KEY (`job_id`) REFERENCES `jobs` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `job_seekers`
 --
 ALTER TABLE `job_seekers`
   ADD CONSTRAINT `job_seekers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `training_programs`
+--
+ALTER TABLE `training_programs`
+  ADD CONSTRAINT `training_programs_ibfk_1` FOREIGN KEY (`provider_id`) REFERENCES `training_providers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `training_providers`
