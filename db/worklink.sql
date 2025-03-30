@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 12:08 PM
+-- Generation Time: Mar 30, 2025 at 01:32 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -208,8 +208,7 @@ CREATE TABLE `job_seekers` (
 
 INSERT INTO `job_seekers` (`id`, `user_id`, `resume`) VALUES
 (2, 1, '67e9099576d5a_Practical time table for BTECH_VI_RG.pdf'),
-(3, 5, NULL),
-(4, 5, '67e917999ed19_Practical time table for BTECH_VI_RG.pdf');
+(7, 8, '67e929199fd8d_Practical time table for BTECH_VI_RG.pdf');
 
 -- --------------------------------------------------------
 
@@ -294,10 +293,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
 (1, 'jobSeeker', 'Shruti Chavda', 'chadvashruti516', 'chadvashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'active', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
-(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
-(3, 'trainingProvider', 'Urisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'active', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
+(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', '67e921af1b548_Avatar.png', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
+(3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'active', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
 (4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'active', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
-(5, 'jobSeeker', 'test', 'test', 'test@gmail.com', 'Female', '4532767898', '2001-03-04', 'undraw_profile.jpg', '123', 'active', 'eda4894c401dfaa1079d34d782d03f679787cd013716b159f124717616192754');
+(8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '0012-12-12', '67e92b629b1c0_Avatar.png', '123', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63');
 
 --
 -- Triggers `users`
@@ -305,20 +304,21 @@ INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gend
 DELIMITER $$
 CREATE TRIGGER `after_user_insert` AFTER INSERT ON `users` FOR EACH ROW BEGIN
     IF NEW.user_type = 'jobSeeker' THEN
-        INSERT INTO job_seekers (user_id) VALUES (NEW.id);
+        UPDATE job_seekers SET user_id = NEW.id WHERE user_id = NEW.id;
     END IF;
-    
+
     IF NEW.user_type = 'employer' THEN
-        INSERT INTO employers (user_id) VALUES (NEW.id);
+        UPDATE employers SET user_id = NEW.id WHERE user_id = NEW.id;
     END IF;
-    
+
     IF NEW.user_type = 'trainingProvider' THEN
-        INSERT INTO training_providers (user_id) VALUES (NEW.id);
+        UPDATE training_providers SET user_id = NEW.id WHERE user_id = NEW.id;
     END IF;
 
     IF NEW.user_type = 'governmentOfficial' THEN
-        INSERT INTO government_officials (user_id, department, designation) 
-        VALUES (NEW.id, '', ''); -- Assuming default values, modify as needed
+        UPDATE government_officials 
+        SET department = '', designation = '' 
+        WHERE user_id = NEW.id;
     END IF;
 END
 $$
@@ -461,7 +461,7 @@ ALTER TABLE `contact_requests`
 -- AUTO_INCREMENT for table `employers`
 --
 ALTER TABLE `employers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `employment_reports`
@@ -491,7 +491,7 @@ ALTER TABLE `government_officials`
 -- AUTO_INCREMENT for table `job_seekers`
 --
 ALTER TABLE `job_seekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `skill_policies`
@@ -515,7 +515,7 @@ ALTER TABLE `training_providers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `workplace_safety`
