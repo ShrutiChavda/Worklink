@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2025 at 05:09 PM
+-- Generation Time: Mar 31, 2025 at 09:58 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -317,10 +317,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
-(1, 'jobSeeker', 'Shruti Chavda', 'chadvashruti516', 'chadvashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
+(1, 'jobSeeker', 'Shruti Chavda', 'chavdashruti516', 'chavdashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
 (2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', '67e921af1b548_Avatar.png', '123', 'Inactive', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
 (3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
-(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'active', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
+(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
 (8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', '67e92b629b1c0_Avatar.png', '123', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
 (9, 'jobSeeker', 'abc', 'abc123', 'abc@gmail.com', 'Male', '1234567890', '2003-10-10', 'undraw_profile.jpg', 'ADmin12@', 'inactive', '174317426d19744d3c996sdfs7f902029a67da47db47cd9843987201d40f4fed0b63'),
 (10, 'jobSeeker', 'test abc', 'testanc', 'testabc@gmail.com', 'Male', '2147483647', '2005-12-12', 'undraw_profile.jpg', 'ADmin@12', 'inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
@@ -488,7 +488,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `job_applications`
 --
 ALTER TABLE `job_applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `job_seekers`
@@ -512,7 +512,7 @@ ALTER TABLE `token1`
 -- AUTO_INCREMENT for table `training_programs`
 --
 ALTER TABLE `training_programs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `training_providers`
