@@ -22,11 +22,11 @@ if(isset($_GET['op']) && isset($_GET['np']) && isset($_GET['cp'])) {
             $update_query = "UPDATE users SET password = '$new_password' WHERE user_name = '$un'";
             if (mysqli_query($con, $update_query)) {
                 echo "<script>alert('Password updated successfully');</script>";
-                echo "<script>window.location.href='http://localhost/worklink/trainingProvider/change_password.php';</script>";
+                echo "<script>window.location.href='http://localhost/worklink/trainingProvider/Manage_profile.php';</script>";
 
             } else {
                 echo "<script>alert('Error in updating Password');</script>";
-                echo "<script>window.location.href='http://localhost/worklink/trainingProvider/change_password.php';</script>";
+                echo "<script>window.location.href='http://localhost/worklink/trainingProvider/Manage_profile.php';</script>";
 
             }
         } else {
