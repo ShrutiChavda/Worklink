@@ -1,4 +1,4 @@
-<?php 
+<?php
 include('session.php');
 include('connection.php');
 
@@ -18,32 +18,30 @@ include('connection.php');
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashbord.css">
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="js/search.js"></script>
 </head>
 
 <body id="page-top">
-    <?php  include('sidebar.php'); ?>
-    <?php  include('header.php'); ?>
+    <?php include('sidebar.php'); ?>
+    <?php include('header.php'); ?>
 
-
+    <?php include('Dashbord.php'); ?>
     <?php
-          include_once('footer.php');
-          ?>
+    include_once('footer.php');
+    ?>
 
     </div>
-    <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -65,21 +63,16 @@ include('connection.php');
     </div>
 
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
 

@@ -3839,7 +3839,7 @@ input[type=submit].btn-block {
 
 .input-group-append,
 .input-group-prepend {
-    display: flex
+    display: flex;
 }
 
 .input-group-append .btn,
@@ -3869,7 +3869,8 @@ input[type=submit].btn-block {
 }
 
 .input-group-append {
-    margin-left: -1px
+    margin-left: -1px;
+    background-color:#004080 !important;
 }
 
 .input-group-text {

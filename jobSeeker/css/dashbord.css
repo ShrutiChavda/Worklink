@@ -1,0 +1,178 @@
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.dashboard-container header{
+    color:black;
+    background-color: white;
+}
+
+header h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+header p {
+  color: #888;
+  margin-top: revert;
+}
+
+.stats {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  flex: 1 1 200px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.stat-box i {
+  font-size: 24px;
+  color: #4f46e5;
+  margin-bottom: 10px;
+}
+
+.stat-box h3 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.activity {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+}
+
+.activity h4 {
+  margin-bottom: 15px;
+}
+
+.activity ul {
+  list-style: none;
+}
+
+.activity li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.activity .dot {
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.blue { background: #3b82f6; }
+.dot.purple { background: #8b5cf6; }
+.dot.green { background: #10b981; }
+.dot.orange { background: #f97316; }
+
+.activity small {
+  margin-left: auto;
+  color: #aaa;
+}
+
+.jobs {
+  margin-bottom: 30px;
+}
+
+.jobs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.jobs-header .filters button {
+  padding: 6px 12px;
+  margin-left: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #e5e7eb;
+  cursor: pointer;
+}
+
+.jobs-header .filters .active {
+  background: #4f46e5;
+  color: white;
+}
+
+.job-cards {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.job-card {
+  flex: 1 1 300px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.job-card h5 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.job-card p {
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.job-card .salary {
+  font-weight: bold;
+  color: #4f46e5;
+}
+
+.job-card button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.application-activity h4 {
+  margin-bottom: 10px;
+}
+
+.graph {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .stats, .job-cards {
+    flex-direction: column;
+  }
+
+  .jobs-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .jobs-header .filters {
+    margin-top: 10px;
+  }
+}
