@@ -5,11 +5,9 @@ $url = $_SERVER['REQUEST_URI'];
 $url = parse_url($url, PHP_URL_PATH);
 $arr_url = explode("/", $url);
 // echo $arr_url[3];
-
 ?>
 
 <div id="wrapper">
-
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
