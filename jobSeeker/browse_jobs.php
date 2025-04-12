@@ -81,7 +81,7 @@
         </div>
 
         <div class="job-card">
-            <img src="img/designlabs.png" class="company-logo">
+            <img src="img/undraw_profile.jpg" class="company-logo">
             <h3>Product Designer</h3>
             <p>DesignLabs</p>
             <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</span>
@@ -92,7 +92,7 @@
         </div>
 
         <div class="job-card">
-            <img src="img/facebook.png" class="company-logo">
+            <img src="img/undraw_profile.jpg" class="company-logo">
             <h3>Marketing Manager</h3>
             <p>GrowthCo</p>
             <span class="job-location"><i class="fas fa-map-marker-alt"></i> New York, NY</span>
@@ -103,7 +103,7 @@
         </div>
 
         <div class="job-card">
-            <img src="img/youtube.png" class="company-logo">
+            <img src="img/undraw_profile.jpg" class="company-logo">
             <h3>Data Scientist</h3>
             <p>DataTech Solutions</p>
             <span class="job-location"><i class="fas fa-map-marker-alt"></i> Boston, MA</span>
@@ -114,7 +114,7 @@
         </div>
 
         <div class="job-card">
-            <img src="img/snapchat.png" class="company-logo">
+            <img src="img/undraw_profile.jpg" class="company-logo">
             <h3>Frontend Developer</h3>
             <p>WebCraft</p>
             <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</span>
@@ -125,7 +125,7 @@
         </div>
 
         <div class="job-card">
-            <img src="img/userfirst.png" class="company-logo">
+            <img src="img/undraw_profile.jpg" class="company-logo">
             <h3>UX Researcher</h3>
             <p>UserFirst</p>
             <span class="job-location"><i class="fas fa-map-marker-alt"></i> Seattle, WA</span>

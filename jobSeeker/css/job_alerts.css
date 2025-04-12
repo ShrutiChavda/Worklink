@@ -1,0 +1,89 @@
+.job-alerts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.job-alerts-header h1 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.job-alerts-header p {
+    color: #6c757d;
+    margin: 0;
+    flex: 1;
+    padding-left: 20px;
+}
+
+.sort-box select {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.job-alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.job-card {
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.job-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.job-meta,
+.job-details {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.job-labels {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge.new {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge.closing {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.deadline {
+    color: #e69900;
+}
+
+.apply-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
