@@ -10,7 +10,7 @@
     <meta name='description' content=''>
     <meta name='author' content=''>
 
-    <title>Blank Page</title>
+    <title>Job Alerts</title>
 
     <link href='img/favicon.png' rel='icon'>
     <link href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet' type='text/css'>
