@@ -23,7 +23,16 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+    <div class="section">
+  <h2>Training Analytics</h2>
+  <ul>
+    <li>Total Students Trained: 1200</li>
+    <li>Courses Offered: 15</li>
+    <li>Average Completion Rate: 87%</li>
+  </ul>
+  <canvas id="trainingChart"></canvas>
+</div>
+
     </div>
 <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -34,7 +43,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

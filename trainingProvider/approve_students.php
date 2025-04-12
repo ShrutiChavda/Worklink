@@ -15,6 +15,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="common.css">
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="js/search.js"></script>
 </head>
@@ -23,7 +24,17 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+    <div class="form-container">
+    <h2>Approve Applications</h2>
+   <div class="application-card">
+        <p><strong>Name:</strong> <?= $row['applicant_name'] ?></p>
+        <p><strong>Course:</strong> <?= $row['course_id'] ?></p>
+            <form method="POST">
+                <input type="hidden" name="application_id" value="<?= $row['id'] ?>">
+                <button type="submit" name="action" value="approve">Approve</button>
+                <button type="submit" name="action" value="reject">Reject</button>
+            </form>
+        </div>
     </div>
 <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -34,7 +45,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -52,5 +63,8 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+    
+ 
+</div>
 </body>
 </html>
