@@ -10,6 +10,7 @@ $dataPoints = array(
     array("y" => 0, "label" => "Friday"),
     array("y" => 20, "label" => "Saturday")
 );
+
 ?>
 
 <script>
@@ -84,13 +85,23 @@ $dataPoints = array(
             </div>
 
             <div class="job-cards">
-                <div class="job-card">
-                    <h5>Senior Frontend Developer</h5>
-                    <p>TechCorp Inc. - San Francisco, CA</p>
-                    <p class="salary">$120k - $150k</p>
-                    <button>Apply Now</button>
-                </div>
-                <div class="job-card">
+                <?php
+                $sql = mysqli_query($con, "SELECT * FROM totaljobs"); ?>
+
+                <?php if (mysqli_num_rows($sql) > 0):
+                    while ($row = mysqli_fetch_assoc($sql)):  ?>
+                        <div class="job-card">
+                            <!-- <h5>Senior Frontend Developer</h5> -->
+                            <h5><?php echo htmlspecialchars($row['job_title']); ?></h5>
+                            <p><?php echo htmlspecialchars($row['company_name']) . " - " . htmlspecialchars($row['country']); ?></p>
+                            <p class="salary"><?php echo htmlspecialchars($row['salary']); ?></p>
+                            <button>Apply Now</button>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p>No jobs found.</p>
+                <?php endif; ?>
+                <!-- <div class="job-card">
                     <h5>UX Designer</h5>
                     <p>Design Studio - Remote</p>
                     <p class="salary">$90k - $110k</p>
@@ -101,14 +112,9 @@ $dataPoints = array(
                     <p>Innovation Labs - New York, NY</p>
                     <p class="salary">$130k - $160k</p>
                     <button>Apply Now</button>
-                </div>
+                </div> -->
             </div>
         </section>
-
-        <!-- <section class="application-activity">
-            <h4>Application Activity</h4>
-            <img src="img/FRAME.png" alt="Activity Graph" class="graph">
-        </section> -->
 
         <div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>

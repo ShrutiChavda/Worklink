@@ -10,7 +10,7 @@
     <meta name='description' content=''>
     <meta name='author' content=''>
 
-    <title>Blank Page</title>
+    <title>Job Alerts</title>
 
     <link href='img/favicon.png' rel='icon'>
     <link href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet' type='text/css'>
@@ -26,8 +26,65 @@
 <?php include('header.php'); ?>
 
 <div class='container-fluid'>
-    <h1 class='h3 mb-4 text-gray-800'>Blank Page</h1>
+    <div class='job-alerts-header d-flex justify-content-between align-items-center mb-4'>
+        <div>
+            <h1 class='h3 text-gray-800'>Job Alerts</h1>
+            <p class="text-muted mb-0">Stay updated with latest job opportunities</p>
+        </div>
+        <div class="form-inline">
+            <label for="sort" class="mr-2">Sort by:</label>
+            <select id="sort" class="form-control">
+                <option>Latest</option>
+                <option>Oldest</option>
+                <option>Closing Soon</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Job Cards -->
+    <div class="job-card border rounded p-4 mb-4 shadow-sm">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5 class="font-weight-bold mb-1">Senior Frontend Developer</h5>
+                <p class="text-muted mb-1"><i class="fas fa-building mr-1"></i> Tech Solutions Inc. &nbsp; <i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                <p class="mb-2"><i class="far fa-clock mr-1"></i> 5–7 years &nbsp; <i class="fas fa-envelope mr-1"></i> $120,000 – $150,000 &nbsp; <i class="far fa-calendar-alt mr-1"></i> <span class="text-warning">3 days left</span></p>
+                <span class="badge badge-success mr-1">New</span>
+                <span class="badge badge-warning">Closing Soon</span>
+            </div>
+            <div class="text-right d-flex flex-column justify-content-between align-items-end">
+                <a href="#" class="btn btn-primary mb-2">Apply Now</a>
+                <div>
+                    <i class="far fa-bookmark mr-3"></i>
+                    <i class="far fa-bell"></i>
+                </div>
+            </div>
+        </div>
+  
+    </div>
+
+    <div class="job-card border rounded p-4 mb-4 shadow-sm">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5 class="font-weight-bold mb-1">Professor</h5>
+                <p class="text-muted mb-1"><i class="fas fa-building mr-1"></i>RK University &nbsp; <i class="fas fa-map-marker-alt"></i> New York, NY</p>
+                <p class="mb-2"><i class="far fa-clock mr-1"></i> 1-2 years &nbsp; <i class="fas fa-envelope mr-1"></i> $10,000 – $20,000 &nbsp; <i class="far fa-calendar-alt mr-1"></i> <span class="text-warning">3 days left</span></p>
+                <span class="badge badge-success mr-1">New</span>
+                <span class="badge badge-warning">Closing Soon</span>
+            </div>
+            <div class="text-right d-flex flex-column justify-content-between align-items-end">
+                <a href="#" class="btn btn-primary mb-2">Apply Now</a>
+                <div>
+                    <i class="far fa-bookmark mr-3"></i>
+                    <i class="far fa-bell"></i>
+                </div>
+            </div>
+        </div>
+  
+    </div>
+
+    <!-- Repeat this block for each job -->
 </div>
+
 
 <?php include_once('footer.php'); ?>
 
