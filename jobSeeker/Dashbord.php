@@ -94,6 +94,7 @@ $dataPoints = array(
                             <!-- <h5>Senior Frontend Developer</h5> -->
                             <h5><?php echo htmlspecialchars($row['job_title']); ?></h5>
                             <p><?php echo htmlspecialchars($row['company_name']) . " - " . htmlspecialchars($row['country']); ?></p>
+                            <h6><?php echo htmlspecialchars($row['job_type']) ?></h6>
                             <p class="salary"><?php echo htmlspecialchars($row['salary']); ?></p>
                             <button>Apply Now</button>
                         </div>
