@@ -23,7 +23,29 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+    <div class="section">
+  <h2>Enrolled Students</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Enrollment Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>101</td>
+        <td>Aarav Sharma</td>
+        <td>Web Development</td>
+        <td>2025-04-01</td>
+      </tr>
+      <!-- Add more rows dynamically -->
+    </tbody>
+  </table>
+</div>
+
     </div>
 <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -34,7 +56,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

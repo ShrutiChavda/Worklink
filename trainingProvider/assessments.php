@@ -23,7 +23,25 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+    <div class="section">
+  <h2>Create Assessment</h2>
+  <form>
+    <label>Course Name:</label>
+    <input type="text" />
+
+    <label>Assessment Title:</label>
+    <input type="text" />
+
+    <label>Questions (upload or type):</label>
+    <textarea></textarea>
+
+    <button>Create Assessment</button>
+  </form>
+
+  <h2>Evaluate Submissions</h2>
+  <p>Select course and student to view submitted answers and assign marks.</p>
+</div>
+
     </div>
 <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -34,7 +52,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

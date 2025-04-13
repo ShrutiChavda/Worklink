@@ -15,6 +15,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
+   <link rel="stylesheet" href="update.css">
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="js/search.js"></script>
 </head>
@@ -22,9 +23,34 @@
 <body id="page-top">
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
-    <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+<div class="update-course-form-container">
+  <form class="update-course-form" action="#" method="POST">
+    <h2>Update Course Details</h2>
+
+    <div class="form-group">
+      <label for="course_id">Course ID:</label>
+      <input type="text" id="course_id" name="course_id" required>
     </div>
+
+    <div class="form-group">
+      <label for="course_name">Course Name:</label>
+      <input type="text" id="course_name" name="course_name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="duration">Duration (in weeks):</label>
+      <input type="number" id="duration" name="duration" required>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="3" required></textarea>
+    </div>
+
+    <button type="submit">Update Course</button>
+  </form>
+</div>
+
 <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -34,7 +60,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -52,5 +78,7 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+
+   
 </body>
 </html>

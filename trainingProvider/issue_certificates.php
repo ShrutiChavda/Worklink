@@ -15,6 +15,7 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="issue.css">
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="js/search.js"></script>
 </head>
@@ -23,7 +24,22 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
     <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+    <div class="section">
+  <h2>Issue Certificates</h2>
+  <form>
+    <label for="studentId">Student ID:</label>
+    <input type="text" id="studentId" />
+
+    <label for="course">Course:</label>
+    <input type="text" id="course" />
+
+    <label for="date">Issue Date:</label>
+    <input type="date" id="date" />
+
+    <button type="submit">Generate Certificate</button>
+  </form>
+</div>
+
     </div>
 <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -34,7 +50,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

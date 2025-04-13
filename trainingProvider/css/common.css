@@ -1,0 +1,70 @@
+.form-container {
+    background: white;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.form-container label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.form-container input,
+.form-container textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 0.4rem;
+}
+
+.form-container button {
+    margin-top: 1.5rem;
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.application-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.application-card form {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.application-card button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.application-card button[name="action"][value="approve"] {
+    background-color: #28a745;
+    color: white;
+}
+
+.application-card button[name="action"][value="reject"] {
+    background-color: #dc3545;
+    color: white;
+}

@@ -313,10 +313,6 @@ $gender = $_POST['gender'];
         });
     });
 
-    $("form").on("submit", function(e) {
-    $("button[name='register']").prop("disabled", true);
-});
-
     </script>
 
     </div>

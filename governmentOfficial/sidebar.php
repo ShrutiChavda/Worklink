@@ -82,15 +82,8 @@ $arr_url = explode("/", $url);
                 <span>Minimum Wage Compliance</span></a>
         </li>
 
-        <li
-            class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "workplace_safety.php") { echo "active"; } ?>">
-            <a class="nav-link" href="workplace_safety.php">
-                <i class="fas fa-hard-hat"></i>
-                <span>Workplace Safety</span></a>
-        </li>
-
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "settings.php") { echo "active"; } ?>">
-            <a class="nav-link" href="settings.php">
+        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "Manage_profile.php") { echo "active"; } ?>">
+            <a class="nav-link" href="Manage_profile.php">
                 <i class="fas fa-cogs"></i>
                 <span>Settings & Support</span></a>
         </li>
