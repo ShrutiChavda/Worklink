@@ -1,7 +1,4 @@
-﻿
-
-
-<?php include('session.php'); ?>
+﻿<?php include('session.php'); ?>
 
 <!DOCTYPE html>
 <html lang='en'>
@@ -48,94 +45,103 @@
         </div>
 
         <!-- Featured Job Opportunities -->
-<div class="featured-jobs">
-    <h2>Featured Job Opportunities</h2>
-    <div class="filter-options">
-        <select>
-            <option>Most Relevant</option>
-            <option>Latest</option>
-        </select>
-        <select>
-            <option>All Types</option>
-            <option>Full-time</option>
-            <option>Part-time</option>
-        </select>
-        <select>
-            <option>All Levels</option>
-            <option>Entry Level</option>
-            <option>Mid Level</option>
-            <option>Senior Level</option>
-        </select>
-    </div>
+        <div class="featured-jobs">
+            <h2>Featured Job Opportunities</h2>
+            <div class="filter-options">
+                <select>
+                    <option>Most Relevant</option>
+                    <option>Latest</option>
+                </select>
+                <select>
+                    <option>All Types</option>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                </select>
+                <select>
+                    <option>All Levels</option>
+                    <option>Entry Level</option>
+                    <option>Mid Level</option>
+                    <option>Senior Level</option>
+                </select>
+            </div>
 
-    <div class="job-listings">
-        <div class="job-card">
-            <img src="img/undraw_profile.jpg" class="company-logo">
-            <h3>Senior Software Engineer</h3>
-            <p>TechCorp Inc.</p>
-            <span class="job-location"><i class="fas fa-map-marker-alt"></i> San Francisco, CA</span>
-            <span class="job-type">Full-time</span>
-            <span class="salary">$120K - $150K</span>
-            <div class="tags"><span>React</span><span>Node.js</span><span>TypeScript</span></div>
-            <button class="apply-btn">Apply Now</button>
-        </div>
+            <div class="job-listings">
+                <?php
+                $sql = mysqli_query($con, "SELECT * FROM totaljobs"); ?>
 
-        <div class="job-card">
-            <img src="img/undraw_profile.jpg" class="company-logo">
-            <h3>Product Designer</h3>
-            <p>DesignLabs</p>
-            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</span>
-            <span class="job-type">Full-time</span>
-            <span class="salary">$90K - $120K</span>
-            <div class="tags"><span>Figma</span><span>UI/UX</span><span>Prototyping</span></div>
-            <button class="apply-btn">Apply Now</button>
-        </div>
+                <?php if (mysqli_num_rows($sql) > 0):
+                    while ($row = mysqli_fetch_assoc($sql)):  ?>
+                        <div class="job-card">
+                            <img src="img/undraw_profile.jpg" class="company-logo">
+                            <h3><?php echo htmlspecialchars($row['job_title']); ?></h3>
+                            <p><?php echo htmlspecialchars($row['company_name']); ?></p>
+                            <class="job-location"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($row['country']); ?></span><br>
+                                <span class="job-type"><?php echo htmlspecialchars($row['job_type']) ?></span>
+                                <span class="salary"><?php echo htmlspecialchars($row['salary']) ?></span>
+                                <div class="tags"><span>React</span><span>Node.js</span><span>TypeScript</span></div>
+                                <button class="apply-btn">Apply Now</button>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p>No jobs found.</p>
+                <?php endif; ?>
 
-        <div class="job-card">
-            <img src="img/undraw_profile.jpg" class="company-logo">
-            <h3>Marketing Manager</h3>
-            <p>GrowthCo</p>
-            <span class="job-location"><i class="fas fa-map-marker-alt"></i> New York, NY</span>
-            <span class="job-type">Full-time</span>
-            <span class="salary">$80K - $100K</span>
-            <div class="tags"><span>Digital Marketing</span><span>SEO</span><span>Analytics</span></div>
-            <button class="apply-btn">Apply Now</button>
-        </div>
+                <!-- <div class="job-card">
+                    <img src="img/undraw_profile.jpg" class="company-logo">
+                    <h3>Product Designer</h3>
+                    <p>DesignLabs</p>
+                    <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                    <span class="job-type">Full-time</span>
+                    <span class="salary">$90K - $120K</span>
+                    <div class="tags"><span>Figma</span><span>UI/UX</span><span>Prototyping</span></div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
 
-        <div class="job-card">
-            <img src="img/undraw_profile.jpg" class="company-logo">
-            <h3>Data Scientist</h3>
-            <p>DataTech Solutions</p>
-            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Boston, MA</span>
-            <span class="job-type">Full-time</span>
-            <span class="salary">$130K - $160K</span>
-            <div class="tags"><span>Python</span><span>ML</span><span>SQL</span></div>
-            <button class="apply-btn">Apply Now</button>
-        </div>
+                <div class="job-card">
+                    <img src="img/undraw_profile.jpg" class="company-logo">
+                    <h3>Marketing Manager</h3>
+                    <p>GrowthCo</p>
+                    <span class="job-location"><i class="fas fa-map-marker-alt"></i> New York, NY</span>
+                    <span class="job-type">Full-time</span>
+                    <span class="salary">$80K - $100K</span>
+                    <div class="tags"><span>Digital Marketing</span><span>SEO</span><span>Analytics</span></div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
 
-        <div class="job-card">
-            <img src="img/undraw_profile.jpg" class="company-logo">
-            <h3>Frontend Developer</h3>
-            <p>WebCraft</p>
-            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</span>
-            <span class="job-type">Full-time</span>
-            <span class="salary">$90K - $120K</span>
-            <div class="tags"><span>React</span><span>Vue</span><span>JavaScript</span></div>
-            <button class="apply-btn">Apply Now</button>
-        </div>
+                <div class="job-card">
+                    <img src="img/undraw_profile.jpg" class="company-logo">
+                    <h3>Data Scientist</h3>
+                    <p>DataTech Solutions</p>
+                    <span class="job-location"><i class="fas fa-map-marker-alt"></i> Boston, MA</span>
+                    <span class="job-type">Full-time</span>
+                    <span class="salary">$130K - $160K</span>
+                    <div class="tags"><span>Python</span><span>ML</span><span>SQL</span></div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
 
-        <div class="job-card">
-            <img src="img/undraw_profile.jpg" class="company-logo">
-            <h3>UX Researcher</h3>
-            <p>UserFirst</p>
-            <span class="job-location"><i class="fas fa-map-marker-alt"></i> Seattle, WA</span>
-            <span class="job-type">Full-time</span>
-            <span class="salary">$85K - $110K</span>
-            <div class="tags"><span>User Research</span><span>Usability Testing</span></div>
-            <button class="apply-btn">Apply Now</button>
+                <div class="job-card">
+                    <img src="img/undraw_profile.jpg" class="company-logo">
+                    <h3>Frontend Developer</h3>
+                    <p>WebCraft</p>
+                    <span class="job-location"><i class="fas fa-map-marker-alt"></i> Remote</span>
+                    <span class="job-type">Full-time</span>
+                    <span class="salary">$90K - $120K</span>
+                    <div class="tags"><span>React</span><span>Vue</span><span>JavaScript</span></div>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <div class="job-card">
+                    <img src="img/undraw_profile.jpg" class="company-logo">
+                    <h3>UX Researcher</h3>
+                    <p>UserFirst</p>
+                    <span class="job-location"><i class="fas fa-map-marker-alt"></i> Seattle, WA</span>
+                    <span class="job-type">Full-time</span>
+                    <span class="salary">$85K - $110K</span>
+                    <div class="tags"><span>User Research</span><span>Usability Testing</span></div>
+                    <button class="apply-btn">Apply Now</button>
+                </div> -->
+            </div>
         </div>
-    </div>
-</div>
 
     </div>
 

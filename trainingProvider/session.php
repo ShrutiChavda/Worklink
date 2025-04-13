@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('connection.php');
+
 if (!isset($_SESSION['username'])) {
     $sql_update_status = "UPDATE users SET status = 'Inactive'";
     mysqli_query($con, $sql_update_status);
@@ -8,29 +9,27 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-
 $user_type = ''; // Initialize user_type variable
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    // echo $username;
-    $sql = "SELECT user_type FROM users WHERE user_name = '$username'"; 
+    $sql = "SELECT user_type, status FROM users WHERE user_name = '$username'"; 
     $result = mysqli_query($con, $sql);
-    $sql_update_status = "UPDATE users SET status = 'active' WHERE user_name = '$username'";
-    mysqli_query($con, $sql_update_status);
-    
-    if ($row = mysqli_fetch_assoc($result)) {
-        $_SESSION['user_type']=$row['user_type'];
-        // echo $_SESSION['user_type'];
-}
-// else{
-//     if(!isset($_SESSION['username'])=="" || !isset($_SESSION['user_type'])=="") {
-//     // Redirect the user to the login page
-//     header("Location:  http://localhost/Employee%20Management%20System/login.php");
-//     exit;
-// }
-// }
-}
 
+    if ($row = mysqli_fetch_assoc($result)) {
+        // Check if account is disabled
+        if ($row['status'] === 'Disabled') {
+            echo "<script>alert('Your account has been deactivated.');</script>";
+            echo "<script>window.location.href='http://localhost/worklink/login.php';</script>";
+            exit();
+        }
+
+        $_SESSION['user_type'] = $row['user_type'];
+
+        // Set user status to active
+        $sql_update_status = "UPDATE users SET status = 'active' WHERE user_name = '$username'";
+        mysqli_query($con, $sql_update_status);
+    }
+}
 
 //After 60 minutes the user will automatically get destroyed
 if (isset($_SESSION['timeout']) && $_SESSION['timeout'] < time()) {
@@ -42,7 +41,4 @@ if (isset($_SESSION['timeout']) && $_SESSION['timeout'] < time()) {
     exit();
 }
 $_SESSION['timeout'] = time() + (60 * 60);
-
-//echo "Welcome, " . $_SESSION['username'];
-
 ?>
