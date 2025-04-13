@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 12, 2025 at 06:51 PM
+-- Generation Time: Apr 13, 2025 at 06:00 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -63,6 +63,58 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `assessments`
+--
+
+CREATE TABLE `assessments` (
+  `id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `type` varchar(50) DEFAULT 'Text',
+  `questions` text NOT NULL,
+  `timer_minutes` int(11) DEFAULT NULL,
+  `due_date` date DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'Open',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assessments`
+--
+
+INSERT INTO `assessments` (`id`, `provider_id`, `course_id`, `title`, `type`, `questions`, `timer_minutes`, `due_date`, `status`, `created_at`) VALUES
+(1, 3, 1, 'Quiz 1', 'MCQ', '[{\"q\":\"What does the term \\\"Full Stack Development\\\" refer to?\",\"options\":[\"Development that involves stack data structures\",\"Development that involves front-end and back-end programming\",\"Development that involves only backend programming\",\"None of the above\"],\"answer\":\"2\"},{\"q\":\"Which of the following is not a front-end technology?\",\"options\":[\"HTML\",\"CSS\",\"JavaScript\",\"SQL\"],\"answer\":\"4\"},{\"q\":\"The purpose of the Front-end framework in Full stack development is ____.\",\"options\":[\"To provide the client-side interface\",\"To manage database\",\"To reduce the server load\",\"To send http requests\"],\"answer\":\"1\"},{\"q\":\"Amongst which of the following programming language is used as a server-side language?\",\"options\":[\"Python\",\"C++\",\"JavaScript\",\"Both A and C\"],\"answer\":\"4\"}]', 100, '2025-04-14', 'Open', '2025-04-13 13:49:32'),
+(2, 3, 2, 'Quiz 2', 'Multichoice', '[{\"q\":\"What is data science primarily concerned with?\",\"options\":[\"Analyzing and interpreting data\",\"Analyzing and interpreting data\",\"Storing data in database mentioned above\",\"All of above\"],\"answer\":\"1\"}]', 10, '2025-04-14', 'Open', '2025-04-13 13:53:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `assessment_submissions`
+--
+
+CREATE TABLE `assessment_submissions` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `submitted_at` datetime DEFAULT NULL,
+  `status` enum('Pending','Submitted') DEFAULT 'Pending',
+  `score` int(11) DEFAULT 0,
+  `answers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`answers`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `assessment_submissions`
+--
+
+INSERT INTO `assessment_submissions` (`id`, `assessment_id`, `user_id`, `submitted_at`, `status`, `score`, `answers`) VALUES
+(1, 1, 11, '2025-04-13 14:00:00', 'Submitted', 8, '{\r\n    \"1\": \"A\", \"2\": \"B\", \"3\": \"C\", \"4\": \"D\",\r\n    \"5\": \"A\", \"6\": \"B\", \"7\": \"C\", \"8\": \"D\"\r\n}'),
+(2, 2, 1, '2025-04-13 16:30:00', 'Submitted', 6, '{\r\n    \"1\": \"B\", \"2\": \"B\", \"3\": \"C\", \"4\": \"C\",\r\n    \"5\": \"D\", \"6\": \"D\"\r\n}'),
+(3, 1, 8, NULL, 'Pending', 0, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `audit_logs`
 --
 
@@ -96,6 +148,41 @@ INSERT INTO `audit_logs` (`log_id`, `action`, `table_name`, `record_id`, `old_da
 (11, 'update', 'policies', 5, '{\"policy_id\":\"6\",\"policy_title\":\"new\",\"description\":\"new\",\"department\":\"new\",\"status\":\"1\",\"created_at\":\"2025-04-12 18:39:04\",\"updated_at\":\"2025-04-12 18:39:04\"}', '{\"policy_title\":\"new\",\"department\":\"new\",\"description\":\"new\",\"status\":\"0\"}', '2025-04-12 13:09:11', 4, '2025-04-12 13:09:11'),
 (13, 'update', 'policies', 5, '{\"policy_id\":\"5\",\"policy_title\":\"National Skill Enhancement Scheme\",\"description\":\"ABC\",\"department\":\"Ministry of Employment\",\"status\":\"0\",\"created_at\":\"2025-04-12 18:14:55\",\"updated_at\":\"2025-04-12 18:15:05\"}', '{\"policy_title\":\"National Skill Enhancement Scheme\",\"department\":\"Ministry of Employment\",\"description\":\"ABC\",\"status\":\"1\"}', '2025-04-12 13:21:29', 4, '2025-04-12 13:21:29'),
 (14, 'insert', 'policies', 7, NULL, '{\"policy_title\":\"DEF\",\"department\":\"TEST\",\"description\":\"DEF\",\"status\":\"1\"}', '2025-04-12 13:21:41', 4, '2025-04-12 13:21:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `certificates`
+--
+
+CREATE TABLE `certificates` (
+  `id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `training_program_id` int(11) NOT NULL,
+  `issue_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `certificate_number` varchar(255) DEFAULT NULL,
+  `status` enum('Issued','Pending') DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `certificates`
+--
+
+INSERT INTO `certificates` (`id`, `provider_id`, `user_id`, `training_program_id`, `issue_date`, `certificate_number`, `status`) VALUES
+(1, 3, 1, 1, '2025-04-13 06:27:02', 'CERT-1', 'Issued'),
+(2, 3, 8, 1, '2025-04-13 06:27:02', 'CERT-2', 'Issued'),
+(3, 3, 9, 2, '2025-04-13 06:27:02', 'CERT-3', 'Issued'),
+(4, 3, 10, 2, '2025-04-13 06:27:02', 'CERT-4', 'Pending'),
+(5, 3, 9, 3, '2025-04-13 06:27:02', 'CERT-5', 'Issued'),
+(6, 3, 10, 4, '2025-04-13 06:27:02', 'CERT-6', 'Issued'),
+(7, 3, 8, 4, '2025-04-13 06:27:02', 'CERT-7', 'Issued'),
+(8, 3, 1, 1, '2025-04-13 06:27:02', 'CERT-8', 'Pending'),
+(16, 3, 1, 25, '2025-04-13 11:14:36', 'CERT-1-25-1744542876', 'Pending'),
+(17, 3, 11, 25, '2025-04-13 11:17:55', 'CERT-11-25-1744543075', 'Issued'),
+(18, 3, 11, 24, '2025-04-13 11:18:57', 'CERT-11-24-1744543137', 'Issued'),
+(19, 3, 1, 1, '2025-04-13 11:21:51', 'CERT-1-1-1744543311', 'Pending'),
+(20, 3, 11, 25, '2025-04-13 11:23:59', 'CERT-11-25-1744543439', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -143,6 +230,121 @@ INSERT INTO `employment_analytics` (`id`, `year`, `employment_rate`, `job_seeker
 (3, 2022, '52.10', '2.1M', 10000, 500),
 (4, 2023, '54.30', '2.2M', 11000, 550),
 (5, 2024, '56.40', '2.3M+', 12000, 600);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `enrollments`
+--
+
+CREATE TABLE `enrollments` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `provider_id` int(11) NOT NULL,
+  `training_program_id` int(11) NOT NULL,
+  `enrollment_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` text NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `enrollments`
+--
+
+INSERT INTO `enrollments` (`id`, `user_id`, `provider_id`, `training_program_id`, `enrollment_date`, `status`) VALUES
+(1, 1, 3, 1, '2025-04-13 06:09:15', 'Approved'),
+(2, 8, 3, 1, '2025-04-13 06:09:15', 'Approved'),
+(3, 9, 3, 1, '2025-04-13 06:09:15', 'Approved'),
+(4, 10, 3, 2, '2025-04-13 06:09:15', 'Approved'),
+(5, 9, 3, 3, '2025-04-13 06:16:06', 'Approved'),
+(6, 10, 3, 4, '2025-04-13 06:16:06', 'Pending'),
+(7, 8, 3, 1, '2025-04-13 06:19:43', 'Approved'),
+(8, 1, 3, 1, '2025-04-13 06:23:07', 'Approved'),
+(9, 11, 3, 24, '2025-04-13 11:11:58', 'Approved'),
+(10, 1, 3, 25, '2025-04-13 11:11:58', 'Approved'),
+(11, 11, 3, 25, '2025-04-12 11:17:13', 'Pending'),
+(12, 11, 3, 25, '2025-04-13 11:23:18', 'Approved');
+
+--
+-- Triggers `enrollments`
+--
+DELIMITER $$
+CREATE TRIGGER `trg_update_certificates` AFTER INSERT ON `enrollments` FOR EACH ROW IF NEW.status = 'Approved' THEN
+        INSERT INTO certificates (provider_id, user_id, training_program_id, issue_date, certificate_number, status)
+        VALUES (
+            NEW.provider_id,
+            NEW.user_id,
+            NEW.training_program_id,
+            NOW(),
+            CONCAT('CERT-', NEW.user_id, '-', NEW.training_program_id, '-', UNIX_TIMESTAMP(NOW())),
+            'Pending'
+        )
+        ON DUPLICATE KEY UPDATE
+            issue_date = NOW(),
+            status = 'Pending';
+    END IF
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `trg_update_certificates_on_update` AFTER UPDATE ON `enrollments` FOR EACH ROW IF NEW.status = 'Approved' THEN
+        INSERT INTO certificates (provider_id, user_id, training_program_id, issue_date, certificate_number, status)
+        VALUES (
+            NEW.provider_id,
+            NEW.user_id,
+            NEW.training_program_id,
+            NOW(),
+            CONCAT('CERT-', NEW.user_id, '-', NEW.training_program_id, '-', UNIX_TIMESTAMP(NOW())),
+            'Pending'
+        )
+        ON DUPLICATE KEY UPDATE
+            issue_date = NOW(),
+            status = 'Pending';
+    END IF
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_enrollment_count_after_insert` AFTER INSERT ON `enrollments` FOR EACH ROW UPDATE training_programs
+    SET enrollment_count = (
+        SELECT COUNT(*) 
+        FROM enrollments
+        WHERE training_program_id = NEW.training_program_id
+    )
+    WHERE id = NEW.training_program_id
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `update_enrollment_count_after_update` AFTER UPDATE ON `enrollments` FOR EACH ROW UPDATE training_programs
+    SET enrollment_count = (
+        SELECT COUNT(*) 
+        FROM enrollments
+        WHERE training_program_id = NEW.training_program_id
+    )
+    WHERE id = NEW.training_program_id
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `feedback_message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `user_id`, `feedback_message`, `created_at`) VALUES
+(11, 3, 'The training content was very informative and helpful, but the course duration felt too short.', '2025-04-13 05:00:00'),
+(12, 1, 'I encountered some technical issues with the course platform during the assessment phase.', '2025-04-12 09:50:00'),
+(13, 4, 'I would appreciate more practical examples in the training modules to make learning more hands-on.', '2025-04-11 03:15:00'),
+(14, 8, 'The course was excellent, but it would be great to have more interaction with the instructors.', '2025-04-10 12:20:00'),
+(15, 9, 'The overall training experience was good, but the certification process was a bit delayed.', '2025-04-09 08:40:00');
 
 -- --------------------------------------------------------
 
@@ -355,23 +557,6 @@ INSERT INTO `policies` (`policy_id`, `policy_title`, `description`, `department`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subsidies`
---
-
-CREATE TABLE `subsidies` (
-  `subsidy_id` int(11) NOT NULL,
-  `year` year(4) NOT NULL,
-  `scheme_name` varchar(100) DEFAULT NULL,
-  `description` text DEFAULT NULL,
-  `amount` decimal(12,2) DEFAULT NULL,
-  `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `token1`
 --
 
@@ -392,23 +577,30 @@ CREATE TABLE `token1` (
 CREATE TABLE `training_programs` (
   `id` int(11) NOT NULL,
   `provider_id` int(11) DEFAULT NULL,
+  `training_provider_id` int(11) NOT NULL,
+  `enrollment_count` int(11) DEFAULT NULL,
   `course_name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `duration` int(11) NOT NULL,
   `status` enum('Approved','Rejected','Pending') NOT NULL DEFAULT 'Pending',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `category` varchar(100) DEFAULT NULL,
+  `completion_rate` decimal(5,2) DEFAULT 0.00,
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `training_programs`
 --
 
-INSERT INTO `training_programs` (`id`, `provider_id`, `course_name`, `description`, `duration`, `status`, `created_at`) VALUES
-(1, 1, 'Full Stack Web Development', 'Learn frontend and backend web development.', 6, 'Approved', '2025-04-11 03:25:11'),
-(2, 2, 'Data Science Bootcamp', 'Comprehensive training in data analysis and machine learning.', 4, 'Rejected', '2025-04-11 03:25:11'),
-(3, 1, 'Digital Marketing Mastery', 'Advanced strategies for SEO, PPC, and content marketing.', 3, 'Pending', '2025-04-11 03:25:11'),
-(4, 2, 'Cyber Security Essentials', 'Fundamentals of network security and ethical hacking.', 5, 'Approved', '2025-04-11 03:25:11'),
-(5, 1, 'Graphic Design Fundamentals', 'Learn Adobe Photoshop, Illustrator, and UI/UX design.', 3, 'Pending', '2025-04-11 03:25:11');
+INSERT INTO `training_programs` (`id`, `provider_id`, `training_provider_id`, `enrollment_count`, `course_name`, `description`, `duration`, `status`, `created_at`, `category`, `completion_rate`, `updated_at`) VALUES
+(1, 3, 1, 5, 'Full Stack Web Development', 'Learn frontend and backend web development.', 6, 'Approved', '2025-04-11 03:25:11', 'Web Development', '85.50', '2025-04-13 12:52:00'),
+(2, 3, 1, 1, 'Data Science Bootcamp', 'Comprehensive training in data analysis and machine learning.', 4, 'Approved', '2025-04-11 03:25:11', 'Data Science', '70.25', '2025-04-13 14:32:25'),
+(3, 3, 1, 1, 'Digital Marketing Mastery', 'Advanced strategies for SEO, PPC, and content marketing.', 3, 'Approved', '2025-04-11 03:25:11', 'Digital Marketing', '60.00', '2025-04-13 12:37:14'),
+(4, 3, 1, 1, 'Cyber Security Essentials', 'Fundamentals of network security and ethical hacking.', 5, 'Approved', '2025-04-11 03:25:11', 'Cyber Security', '65.00', '2025-04-13 14:26:27'),
+(5, 13, 2, 0, 'Graphic Design Fundamentals', 'Learn Adobe Photoshop, Illustrator, and UI/UX design.', 3, 'Pending', '2025-04-11 03:25:11', 'Design', '75.30', '2025-04-13 14:26:39'),
+(24, 3, 1, 1, 'test', 'test', 12, 'Approved', '2025-04-13 09:52:54', 'Information Technology', '0.00', '2025-04-13 16:43:49'),
+(25, 3, 1, 3, 'test2', 'test2', 12, 'Approved', '2025-04-13 11:09:24', 'Banking and Finance', '0.00', '2025-04-13 16:53:38');
 
 -- --------------------------------------------------------
 
@@ -418,20 +610,20 @@ INSERT INTO `training_programs` (`id`, `provider_id`, `course_name`, `descriptio
 
 CREATE TABLE `training_providers` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `organization_name` varchar(255) DEFAULT NULL,
   `registration_number` varchar(100) DEFAULT NULL,
   `head_office_location` varchar(255) DEFAULT NULL,
-  `training_sectors` text DEFAULT NULL,
-  `user_id` int(11) NOT NULL
+  `training_sectors` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `training_providers`
 --
 
-INSERT INTO `training_providers` (`id`, `organization_name`, `registration_number`, `head_office_location`, `training_sectors`, `user_id`) VALUES
-(1, 'ABC', 'A11', 'ABC 123', 'IT', 3),
-(2, 'DEF', 'A22', 'DEF 123', 'ENGINEERING', 3);
+INSERT INTO `training_providers` (`id`, `user_id`, `organization_name`, `registration_number`, `head_office_location`, `training_sectors`) VALUES
+(1, 3, 'ABC', 'A11', 'ABC 123', 'IT'),
+(2, 13, 'DEF', 'A22', 'DEF 123', 'ENGINEERING');
 
 -- --------------------------------------------------------
 
@@ -460,15 +652,15 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
 (1, 'jobSeeker', 'Shruti Chavda', 'chavdashruti516', 'chavdashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
-(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
+(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'Inactive', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
 (3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
-(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'active', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
+(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
 (8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', 'undraw_profile.jpg', '123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
 (9, 'jobSeeker', 'abc', 'abc123', 'abc@gmail.com', 'Male', '1234567890', '2003-10-10', 'undraw_profile.jpg', 'ADmin12@', 'Inactive', '174317426d19744d3c996sdfs7f902029a67da47db47cd9843987201d40f4fed0b63'),
 (10, 'jobSeeker', 'test abc', 'testanc', 'testabc@gmail.com', 'Male', '2147483647', '2005-12-12', 'undraw_profile.jpg', 'ADmin@12', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
 (11, 'jobSeeker', 'Alice Johnson', 'alice', 'alice@gmail.com', 'Female', '1234567890', '2001-01-01', 'undraw_profile.jpg', 'pass123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
 (12, 'employer', 'Tech Corp', 'techcorp', 'techcorp@gmail.com', 'Male', '9876543210', '2001-08-09', 'undraw_profile.jpg', 'pass456', 'Inactive', '174317426d19744d3c9967f90202sdfs9a67da47db47cd9843987201d40f4fed0b63'),
-(13, 'trainingProvider', 'Skill Academy', 'skillacademy', 'skillacademy@gmail.com', 'Male', '5555555555', '2002-10-10', 'undraw_profile.jpg', 'pass789', 'active', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
+(13, 'trainingProvider', 'Skill Academy', 'skillacademy', 'skillacademy@gmail.com', 'Male', '5555555555', '2002-10-10', 'undraw_profile.jpg', 'pass789', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
 (15, 'governmentOfficial', 'Kashish Koshiya', 'temp1', 'temp1@gmail.com', 'Female', '7654567896', '2005-01-01', 'undraw_profile.jpg', '123', 'Inactive', '809afba46cad8464a247d0dd3f1c9db4dce45f5e40852950aa2428a794f147e5');
 
 --
@@ -575,12 +767,37 @@ ALTER TABLE `admin`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Indexes for table `assessments`
+--
+ALTER TABLE `assessments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `assesments_fk_1` (`provider_id`),
+  ADD KEY `assesments_fk_2` (`course_id`);
+
+--
+-- Indexes for table `assessment_submissions`
+--
+ALTER TABLE `assessment_submissions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `assessment_id` (`assessment_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
   ADD PRIMARY KEY (`log_id`),
   ADD KEY `fk_audit_policy` (`record_id`),
   ADD KEY `fk_audit_users` (`created_by`);
+
+--
+-- Indexes for table `certificates`
+--
+ALTER TABLE `certificates`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `training_program_id` (`training_program_id`),
+  ADD KEY `certificates_ibfk_3` (`provider_id`);
 
 --
 -- Indexes for table `employers`
@@ -594,6 +811,22 @@ ALTER TABLE `employers`
 --
 ALTER TABLE `employment_analytics`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`provider_id`),
+  ADD KEY `training_program_id` (`training_program_id`),
+  ADD KEY `enrollments_ibfk_3` (`user_id`);
+
+--
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `government_officials`
@@ -653,12 +886,6 @@ ALTER TABLE `policies`
   ADD PRIMARY KEY (`policy_id`);
 
 --
--- Indexes for table `subsidies`
---
-ALTER TABLE `subsidies`
-  ADD PRIMARY KEY (`subsidy_id`);
-
---
 -- Indexes for table `token1`
 --
 ALTER TABLE `token1`
@@ -669,14 +896,15 @@ ALTER TABLE `token1`
 --
 ALTER TABLE `training_programs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `provider_id` (`provider_id`);
+  ADD KEY `training_programs_ibfk_1` (`provider_id`),
+  ADD KEY `training_provider_id` (`training_provider_id`);
 
 --
 -- Indexes for table `training_providers`
 --
 ALTER TABLE `training_providers`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `training_providers_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -709,10 +937,28 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `assessments`
+--
+ALTER TABLE `assessments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `assessment_submissions`
+--
+ALTER TABLE `assessment_submissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
   MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `certificates`
+--
+ALTER TABLE `certificates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `employers`
@@ -725,6 +971,18 @@ ALTER TABLE `employers`
 --
 ALTER TABLE `employment_analytics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `government_officials`
@@ -775,12 +1033,6 @@ ALTER TABLE `policies`
   MODIFY `policy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `subsidies`
---
-ALTER TABLE `subsidies`
-  MODIFY `subsidy_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `token1`
 --
 ALTER TABLE `token1`
@@ -790,7 +1042,7 @@ ALTER TABLE `token1`
 -- AUTO_INCREMENT for table `training_programs`
 --
 ALTER TABLE `training_programs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `training_providers`
@@ -821,6 +1073,20 @@ ALTER TABLE `worker_complaints`
 --
 
 --
+-- Constraints for table `assessments`
+--
+ALTER TABLE `assessments`
+  ADD CONSTRAINT `assesments_fk_1` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `assesments_fk_2` FOREIGN KEY (`course_id`) REFERENCES `training_programs` (`id`);
+
+--
+-- Constraints for table `assessment_submissions`
+--
+ALTER TABLE `assessment_submissions`
+  ADD CONSTRAINT `assessment_submissions_ibfk_1` FOREIGN KEY (`assessment_id`) REFERENCES `assessments` (`id`),
+  ADD CONSTRAINT `assessment_submissions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `audit_logs`
 --
 ALTER TABLE `audit_logs`
@@ -828,10 +1094,32 @@ ALTER TABLE `audit_logs`
   ADD CONSTRAINT `fk_audit_users` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `certificates`
+--
+ALTER TABLE `certificates`
+  ADD CONSTRAINT `certificates_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `certificates_ibfk_2` FOREIGN KEY (`training_program_id`) REFERENCES `training_programs` (`id`),
+  ADD CONSTRAINT `certificates_ibfk_3` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`);
+
+--
 -- Constraints for table `employers`
 --
 ALTER TABLE `employers`
   ADD CONSTRAINT `employers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  ADD CONSTRAINT `enrollments_ibfk_1` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `enrollments_ibfk_2` FOREIGN KEY (`training_program_id`) REFERENCES `training_programs` (`id`),
+  ADD CONSTRAINT `enrollments_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `government_officials`
@@ -881,13 +1169,14 @@ ALTER TABLE `messages`
 -- Constraints for table `training_programs`
 --
 ALTER TABLE `training_programs`
-  ADD CONSTRAINT `training_programs_ibfk_1` FOREIGN KEY (`provider_id`) REFERENCES `training_providers` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `training_programs_ibfk_1` FOREIGN KEY (`provider_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `training_provider_id` FOREIGN KEY (`training_provider_id`) REFERENCES `training_providers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `training_providers`
 --
 ALTER TABLE `training_providers`
-  ADD CONSTRAINT `training_providers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `training_providers_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `worker_complaints`
