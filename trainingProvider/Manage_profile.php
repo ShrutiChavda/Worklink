@@ -73,7 +73,7 @@
 
             <?php
 $un = $_SESSION['username'];
-$q = "SELECT u.*, tp.organization_name, tp.registration_number, tp.head_office_location, tp.training_sectors
+$q = "SELECT u.*, tp.organization_name, tp.head_office_location, tp.training_sectors
       FROM users u 
       LEFT JOIN training_providers tp ON u.id = tp.user_id 
       WHERE u.user_name = '$un'";
@@ -96,7 +96,6 @@ $row = mysqli_fetch_assoc($res);
             <?php if ($row['user_type'] === 'trainingProvider') { ?>
                 <hr>
                 <div class="profile-row"><div class="profile-label">Organization Name:</div><div class="profile-value"><?php echo $row['organization_name']; ?></div></div>
-                <div class="profile-row"><div class="profile-label">Registration Number:</div><div class="profile-value"><?php echo $row['registration_number']; ?></div></div>
                 <div class="profile-row"><div class="profile-label">Head Office Location:</div><div class="profile-value"><?php echo $row['head_office_location']; ?></div></div>
                 <div class="profile-row"><div class="profile-label">Training Sectors:</div><div class="profile-value"><?php echo $row['training_sectors']; ?></div></div>
             <?php } ?>

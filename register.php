@@ -97,6 +97,15 @@ $gender = $_POST['gender'];
             $query->execute();
         }
 
+        if ($userType == "trainingProvider") {
+            $organization_name = $_POST['organization_name'];
+            $head_office_location = $_POST['head_office_location'];
+            $training_sectors = $_POST['training_sectors'];
+            $query = $conn->prepare("INSERT INTO training_providers (user_id, organization_name, head_office_location, training_sectors) VALUES (?, ?, ?, ?)");
+            $query->bind_param("iss", $userId, $organization_name, $head_office_location, $training_sectors);
+            $query->execute();
+        }
+
         if ($userType == "employer") {
             $companyName = $_POST['companyName'];
             $industry = $_POST['industry'];
@@ -239,8 +248,7 @@ $gender = $_POST['gender'];
                     </div>
                 </div>
 
-                <input type="text" value="<?php echo uniqid().uniqid(); ?>" id="token1" name="token"
-                    hidden>
+                <input type="text" value="<?php echo uniqid().uniqid(); ?>" id="token1" name="token" hidden>
                 <div id="additionalFields"></div>
 
                 <div class="d-flex justify-content-center">
@@ -277,17 +285,61 @@ $gender = $_POST['gender'];
                     <input type="text" class="form-control" id="industry" name="industry" required>
                 </div>
             `;
+            } else if (userType === "trainingProvider") {
+                additionalFields = `
+            <div class="mb-3">
+            <label class="form-label">Organization Name</label>
+            <input type="text" class="form-control" id="organization_name" name="organization_name">
+            </div>
+
+<div class="mb-3">
+    <label class="form-label">Head Office Location</label>
+    <input type="text" class="form-control" id="head_office_location" name="head_office_location">
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Training Sectors</label>
+    <select class="form-control" id="training_sectors" name="training_sectors">
+        <option value="">Select Sector</option>
+        <option value="IT">IT</option>
+        <option value="Healthcare">Healthcare</option>
+        <option value="Construction">Construction</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Retail">Retail</option>
+        <option value="Education">Education</option>
+        <option value="Hospitality">Hospitality</option>
+        <option value="Finance">Finance</option>
+    </select>
+</div>
+            `;
             } else if (userType === "governmentOfficial") {
                 additionalFields = `
                 <div class="mb-3">
                     <label for="department" class="form-label">Department:</label>
                     <select class="form-select" id="department" name="department" required>
-                        <option value="">Select Department</option>
-                        <option value="Labour Department">Labour Department</option>
-                        <option value="Employment Department">Employment Department</option>
-                        <option value="Skill Development Department">Skill Development Department</option>
-                        <option value="Education Department">Education Department</option>
-                        <option value="Ministry of Finance">Ministry of Finance</option>
+                        <option value="" disabled selected>Select Department</option>
+                        <option value="Administrative Services">Administrative Services</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Education">Education</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Health &amp; Family Welfare">Health &amp; Family Welfare</option>
+                        <option value="Home Affairs">Home Affairs</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Labour and Employment">Labour and Employment</option>
+                        <option value="Law and Justice">Law and Justice</option>
+                        <option value="Public Works Department (PWD)">Public Works Department (PWD)</option>
+                        <option value="Railways">Railways</option>
+                        <option value="Revenue">Revenue</option>
+                        <option value="Rural Development">Rural Development</option>
+                        <option value="Skill Development and Entrepreneurship">Skill Development and Entrepreneurship</option>
+                        <option value="Social Welfare">Social Welfare</option>
+                        <option value="Textiles">Textiles</option>
+                        <option value="Tourism">Tourism</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Urban Development">Urban Development</option>
+                        <option value="Water Resources">Water Resources</option>
+                        <option value="Women and Child Development">Women and Child Development</option>
+                        <option value="Youth Affairs and Sports">Youth Affairs and Sports</option>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -312,7 +364,6 @@ $gender = $_POST['gender'];
             $(this).toggleClass("fa-eye fa-eye-slash");
         });
     });
-
     </script>
 
     </div>

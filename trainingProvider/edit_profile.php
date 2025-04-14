@@ -120,12 +120,6 @@ if (!empty($rec['pic'])) { ?>
                                 <span id="org_name_err" class="error1 p-1"></span>
                             </div>
 
-                            <p>Registration Number</p>
-                            <div class="input-group1">
-                                <input class="input--style-1" type="text" placeholder="Registration Number"
-                                    name="reg_num" value="<?php echo $rec['registration_number']; ?>" readonly/>
-                                <span id="reg_num_err" class="error1 p-1"></span>
-                            </div>
 
                             <p>Head Office Location</p>
                             <div class="input-group1">
@@ -191,7 +185,6 @@ if (isset($_POST['submit'])) {
         $cn1 = $_POST['pn'];
         $gen1 = $_POST['gender'];
         $org_name = $_POST['org_name'];
-        $reg_num = $_POST['reg_num'];
         $head_office = $_POST['head_office'];
         $training_sectors = $_POST['training_sectors'];
 
@@ -202,7 +195,7 @@ if (isset($_POST['submit'])) {
         $ins_users .= " WHERE id='$id'";
 
         
-        $ins_providers = "UPDATE training_providers SET `organization_name`='$org_name', `registration_number`='$reg_num', `head_office_location`='$head_office', `training_sectors`='$training_sectors' WHERE `user_id`='$id'";
+        $ins_providers = "UPDATE training_providers SET `organization_name`='$org_name', `head_office_location`='$head_office', `training_sectors`='$training_sectors' WHERE `user_id`='$id'";
         
         if (mysqli_query($con, $ins_users)) {
             if (mysqli_query($con, $ins_providers)) {

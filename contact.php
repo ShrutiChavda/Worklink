@@ -1,6 +1,35 @@
 <?php
 session_start();
+
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "worklink";
+
+$conn = new mysqli($host, $username, $password, $database);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $fullName = $_POST['fullName'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $subject = $_POST['subject'] ?? '';
+    $message = $_POST['message'] ?? '';
+
+    $sql = "INSERT INTO queries (fullName, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssss", $fullName, $email, $phone, $subject, $message);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    if($stmt){
+        echo "<script>alert('Your query is submitted successfully');</script>";
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,62 +37,136 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Worklink Dashboard</title>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
-   
+
     <style>
-    .hero {
-        height: 400px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-        font-size: 2rem;
-        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?customer,support') no-repeat center center/cover;
-        text-align: center;
-    }
+        .hero {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            font-size: 2rem;
+            text-align: center;
+            background: linear-gradient(to right,rgb(159, 162, 166),rgb(150, 158, 159));
+        }
 
-    .contact-block {
-        border: 1px solid #eee;
-        padding: 20px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        text-align: center;
-    }
+        .section-container {
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
 
-    .section-container {
-        padding: 30px;
-        margin-bottom: 30px;
-        border: 1px solid #eee;
-        border-radius: 8px;
-    }
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .section-title {
-        text-align: center;
-        margin-bottom: 30px;
-    }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 125px;
+            justify-items: center;
+        }
 
-    .contact-form {
-        max-width: 600px;
-        margin: 0 auto;
-    }
+        .team-card {
+            text-align: center;
+            padding: 15px;
+            margin-top: 10%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-    .social-links {
-        text-align: center;
-        margin-top: 20px;
-    }
+        .team-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
 
-    .social-links a {
-        margin: 0 10px;
-        font-size: 1.5rem;
-    }
+        .team-card h5 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .team-card p {
+            color: #777;
+        }
+
+        .team-card .role {
+            font-style: italic;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .jobseeker {
+            background-color: #d1f7d1;
+        }
+
+        .employer {
+            background-color: #fff5b1;
+        }
+
+        .training-provider {
+            background-color: #d0e9ff;
+        }
+
+        .leader-card {
+            grid-column: 1 / -1;
+            justify-self: center;
+            background-color: #d0e9ff;
+            border: 2px solid #007bff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 255, 0.2);
+            width: 35%;
+        }
+
+        @media (max-width: 768px) {
+            .leader-card {
+                width: 90%;
+            }
+            .team-grid {
+                gap: 30px;
+            }
+        }
+
+        .leader-card img {
+            border: 3px solid #007bff;
+        }
+
+        .team-group {
+            margin-bottom: 40px;
+        }
+
+        .team-group-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 
@@ -72,132 +175,106 @@ session_start();
     <?php include 'includes/nav.php'; ?>
 
     <div class="hero animate__animated animate__fadeIn">
-        <h1>Need Help? Contact Us Today!</h1>
-        <div class="mt-3">
-            <a href="#query-form" class="btn btn-primary">Submit an Inquiry</a>
-        </div>
+        <h1>Meet Our Amazing Student Team</h1>
+        <p class="mt-2">A collaborative project built with dedication and creativity</p>
     </div>
 
     <div class="container mt-4">
         <section class="section-container">
-            <h2 class="section-title">Support Phone Numbers & Emails</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="contact-block">
-                        <i class="fas fa-phone fa-3x"></i>
-                        <h3>Helpline for Workers & Job Seekers</h3>
-                        <p>1800-XYZ-1234</p>
-                        <p>support@worklink.gov</p>
-                        <a href="tel:1800-XYZ-1234" class="btn btn-sm btn-success">Call Us Now</a>
-                    </div>
+            <div class="team-grid">
+                <div class="team-card leader-card animate__animated animate__fadeIn">
+                    <img src="https://api.dicebear.com/7.x/adventurer/png?seed=Shruti119&gender=female&skinColor=ffffff" alt="Leader">
+                    <h5>Shruti Chavda</h5>
+                    <p>schavda684@rku.ac.in</p>
+                    <strong>Team Leader</strong>
+                    <p class="role">Admin & Govt. Official</p>
                 </div>
-                <div class="col-md-4">
-                    <div class="contact-block">
-                        <i class="fas fa-building fa-3x"></i>
-                        <h3>Employer Assistance & Business Support</h3>
-                        <p>1800-XYZ-5678</p>
-                        <p>employers@worklink.gov</p>
-                        <a href="tel:1800-XYZ-5678" class="btn btn-sm btn-success">Call Us Now</a>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="contact-block">
-                        <i class="fas fa-comments fa-3x"></i>
-                        <h3>General Inquiries & Complaints</h3>
-                        <p>helpdesk@worklink.gov</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section class="section-container">
-            <h2 class="section-title">Office Addresses & Locations</h2>
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.337775586676!2d73.7981503750868!3d18.49033338235294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2c159841f4f8b%3A0x6b107e324c489b0!2sPune%20Railway%20Station!5e0!3m2!1sen!2sin!4v1718873428945!5m2!1sen!2sin"
-                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="accordion" id="officeAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            Head Office
-                        </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                        data-bs-parent="#officeAccordion">
-                        <div class="accordion-body">
-                            [Address] | 📞 [Contact]
-                        </div>
+                <div class="team-group">
+                    <h3 class="team-group-title">Jobseeker Module</h3>
+                    <div class="team-card jobseeker animate__animated animate__fadeIn">
+                        <img src="https://api.dicebear.com/7.x/adventurer/png?seed=Archil912&gender=male&skinColor=ffffff" alt="Archil">
+                        <h5>Archil Gajera</h5>
+                        <p>agajera171@rku.ac.in</p>
+                    </div>
+                    <div class="team-card jobseeker animate__animated animate__fadeIn">
+                        <img src="https://api.dicebear.com/7.x/adventurer/png?seed=Rutika18&gender=female&skinColor=ffffff" alt="Rutika">
+                        <h5>Rutika Vaghasiya</h5>
+                        <p>rvaghasiya328@rku.ac.in</p>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            State & Regional Offices
-                        </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                        data-bs-parent="#officeAccordion">
-                        <div class="accordion-body">
-                            <ul>
-                                <li>[State Office 1 Address] | 📞 [Contact]</li>
-                                <li>[Regional Office 1 Address] | 📞 [Contact]</li>
-                                <li>[State Office 2 Address] | 📞 [Contact]</li>
-                            </ul>
-                        </div>
+
+                <div class="team-group">
+                    <h3 class="team-group-title">Employer Module</h3>
+                    <div class="team-card employer animate__animated animate__fadeIn">
+                    <img src="https://api.dicebear.com/7.x/adventurer/png?seed=Kashish19&gender=female&skinColor=ffffff" alt="Kashish">
+                    <h5>Kashish Koshiya</h5>
+                        <p>kkoshiya268@rku.ac.in</p>
+                    </div>
+                    <div class="team-card employer animate__animated animate__fadeIn">
+                        <img src="https://api.dicebear.com/7.x/adventurer/png?seed=Hemanshi152&gender=female&skinColor=ffffff" alt="Hemanshi">
+                        <h5>Hemanshi Garnara</h5>
+                        <p>hgarnara015@rku.ac.in</p>
                     </div>
                 </div>
-            </div>
-            <div class="text-center mt-3">
-                <a href="#" class="btn btn-info">Find the Nearest Office</a>
+
+                <div class="team-group">
+                    <h3 class="team-group-title">Training Provider Module</h3>
+                    <div class="team-card training-provider animate__animated animate__fadeIn">
+                        <img src="https://api.dicebear.com/7.x/adventurer/png?seed=Avani5&gender=female&skinColor=ffffff" alt="Avani">
+                        <h5>Avani Tarapara</h5>
+                        <p>atarapara765@rku.ac.in</p>
+                    </div>
+                    <div class="team-card training-provider animate__animated animate__fadeIn">
+                        <img src="https://api.dicebear.com/7.x/adventurer/png?seed=krutii&gender=female&skinColor=ffffff" alt="Kruti">
+                        <h5>Kruti Patel</h5>
+                        <p>kpatel527@rku.ac.in</p>
+                    </div>
+                    <div class="team-card training-provider animate__animated animate__fadeIn">
+                        <img src="https://api.dicebear.com/7.x/adventurer/png?seed=happy4&gender=female&skinColor=ffffff" alt="Happy">
+                        <h5>Happy Domadia</h5>
+                        <p>hdomadia699@rku.ac.in</p>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section id="query-form" class="section-container">
             <h2 class="section-title">Online Query Submission</h2>
-            <form class="contact-form">
+            <form class="contact-form" method="post" action="contact.php">
                 <div class="mb-3">
                     <label for="fullName" class="form-label">Full Name (Required)</label>
-                    <input type="text" class="form-control" id="fullName" required>
+                    <input type="text" class="form-control" name="fullName" id="fullName" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address (Required)</label>
-                    <input type="email" class="form-control" id="email" required>
+                    <input type="email" class="form-control" name="email" id="email" required>
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number (Optional)</label>
-                    <input type="tel" class="form-control" id="phone">
-                    <small class="form-text text-muted">We'll never share your phone number with anyone else.</small>
+                    <input type="tel" class="form-control" name="phone" id="phone">
                 </div>
                 <div class="mb-3">
                     <label for="subject" class="form-label">Subject (Required)</label>
-                    <input type="text" class="form-control" id="subject" required>
+                    <input type="text" class="form-control" name="subject" id="subject" required>
                 </div>
                 <div class="mb-3">
                     <label for="message" class="form-label">Message (Required)</label>
-                    <textarea class="form-control" id="message" rows="5" required></textarea>
+                    <textarea class="form-control" name="message" id="message" rows="5" required></textarea>
                 </div>
-                <div class="form-check">
+                <div class="form-check mb-3">
                     <input type="checkbox" class="form-check-input" id="agree" required>
                     <label class="form-check-label" for="agree">I agree to the terms and conditions</label>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
-
             </form>
         </section>
     </div>
-    <?php include 'includes/footer.php'; ?>
 
+    <?php include 'includes/footer.php'; ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
-    <script src="assets/js/script.js"></script>
-
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 03:23 PM
+-- Generation Time: Apr 14, 2025 at 05:29 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -560,6 +560,29 @@ INSERT INTO `policies` (`policy_id`, `policy_title`, `description`, `department`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `queries`
+--
+
+CREATE TABLE `queries` (
+  `id` int(11) NOT NULL,
+  `fullName` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `queries`
+--
+
+INSERT INTO `queries` (`id`, `fullName`, `email`, `phone`, `subject`, `message`, `submitted_at`) VALUES
+(1, 'Shruti Chavda', 'schavda684@rku.ac.in', '1234567890', 'test', 'test', '2025-04-14 15:28:31');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `token1`
 --
 
@@ -616,7 +639,6 @@ CREATE TABLE `training_providers` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `organization_name` varchar(255) DEFAULT NULL,
-  `registration_number` varchar(100) DEFAULT NULL,
   `head_office_location` varchar(255) DEFAULT NULL,
   `training_sectors` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -625,9 +647,9 @@ CREATE TABLE `training_providers` (
 -- Dumping data for table `training_providers`
 --
 
-INSERT INTO `training_providers` (`id`, `user_id`, `organization_name`, `registration_number`, `head_office_location`, `training_sectors`) VALUES
-(1, 3, 'ABC', 'A11', 'ABC 123', 'IT'),
-(2, 13, 'DEF', 'A22', 'DEF 123', 'ENGINEERING');
+INSERT INTO `training_providers` (`id`, `user_id`, `organization_name`, `head_office_location`, `training_sectors`) VALUES
+(1, 3, 'ABCD', 'ABC 12345', 'IT'),
+(2, 13, 'DEF', 'DEF 123', 'ENGINEERING');
 
 -- --------------------------------------------------------
 
@@ -656,7 +678,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
 (1, 'jobSeeker', 'Shruti Chavda', 'chavdashruti516', 'chavdashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
-(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'Inactive', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
+(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
 (3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '1234567890', '2003-03-11', '67fcd63272ab3_Avatar.png', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
 (4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2001-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
 (8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', 'undraw_profile.jpg', '123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
@@ -890,6 +912,12 @@ ALTER TABLE `policies`
   ADD PRIMARY KEY (`policy_id`);
 
 --
+-- Indexes for table `queries`
+--
+ALTER TABLE `queries`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `token1`
 --
 ALTER TABLE `token1`
@@ -1035,6 +1063,12 @@ ALTER TABLE `messages`
 --
 ALTER TABLE `policies`
   MODIFY `policy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `queries`
+--
+ALTER TABLE `queries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `token1`
