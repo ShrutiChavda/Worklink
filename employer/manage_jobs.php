@@ -1,5 +1,17 @@
-<?php  include('session.php');  ?>
+<?php include('session.php'); ?>
+<?php include('connection.php'); ?>
+<?php
+// Get session user_id
+$user_id = $_SESSION['user_id'];
 
+$query_emp = "SELECT id FROM employers WHERE user_id = '$user_id'";
+    $result_emp = mysqli_query($con, $query_emp);
+
+    if ($result_emp && mysqli_num_rows($result_emp) > 0) {
+        $row_emp = mysqli_fetch_assoc($result_emp);
+        $employer_id = $row_emp['id'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +49,7 @@
                     <th>Last Date</th>
                     <th>Company Name</th>
                     <th>Job Title</th>
+                    <th>category</th>
                     <th>Organisation Type</th>
                     <th>Functional Area</th>
                     <th>Functional Role</th>
@@ -54,7 +67,7 @@
                 <?php
                 
 
-                $result = mysqli_query($con, "SELECT * FROM totaljobs ORDER BY id DESC"); // Update 'jobs' to your actual table name
+                $result = mysqli_query($con, "SELECT * FROM totaljobs where employee_id = $employer_id ORDER BY id DESC"); // Update 'jobs' to your actual table name
 
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
@@ -65,6 +78,8 @@
                     echo "<td>" . date('d-m-Y', strtotime($row['last_date'])) . "</td>";
                     echo "<td>" . htmlspecialchars($row['company_name']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['job_title']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['category']) . "</td>";
+
                     echo "<td>" . htmlspecialchars($row['organisation_type']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['functional_area']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['functional_role']) . "</td>";
@@ -75,6 +90,7 @@
                     echo "<td>" . htmlspecialchars($row['job_type']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['gender_preference']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['ex_servicemen_preferred']) . "</td>";
+                    
                     echo "<td>
         <a href='edit_jobs.php?id=" . $row['id'] . "' class='btn btn-sm btn-info' style='margin: 5px 0;'>
             <i class='fas fa-edit'></i>
