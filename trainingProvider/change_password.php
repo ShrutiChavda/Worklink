@@ -12,7 +12,6 @@ if(isset($_GET['op']) && isset($_GET['np']) && isset($_GET['cp'])) {
     $query = "SELECT * FROM users WHERE user_name = '$un' AND password = '$old_password'";
     $result = mysqli_query($con, $query);
     $count = mysqli_num_rows($result);
-    //echo $count;
 
     if ($count == 0) {
         echo "<script>alert('Old password is incorrect');</script>";
@@ -73,79 +72,73 @@ if(isset($_GET['op']) && isset($_GET['np']) && isset($_GET['cp'])) {
 
 <body id="page-top">
 
-<?php  include('sidebar.php'); ?>
+    <?php  include('sidebar.php'); ?>
 
-<?php  include('header.php'); ?>
+    <?php  include('header.php'); ?>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <form id="registrationForm" action="" method="POST">
-                            <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo">
-                                <div class="wrapper wrapper--w680">
-                                    <div class="card card-1">
-                                        <div class="card-heading"></div>
-                                        <div class="card-body">
-                                            <h2 class="title">Change Password</h2>
-                                         
-                                            <div>
-                                                <p>Enter your old password</p>
-                                                <div class="input-group1">
-                                                    <input class="input--style-1" type="password"
-                                                        placeholder="Old password" id="old_pwd" name="op" onblur="verify_old_pwd(document.getElementById('old_pwd').value)"/>
-                                                    <span id="op_err" class="error1 p-1"></span>
-                                                </div>
-                                            </div>
+    <div class="container-fluid">
+        <form id="registrationForm" action="" method="POST">
+            <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo">
+                <div class="wrapper wrapper--w680">
+                    <div class="card card-1">
+                        <div class="card-heading"></div>
+                        <div class="card-body">
+                            <h2 class="title">Change Password</h2>
 
-                                            <div>
-                                                <p>Enter your New password</p>
-                                                <div class="input-group1">
-                                                    <input class="input--style-1 np" type="password"
-                                                        placeholder="New password" id="np" name="np" />
-                                                    <span id="np_err" class="error1 p-1"></span>
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <p>Enter your Confirm password</p>
-                                                <div class="input-group1">
-                                                    <input class="input--style-1 cp" type="password"
-                                                        placeholder="Confirm password" id="cp" name="cp" />
-                                                    <span id="cp_err" class="error1 p-1"></span>
-                                                </div>
-                                            </div>
-
-                                            <input type="checkbox" onclick="myFunction()"> Show Password <br><br>
-
-                                            <div class="p-t-20">
-                                                <button class="btn btn--radius btn-success" name="submit" type="submit">Submit</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div>
+                                <p>Enter your old password</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="password" placeholder="Old password"
+                                        id="old_pwd" name="op"
+                                        onblur="verify_old_pwd(document.getElementById('old_pwd').value)" />
+                                    <span id="op_err" class="error1 p-1"></span>
                                 </div>
                             </div>
-                        </form>
+
+                            <div>
+                                <p>Enter your New password</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1 np" type="password" placeholder="New password" id="np"
+                                        name="np" />
+                                    <span id="np_err" class="error1 p-1"></span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <p>Enter your Confirm password</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1 cp" type="password" placeholder="Confirm password"
+                                        id="cp" name="cp" />
+                                    <span id="cp_err" class="error1 p-1"></span>
+                                </div>
+                            </div>
+
+                            <input type="checkbox" onclick="myFunction()"> Show Password <br><br>
+
+                            <div class="p-t-20">
+                                <button class="btn btn--radius btn-success" name="submit" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
+        </form>
+    </div>
 
-            <?php
+    </div>
+
+    <?php
           include_once('footer.php');
           ?>
 
-        </div>
-        <!-- End of Content Wrapper -->
+    </div>
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -159,8 +152,7 @@ if(isset($_GET['op']) && isset($_GET['np']) && isset($_GET['cp'])) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-success"
-                        href="http://localhost/worklink/trainingProvider/logout.php">Logout</a>
+                    <a class="btn btn-success" href="http://localhost/worklink/trainingProvider/logout.php">Logout</a>
                 </div>
             </div>
         </div>

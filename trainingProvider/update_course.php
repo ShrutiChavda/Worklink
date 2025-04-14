@@ -2,7 +2,6 @@
 <?php include('connection.php'); ?>
 
 <?php
-// Add Program
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['update'])) {
     $providerId = $_SESSION['user_id'];
     $course = mysqli_real_escape_string($con, $_POST['course_name']);
@@ -20,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['update'])) {
     exit;
 }
 
-// Update Program
 if (isset($_POST['update'])) {
     $id = intval($_POST['edit_id']);
     $name = mysqli_real_escape_string($con, $_POST['course_name']);
@@ -38,7 +36,6 @@ if (isset($_POST['update'])) {
     exit;
 }
 
-// Delete Program
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $id = intval($_POST['delete_id']);
     mysqli_query($con, "DELETE FROM training_programs WHERE id = $id");
@@ -52,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 <head>
     <meta charset="utf-8">
     <title>Update Course</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="img/favicon.png" rel="icon">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -67,15 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-primary">Skill Development Hub</h1>
 
-    <!-- Training Programs Table -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <div class="card-header py-3 d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
             <h6 class="m-0 font-weight-bold text-success">Manage Training Programs</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="programsTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             <th>Course Name</th>
                             <th>Description</th>
@@ -99,11 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
                                 <td>{$row['status']}</td>
                                 <td>{$row['created_at']}</td>
                                 <td>
-                                    <button class='btn btn-info btn-sm editBtn' data-id='{$row['id']}'>Edit</button>
-                                    <form method='POST' action='' class='d-inline'>
-                                        <input type='hidden' name='delete_id' value='{$row['id']}'>
-                                        <button class='btn btn-danger btn-sm' onclick=\"return confirm('Are you sure?');\">Delete</button>
-                                    </form>
+                                    <div class='d-flex flex-wrap gap-1'>
+                                        <button class='btn btn-info btn-sm editBtn mb-1' data-id='{$row['id']}'>Edit</button>
+                                        <form method='POST' action='' class='d-inline'>
+                                            <input type='hidden' name='delete_id' value='{$row['id']}'>
+                                            <button class='btn btn-danger btn-sm mb-1' onclick=\"return confirm('Are you sure?');\">Delete</button>
+                                        </form>
+                                    </div>
                                 </td>
                               </tr>";
                         }
@@ -114,81 +113,75 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
         </div>
     </div>
 
-    <!-- Add Program Modal -->
     <div class="modal fade" id="addProgramModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <form action="update_course.php" method="POST" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add Training Program</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group">
+                <div class="modal-body row g-3">
+                    <div class="col-md-6 form-group">
                         <label>Course Name</label>
                         <input type="text" name="course_name" class="form-control" required>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
+                    <div class="col-md-6 form-group">
                         <label>Duration (Months)</label>
                         <input type="number" name="duration" class="form-control" required>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="submit">Add</button>
+                    <div class="col-12 form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" required></textarea>
+                    </div>
+                    <div class="col-12 form-group d-flex justify-content-end">
+                        <button class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Add</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Edit Program Modal -->
     <div class="modal fade" id="editProgramModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <form action="update_course.php" method="POST" class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Training Program</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body row g-3">
                     <input type="hidden" name="edit_id" id="edit_id">
-                    <div class="form-group">
+                    <div class="col-md-6 form-group">
                         <label>Course Name</label>
                         <input type="text" name="course_name" id="edit_course_name" class="form-control" required>
                     </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" id="edit_description" class="form-control" required></textarea>
-                    </div>
-                    <div class="form-group">
+                    <div class="col-md-6 form-group">
                         <label>Duration (Months)</label>
                         <input type="number" name="duration" id="edit_duration" class="form-control" required>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-success" type="submit" name="update">Update</button>
+                    <div class="col-12 form-group">
+                        <label>Description</label>
+                        <textarea name="description" id="edit_description" class="form-control" required></textarea>
+                    </div>
+                  
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-secondary mr-2" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-success" type="submit" name="update">Update</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
-
-    <?php include_once('footer.php'); ?>
+<?php include_once('footer.php'); ?>
 <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
-<!-- Logout Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
@@ -199,7 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     </div>
 </div>
 
-<!-- Scripts -->
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 <script src="js/sb-admin-2.min.js"></script>

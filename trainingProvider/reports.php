@@ -4,6 +4,7 @@ include('connection.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Skill Development Hub</title>
@@ -15,23 +16,21 @@ include('connection.php');
     <script src="js/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @media (max-width: 576px) {
-            .card-body .h5 {
-                font-size: 1rem;
-            }
+    @media (max-width: 576px) {
+        .card-body .h5 {
+            font-size: 1rem;
         }
+    }
     </style>
 </head>
 
 <body id="page-top">
-<?php include('sidebar.php'); include('header.php'); ?>
+    <?php include('sidebar.php'); include('header.php'); ?>
 
-<div class="container-fluid">
-    <h1 class="h3 mb-4 text-gray-800">Training Reports & Analytics</h1>
-
-    <!-- Cards with data -->
-    <div class="row">
-        <?php
+    <div class="container-fluid">
+        <h1 class="h3 mb-4 text-gray-800">Training Reports & Analytics</h1>
+        <div class="row">
+            <?php
         $stats = [
             ["Training Programs", 7, "fas fa-chalkboard-teacher", "success"],
             ["Enrollments", 12, "fas fa-user-check", "info"],
@@ -57,59 +56,56 @@ include('connection.php');
             </div>';
         }
         ?>
-    </div>
+        </div>
 
-    <!-- Charts Section -->
-    <div class="row">
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header font-weight-bold">Training Program Overview</div>
-                <div class="card-body">
-                    <canvas id="programChart"></canvas>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header font-weight-bold">Training Program Overview</div>
+                    <div class="card-body">
+                        <canvas id="programChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header font-weight-bold">Training Statistics</div>
+                    <div class="card-body">
+                        <canvas id="trainingStatsChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="col-lg-6 mb-4">
-            <div class="card shadow">
-                <div class="card-header font-weight-bold">Training Statistics</div>
-                <div class="card-body">
-                    <canvas id="trainingStatsChart"></canvas>
+    <?php include_once('footer.php'); ?>
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-success" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<?php include_once('footer.php'); ?>
-<a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
-
-<!-- Logout Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal"><span>&times;</span></button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-success" href="logout.php">Logout</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Scripts -->
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="js/sb-admin-2.min.js"></script>
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="js/demo/datatables-demo.js"></script>
-<script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
+    <script>
     const chartData = {
         labels: ['Training Programs', 'Enrollments', 'Certificates Issued', 'Assessments'],
         datasets: [{
@@ -128,7 +124,9 @@ include('connection.php');
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { beginAtZero: true }
+                y: {
+                    beginAtZero: true
+                }
             }
         }
     });
@@ -141,6 +139,7 @@ include('connection.php');
             maintainAspectRatio: false
         }
     });
-</script>
+    </script>
 </body>
+
 </html>

@@ -2,7 +2,6 @@
 session_start();
 include('connection.php');
 
-// Handle Feedback Submission
 if (isset($_POST['feedback'])) {
     $user_id = $_SESSION['user_id'];
     $feedback_message = mysqli_real_escape_string($con, $_POST['feedback']);
@@ -18,14 +17,11 @@ if (isset($_POST['feedback'])) {
     }
 }
 
-// Handle Account Deactivation
 if (isset($_POST['deactivate_account'])) {
     $user_id = $_SESSION['user_id'];
 
-    // Update user's status to 'Disabled'
     $query = "UPDATE users SET status = 'Disabled' WHERE id = '$user_id'";
     if (mysqli_query($con, $query)) {
-        // Log out the user and destroy the session
         session_unset();
         session_destroy();
         header('Location: logout.php');
@@ -37,6 +33,7 @@ if (isset($_POST['deactivate_account'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Settings</title>
@@ -56,7 +53,6 @@ if (isset($_POST['deactivate_account'])) {
         <h1 class="h3 mb-4 text-gray-800">Settings</h1>
 
         <?php
-        // Display feedback success or error message
         if (isset($_SESSION['feedback_success'])) {
             echo "<div class='alert alert-success'>{$_SESSION['feedback_success']}</div>";
             unset($_SESSION['feedback_success']);
@@ -66,14 +62,12 @@ if (isset($_POST['deactivate_account'])) {
             unset($_SESSION['feedback_error']);
         }
         
-        // Display deactivation error message
         if (isset($_SESSION['deactivation_error'])) {
             echo "<div class='alert alert-danger'>{$_SESSION['deactivation_error']}</div>";
             unset($_SESSION['deactivation_error']);
         }
         ?>
 
-        <!-- Account Deactivation -->
         <div class="card shadow mb-4">
             <div class="card-header">
                 <i class="fas fa-trash-alt"></i> Account Deactivation
@@ -81,12 +75,13 @@ if (isset($_POST['deactivate_account'])) {
             <div class="card-body">
                 <p>If you wish to deactivate your account, please click below. This action cannot be undone.</p>
                 <form action="settings.php" method="POST">
-                    <button type="submit" name="deactivate_account" class="btn btn-danger" onclick="return confirm('Are you sure you want to deactivate your account? This action cannot be undone.')">Deactivate Account</button>
+                    <button type="submit" name="deactivate_account" class="btn btn-danger"
+                        onclick="return confirm('Are you sure you want to deactivate your account? This action cannot be undone.')">Deactivate
+                        Account</button>
                 </form>
             </div>
         </div>
 
-        <!-- Support and Feedback -->
         <div class="card shadow mb-4">
             <div class="card-header">
                 <i class="fas fa-comments"></i> Support and Feedback
@@ -95,7 +90,8 @@ if (isset($_POST['deactivate_account'])) {
                 <form action="settings.php" method="POST">
                     <div class="form-group">
                         <label for="feedback">Your Feedback</label>
-                        <textarea class="form-control" id="feedback" name="feedback" rows="4" placeholder="Share your feedback or issue"></textarea>
+                        <textarea class="form-control" id="feedback" name="feedback" rows="4"
+                            placeholder="Share your feedback or issue"></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit Feedback</button>
@@ -103,38 +99,38 @@ if (isset($_POST['deactivate_account'])) {
             </div>
         </div>
 
-    </div>
+        </div>
+        </div>
 
 
     <?php include_once('footer.php'); ?>
-<a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
-<!-- Logout Modal -->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-success" href="logout.php">Logout</a>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-success" href="logout.php">Logout</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Scripts -->
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-<script src="js/sb-admin-2.min.js"></script>
-<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="js/demo/datatables-demo.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="js/demo/datatables-demo.js"></script>
 </body>
+
 </html>
