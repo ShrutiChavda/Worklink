@@ -23,9 +23,54 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
 
-    <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+   <div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Manage Applications</h1>
+
+    <!-- Search Bar -->
+    <div class="mb-3">
+        <input type="text" class="form-control" id="searchInput" placeholder="Search by name, email, job title...">
     </div>
+
+    <!-- Applications Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered" id="applicationsTable">
+            <thead class="thead-light">
+                <tr>
+                    <th>Applicant Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Job Title</th>
+                    <th>Applied On</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include('db_connection.php'); // or whatever your connection file is
+
+                $query = "SELECT a.name, a.email, a.phone, j.job_title, a.applied_on, a.status 
+                          FROM applications a 
+                          JOIN jobs j ON a.job_id = j.id 
+                          ORDER BY a.applied_on DESC";
+
+                $result = mysqli_query($conn, $query);
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['job_title']) . "</td>";
+                    echo "<td>" . date('d-m-Y', strtotime($row['applied_on'])) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
+                    echo "</tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 <?php include_once('footer.php'); ?>
 
@@ -41,7 +86,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -60,6 +105,16 @@
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="js/demo/datatables-demo.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#searchInput').on('keyup', function () {
+            var value = $(this).val().toLowerCase();
+            $('#applicationsTable tbody tr').filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

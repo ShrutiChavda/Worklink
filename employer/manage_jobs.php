@@ -23,13 +23,79 @@
 <?php  include('sidebar.php'); ?>
 <?php  include('header.php'); ?>
 
-    <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-    </div>
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Posted Jobs</h1>
 
-<?php include_once('footer.php'); ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover" id="jobsTable">
+            <thead class="thead-light">
+                <tr>
+                    <th>Job ID</th>
+                    <th>Salary</th>
+                    <th>No. of Openings</th>
+                    <th>Posted On</th>
+                    <th>Last Date</th>
+                    <th>Company Name</th>
+                    <th>Job Title</th>
+                    <th>Organisation Type</th>
+                    <th>Functional Area</th>
+                    <th>Functional Role</th>
+                    <th>Job Description</th>
+                    <th>Min Qualification</th>
+                    <th>Country</th>
+                    <th>Occupation</th>
+                    <th>Job Type</th>
+                    <th>Gender</th>
+                    <th>Ex-Servicemen</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                
+
+                $result = mysqli_query($con, "SELECT * FROM totaljobs ORDER BY id DESC"); // Update 'jobs' to your actual table name
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row['job_id']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['salary']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['openings']) . "</td>";
+                    echo "<td>" . date('d-m-Y', strtotime($row['posted_on'])) . "</td>";
+                    echo "<td>" . date('d-m-Y', strtotime($row['last_date'])) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['company_name']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['job_title']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['organisation_type']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['functional_area']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['functional_role']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['job_description']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['qualification']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['country']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['occupation']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['job_type']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['gender_preference']) . "</td>";
+                    echo "<td>" . htmlspecialchars($row['ex_servicemen_preferred']) . "</td>";
+                    echo "<td>
+        <a href='edit_jobs.php?id=" . $row['id'] . "' class='btn btn-sm btn-info' style='margin: 5px 0;'>
+            <i class='fas fa-edit'></i>
+        </a>
+        <a href='delete_job.php?id=" . $row['id'] . "' class='btn btn-sm btn-danger' style='margin: 5px;' onclick=\"return confirm('Are you sure?')\">
+            <i class='fas fa-trash'></i> 
+        </a>
+      </td>";
+echo "</tr>";
+
+
+                }
+
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
     </div>
+    <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
@@ -41,7 +107,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true">ï¿½</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
