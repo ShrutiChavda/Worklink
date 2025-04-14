@@ -1,4 +1,8 @@
-<?php  include('session.php');  ?>
+<?php  include('session.php');  
+include('connection.php');?>
+
+<?php
+//echo $_SESSION['user_id'];?>
 
 <!DOCTYPE html>
 <html lang="en">

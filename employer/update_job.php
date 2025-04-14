@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $jobType = mysqli_real_escape_string($con, $_POST['jobType']);
     $genderPref = mysqli_real_escape_string($con, $_POST['genderPref']);
     $exServicemen = mysqli_real_escape_string($con, $_POST['exServicemen']);
-
+$category = mysqli_real_escape_string($con, $_POST['category']);
     // Get the job record ID (you might want to include a hidden field for this in your form)
     // Assuming 'id' is passed in URL
     if (isset($_GET['id'])) {
@@ -43,7 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             occupation = '$occupation',
             job_type = '$jobType',
             gender_preference = '$genderPref',
-            ex_servicemen_preferred = '$exServicemen'
+            ex_servicemen_preferred = '$exServicemen',
+            category = '$category'
         WHERE id = $id";
 
         if (mysqli_query($con, $query)) {

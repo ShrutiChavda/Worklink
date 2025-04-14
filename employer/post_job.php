@@ -79,6 +79,23 @@
                     <label for="lastDate" class="form-label">Last Date to Apply</label>
                     <input type="date" class="form-control" id="lastDate" name="lastDate" required>
                 </div>
+
+                <div class="col-md-4">
+            <label for="category" class="form-label">Category</label>
+            <br>
+            <select class="form-select" id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Technology">Technology </option>
+                <option value="Healthcare">Healthcare </option>
+                <option value="Finance">Finance </option>
+                <option value="Marketing">Marketing </option>
+                <option value="Education">Education </option>
+                <option value="Design">Design </option>
+                <option value="Sales">Sales </option>
+                <option value="Engineering"> Engineering</option>
+            </select>
+            <div class="invalid-feedback">Please select a category.</div>
+        </div>
             </div>
         </div>
 
