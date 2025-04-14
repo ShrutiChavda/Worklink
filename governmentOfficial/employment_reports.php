@@ -79,14 +79,12 @@ while ($row = mysqli_fetch_assoc($chartData)) {
         </div>
     </div>
 
-    <!-- Chart -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Employment Growth (Last 5 Years)</h6>
-        </div>
-        <div class="card-body">
-            <canvas id="employmentChart" width="100%" height="30"></canvas>
-        </div>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Employment Growth (Last 5 Years)</h6>
+    </div>
+    <div class="card-body">
+        <canvas id="employmentChart" width="200%" height="auto"></canvas>
     </div>
 </div>
 
@@ -139,7 +137,7 @@ new Chart(ctx, {
         }]
     },
     options: {
-        responsive: true,
+        responsive: true, // This makes the chart responsive
         scales: {
             y: {
                 beginAtZero: false,
@@ -152,5 +150,6 @@ new Chart(ctx, {
     }
 });
 </script>
+
 </body>
 </html>

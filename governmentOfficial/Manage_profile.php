@@ -1,177 +1,189 @@
-<?php  include('session.php');  ?>
+<?php include('session.php'); 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>User Dashboard</title>
+        <link href="img/favicon.png" rel="icon">
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <script src="vendor/jquery/jquery.min.js"></script>
 
-    <title>User Dashboard</title>
-    <link href="img/favicon.png" rel="icon">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-    <script src="js/jquery-3.6.4.min.js"></script>
-    <script src="js/search.js"></script>
+        <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="css/sb-admin-2.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/main.css">
+        <style>
+        .profile-card {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
-    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
-    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+        .profile-card h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4e73df;
+        }
 
-    <link rel="stylesheet" href="css/main.css">
+        .profile-pic {
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+        }
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/update_profile.js"></script>
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
 
-</head>
+        .profile-label {
+            font-weight: bold;
+            width: 40%;
+            color: #333;
+        }
+
+        .profile-value {
+            width: 55%;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .profile-row {
+                flex-direction: column;
+            }
+
+            .profile-label,
+            .profile-value {
+                width: 100%;
+            }
+        }
+        </style>
+    </head>
 
 <body id="page-top">
     <?php include('sidebar.php'); ?>
     <?php include('header.php'); ?>
 
-    <!-- Begin Page Content -->
     <div class="container-fluid">
-
         <form id="registrationForm" style="text-align:center">
-
             <div class="page-wrapper bg-blue p-t-100 p-b-100 font-robo">
                 <div class="wrapper wrapper--w680">
                     <div class="card card-1">
                         <div class="card-heading"></div>
                         <div class="card-body">
-                            <!-- Other HTML code here -->
                             <h2 class="title">Profile Information</h2>
 
+                            <?php
+                            include('connection.php');
+                            $un = $_SESSION['username'];
+                            $q = "SELECT u.*, g.* FROM users u LEFT JOIN government_officials g ON u.id = g.user_id WHERE u.user_name = '$un'";
+                            $res = mysqli_query($con, $q);
+                            while ($row = mysqli_fetch_array($res)) {
+                            ?>
 
-                            <?php  
-                                include('connection.php');
-                                $un=$_SESSION['username'];
-
-                                $q = "select * from users where user_name='$un'";
-                                $res = mysqli_query($con, $q);
-                                While($row = mysqli_fetch_array($res)) { ?>
-                                
                             <div>
-                            <img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['8']; ?>"/>
-                            
+                                <img class="img-profile rounded-circle" height="100px" width="100px"
+                                    src="img/Uploads/<?php echo $row['pic']; ?>" />
                             </div><br>
 
-                            <div class="profile-item">
-                                <label>User Name:</label>
-                                <span><?php echo $row['3']; ?></span>
+
+                            <div class="profile-row">
+                                <div class="profile-label">User Name:</div>
+                                <div class="profile-value"><?php echo $row  ['user_name']; ?></div>
+                            </div>
+                            <div class="profile-row">
+                                <div class="profile-label">Full Name:</div>
+                                <div class="profile-value"><?php echo $row['full_name']; ?></div>
+                            </div>
+                            <div class="profile-row">
+                                <div class="profile-label">User Type:</div>
+                                <div class="profile-value"><?php echo $row['user_type']; ?></div>
+                            </div>
+                            <div class="profile-row">
+                                <div class="profile-label">Email:</div>
+                                <div class="profile-value"><?php echo $row['email']; ?></div>
+                            </div>
+                            <div class="profile-row">
+                                <div class="profile-label">Gender:</div>
+                                <div class="profile-value"><?php echo $row['gender']; ?></div>
+                            </div>
+                            <div class="profile-row">
+                                <div class="profile-label">Contact Number:</div>
+                                <div class="profile-value"><?php echo $row['phone']; ?></div>
+                            </div>
+                            <div class="profile-row">
+                                <div class="profile-label">Date Of Birth:</div>
+                                <div class="profile-value"><?php echo $row['birthday']; ?></div>
                             </div>
 
-                            <div class="profile-item">
-                                <label>Full Name:</label>
-                                <span><?php echo $row['2']; ?></span>
+                            <?php if (!empty($row['designation'])) { ?>
+
+                            <div class="profile-row">
+                            <div class="profile-label">Designation:</div>
+                            <div class="profile-value"><?php echo $row['designation']; ?></div>
+                                </div>
+                                <div class="profile-row">
+                                <div class="profile-label">Department:</div>
+                                <div class="profile-value"><?php echo $row['department']; ?></div>
+                                    </div>
+
+                                    <?php } ?><br>
+
+                                    <div class="p-t-20">
+                                        <a href="edit_profile.php?edit=<?php echo $row['id']; ?>">
+                                            <button class="btn btn--radius btn-success" type="button">Update
+                                                Info</button>
+                                        </a>
+                                    </div>
+
+                                    <?php } ?>
+                                </div>
                             </div>
-
-                            <div class="profile-item">
-                                <label>User Type:</label>
-                                <span><?php echo $row['1']; ?></span>
-                            </div>
-
-                            <div class="profile-item">
-                                <label>Email:</label>
-                                <span><?php echo $row['4']; ?></span>
-                            </div>
-
-                            <div class="profile-item">
-                                <label>Gender:</label>
-                                <span><?php echo $row['5']; ?></span>
-                            </div>
-                            
-                            <div class="profile-item">
-                                <label>Date Of Birth:</label>
-                                <span><?php echo $row['7']; ?></span>
-                            </div>
-
-                            <div class="profile-item">
-                                <label>Contact Number:</label>
-                                <span><?php echo $row['6']; ?></span>
-                            </div>
-
-                            <div class="p-t-20">
-                            <a href="edit_profile.php?edit=<?php echo $row['id']; ?>">
-                                    <button class="btn btn--radius btn-success" type="button">Update Info</button>
-                                </a>
-                                <?php  }  ?>
-
-                                <!-- Other form elements -->
-
+                        </div>
+                    </div>
         </form>
-
-        <!-- Other HTML code here -->
-
-
     </div>
-    </div>
-    </div>
-    </div>
-   
 
+    <?php include_once('footer.php'); ?>
 
-    </div>
-    <!-- /.container-fluid -->
-
-    </div>
-    <!-- End of Main Content -->
-
-    
-
-    </div>
-    <?php
-          include_once('footer.php');
-          ?>
-    <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                    <h5 class="modal-title">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal">
+                        <span>×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Select "Logout" below to end your session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-success"
-                        href="http://localhost/worklink/governmentOfficialyer/logout.php">Logout</a>
+                    <a class="btn btn-success" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <script src="js/sb-admin-2.min.js"></script>
-
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <script src="js/demo/datatables-demo.js"></script>
-
 </body>
 
 </html>

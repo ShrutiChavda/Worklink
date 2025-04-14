@@ -8,14 +8,9 @@ $arr_url = explode("/", $url);
 
 ?>
 
-<!-- Page Wrapper -->
 <div id="wrapper">
 
-
-    <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
-
-        <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
             <div class="sidebar-brand-icon">
                 <i class="fas fa-gavel"></i>
@@ -82,8 +77,8 @@ $arr_url = explode("/", $url);
                 <span>Minimum Wage Compliance</span></a>
         </li>
 
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "Manage_profile.php") { echo "active"; } ?>">
-            <a class="nav-link" href="Manage_profile.php">
+        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "settings.php") { echo "active"; } ?>">
+            <a class="nav-link" href="settings.php">
                 <i class="fas fa-cogs"></i>
                 <span>Settings & Support</span></a>
         </li>
@@ -94,4 +89,3 @@ $arr_url = explode("/", $url);
         </div>
 
     </ul>
-    <!-- End of Sidebar -->

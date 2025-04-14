@@ -1,7 +1,6 @@
 <?php
 session_start();
 include('connection.php');
-
 if (!isset($_SESSION['username'])) {
     $sql_update_status = "UPDATE users SET status = 'Inactive'";
     mysqli_query($con, $sql_update_status);
@@ -9,26 +8,44 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-$user_type = '';
+
+$user_type = ''; // Initialize user_type variable
 if (isset($_SESSION['username'])) {
+
     $username = $_SESSION['username'];
-    $sql = "SELECT user_type, status FROM users WHERE user_name = '$username'"; 
+    // echo $username;
+
+    $status_check = mysqli_query($con, "SELECT status, user_type FROM users WHERE user_name = '$username'");
+if ($status_check && mysqli_num_rows($status_check) > 0) {
+    $user_row = mysqli_fetch_assoc($status_check);
+    if ($user_row['status'] === 'Disabled') {
+        echo "<script>
+            alert('Your account is deactivated. Please contact the administrator to restore access.');
+            window.location.href = 'http://localhost/worklink/login.php';
+        </script>";
+        exit();
+        
+
+    $sql = "SELECT user_type FROM users WHERE user_name = '$username'"; 
     $result = mysqli_query($con, $sql);
-
+    $sql_update_status = "UPDATE users SET status = 'active' WHERE user_name = '$username'";
+    mysqli_query($con, $sql_update_status);
+    
     if ($row = mysqli_fetch_assoc($result)) {
-        if ($row['status'] === 'Disabled') {
-            echo "<script>alert('Your account has been deactivated.');</script>";
-            echo "<script>window.location.href='http://localhost/worklink/login.php';</script>";
-            exit();
-        }
-
-        $_SESSION['user_type'] = $row['user_type'];
-
-        $sql_update_status = "UPDATE users SET status = 'active' WHERE user_name = '$username'";
-        mysqli_query($con, $sql_update_status);
-    }
+        $_SESSION['user_type']=$row['user_type'];
+        // echo $_SESSION['user_type'];
 }
+// else{
+//     if(!isset($_SESSION['username'])=="" || !isset($_SESSION['user_type'])=="") {
+//     // Redirect the user to the login page
+//     header("Location:  http://localhost/Employee%20Management%20System/login.php");
+//     exit;
+// }
+// }
+}}}
 
+
+//After 60 minutes the user will automatically get destroyed
 if (isset($_SESSION['timeout']) && $_SESSION['timeout'] < time()) {
     session_destroy();
     echo "<script>alert('Session Expired!');</script>";
@@ -38,4 +55,7 @@ if (isset($_SESSION['timeout']) && $_SESSION['timeout'] < time()) {
     exit();
 }
 $_SESSION['timeout'] = time() + (60 * 60);
+
+//echo "Welcome, " . $_SESSION['username'];
+
 ?>
