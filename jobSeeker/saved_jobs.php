@@ -10,9 +10,10 @@
     <meta name='description' content=''>
     <meta name='author' content=''>
 
-    <title>Blank Page</title>
+    <title>Saved jobs</title>
 
     <link href='img/favicon.png' rel='icon'>
+    <link href="css/saved_jobs.css" rel="stylesheet">
     <link href='vendor/fontawesome-free/css/all.min.css' rel='stylesheet' type='text/css'>
     <link href='css/sb-admin-2.min.css' rel='stylesheet'>
     <link href='vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>
@@ -25,9 +26,122 @@
 <?php include('sidebar.php'); ?>
 <?php include('header.php'); ?>
 
-<div class='container-fluid'>
-    <h1 class='h3 mb-4 text-gray-800'>Blank Page</h1>
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4 saved-jobs-container">
+        <div class="saved-jobs-header">
+            <h1 class="h3 text-gray-800">Saved Jobs</h1>
+            <p class="text-muted"><small>Manage your saved job listings</small></p>
+        </div>
+        <div class="saved-jobs-search">
+            <input type="text" class="form-control" placeholder="Search saved jobs...">
+            <button class="btn btn-outline-secondary"><i class="fas fa-filter"></i> Filters</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Job Card 1 -->
+        <div class="col-md-6 mb-4">
+            <div class="saved-job-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="saved-job-title">Senior Frontend Developer</h5>
+                        <p class="saved-job-company">TechCorp Solutions - San Francisco, CA</p>
+                        <span class="badge badge-light">Full-time</span>
+                        <span class="saved-job-salary">$120K - $150K</span>
+                        <p class="text-muted mt-1"><small>Saved 2 days ago</small></p>
+                    </div>
+                    <i class="fas fa-bookmark saved-job-bookmark"></i>
+                </div>
+                <ul class="saved-job-requirements mt-2">
+                    <li>5+ years React experience</li>
+                    <li>TypeScript expertise</li>
+                    <li>UI/UX knowledge</li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                    <span class="saved-job-match">95% Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Card 2 -->
+        <div class="col-md-6 mb-4">
+            <div class="saved-job-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="saved-job-title">Product Designer</h5>
+                        <p class="saved-job-company">Creative Minds Inc - Remote</p>
+                        <span class="badge badge-light">Full-time</span>
+                        <span class="saved-job-salary">$90K - $120K</span>
+                        <p class="text-muted mt-1"><small>Saved 3 days ago</small></p>
+                    </div>
+                    <i class="fas fa-bookmark saved-job-bookmark"></i>
+                </div>
+                <ul class="saved-job-requirements mt-2">
+                    <li>Figma proficiency</li>
+                    <li>3+ years experience</li>
+                    <li>Portfolio required</li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                    <span class="saved-job-match">88% Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Card 3 -->
+        <div class="col-md-6 mb-4">
+            <div class="saved-job-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="saved-job-title">DevOps Engineer</h5>
+                        <p class="saved-job-company">Cloud Systems - New York, NY</p>
+                        <span class="badge badge-light">Full-time</span>
+                        <span class="saved-job-salary">$130K - $160K</span>
+                        <p class="text-muted mt-1"><small>Saved 1 week ago</small></p>
+                    </div>
+                    <i class="fas fa-bookmark saved-job-bookmark"></i>
+                </div>
+                <ul class="saved-job-requirements mt-2">
+                    <li>AWS expertise</li>
+                    <li>CI/CD pipeline experience</li>
+                    <li>Kubernetes</li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                    <span class="saved-job-match">82% Match</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Card 4 -->
+        <div class="col-md-6 mb-4">
+            <div class="saved-job-card">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="saved-job-title">Full Stack Developer</h5>
+                        <p class="saved-job-company">Innovation Labs - Boston, MA</p>
+                        <span class="badge badge-light">Remote</span>
+                        <span class="saved-job-salary">$100K - $140K</span>
+                        <p class="text-muted mt-1"><small>Saved 1 week ago</small></p>
+                    </div>
+                    <i class="fas fa-bookmark saved-job-bookmark"></i>
+                </div>
+                <ul class="saved-job-requirements mt-2">
+                    <li>Node.js</li>
+                    <li>React</li>
+                    <li>MongoDB</li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <a href="#" class="btn btn-primary">Apply Now</a>
+                    <span class="saved-job-match">90% Match</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <?php include_once('footer.php'); ?>
 

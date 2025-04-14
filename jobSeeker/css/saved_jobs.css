@@ -1,0 +1,77 @@
+/* saved_jobs.css */
+
+/* General spacing and layout tweaks */
+.text-muted small {
+    font-size: 0.85rem;
+}
+
+ul {
+    margin-bottom: 0;
+}
+
+/* Saved Jobs Grid */
+.saved-jobs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.saved-jobs-header h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.saved-jobs-search {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Job Card Styling */
+.saved-job-card {
+    border: 1px solid #e3e6f0;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(18, 38, 63, 0.03);
+    transition: all 0.3s ease;
+}
+
+.saved-job-card:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.saved-job-title {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.saved-job-company {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.saved-job-salary {
+    color: #1b6ec2;
+    font-weight: 600;
+}
+
+.saved-job-requirements li {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+}
+
+.saved-job-match {
+    color: #6c757d;
+    font-size: 0.85rem;
+    margin-left: 1rem;
+}
+
+.saved-job-bookmark {
+    font-size: 1.2rem;
+    color: #adb5bd;
+    cursor: pointer;
+}

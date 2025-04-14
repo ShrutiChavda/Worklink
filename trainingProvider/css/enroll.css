@@ -1,0 +1,50 @@
+/* General Layout */
+.container {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .student-list {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  ul.student-items {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul.student-items li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+  }
+  
+  ul.student-items li:hover {
+    background-color: #f7f7f7;
+  }
+  
+  .student-name {
+    font-weight: bold;
+  }
+  
+  .view-details-btn {
+    background-color: #17a2b8;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .view-details-btn:hover {
+    background-color: #138496;
+  }
+  

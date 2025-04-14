@@ -17,6 +17,8 @@
     <link href='css/sb-admin-2.min.css' rel='stylesheet'>
     <link href='vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>
     <link href='css/sb-admin-2.css' rel='stylesheet'>
+    <link href='css/upload_resume.css' rel='stylesheet'>
+
     <script src='js/jquery-3.6.4.min.js'></script>
     <script src='js/search.js'></script>
 </head>
@@ -25,9 +27,55 @@
 <?php include('sidebar.php'); ?>
 <?php include('header.php'); ?>
 
-<div class='container-fluid'>
-    <h1 class='h3 mb-4 text-gray-800'>Blank Page</h1>
+<div class="container-fluid resume-upload-page">
+    <h2 class="page-title">Upload/Update Resume</h2>
+    <p class="page-subtitle">Manage your resumes and make them visible to employers</p>
+
+    <!-- Current Resume -->
+    <div class="resume-box">
+        <div class="resume-info">
+            <i class="fas fa-file-alt resume-icon"></i>
+            <div>
+                <p class="resume-name">MyResume_2024.pdf</p>
+                <p class="resume-date">Uploaded on Jan 15, 2024</p>
+            </div>
+        </div>
+        <div class="resume-actions">
+            <a href="#" class="btn btn-link text-primary">Download</a>
+            <a href="#" class="btn btn-link text-danger">Delete</a>
+        </div>
+    </div>
+
+    <!-- Upload New Resume -->
+    <h5 class="upload-title">Upload New Resume</h5>
+    <div class="upload-box">
+        <div class="upload-area">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <p>Drag and drop your resume here</p>
+            <span>or</span>
+            <button class="btn btn-primary mt-2">Browse files</button>
+            <p class="upload-info">Supported formats: PDF, DOC, DOCX (Max size: 5MB)</p>
+        </div>
+    </div>
+
+    <!-- Resume Tips -->
+    <div class="resume-tips">
+        <h6 class="tips-title">Resume Tips</h6>
+        <ul class="tips-list">
+            <li>Keep your resume clear and concise</li>
+            <li>Use bullet points to highlight achievements</li>
+            <li>Include relevant keywords from job descriptions</li>
+            <li>Proofread carefully for errors</li>
+            <li>Update your resume regularly</li>
+        </ul>
+    </div>
+
+    <p class="resume-footer-note">
+        <i class="fas fa-shield-alt mr-1"></i> Your resume will be stored securely and only shared with employers you apply to. 
+        You can manage your resume visibility settings in your profile preferences.
+    </p>
 </div>
+
 
 <?php include_once('footer.php'); ?>
 

@@ -1,0 +1,33 @@
+#gov-panel h1 {
+    font-weight: 600;
+    color: #007bff;
+}
+
+.card h5 {
+    color: #007bff;
+    font-weight: 500;
+}
+
+.list-group-item.active {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.list-group-item {
+    font-size: 15px;
+}
+
+
+
+h1 {
+    color: #2e59d9;
+    font-weight: 600;
+}
+
+.table td, .table th {
+    vertical-align: middle !important;
+}
+
+.btn-sm {
+    margin-right: 5px;
+}

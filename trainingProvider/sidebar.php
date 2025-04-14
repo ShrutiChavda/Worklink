@@ -32,42 +32,53 @@ $arr_url = explode("/", $url);
         
         <!-- Manage Training Programs -->
         <div class="sidebar-heading">Manage Training Programs</div>
-        <li class="nav-item <?php if (isset($arr_url[3]) && in_array($arr_url[3], ["add_course.php", "update_course.php", "approve_students.php"])) { echo "active"; } ?>">
+        <li class="nav-item <?php if (isset($arr_url[3]) && in_array($arr_url[3], ["add_course.php", "update_course.php", "approve_applicants.php"])) { echo "active"; } ?>">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#manageTraining"
                 aria-expanded="true" aria-controls="manageTraining">
                 <i class="fas fa-fw fa-book"></i>
                 <span>Training Programs</span>
             </a>
-            <div id="manageTraining" class="collapse <?php if (isset($arr_url[3]) && in_array($arr_url[3], ["add_course.php", "update_course.php", "approve_students.php"])) { echo "show"; } ?>" data-parent="#accordionSidebar">
+            <div id="manageTraining" class="collapse <?php if (isset($arr_url[3]) && in_array($arr_url[3], ["add_course.php", "update_course.php", "approve_applicants.php"])) { echo "show"; } ?>" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item <?php if (isset($arr_url[3]) && $arr_url[3] == "add_course.php") { echo "active"; } ?>" href="add_course.php">Add New Course</a>
                     <a class="collapse-item <?php if (isset($arr_url[3]) && $arr_url[3] == "update_course.php") { echo "active"; } ?>" href="update_course.php">Update Course Details</a>
-                    <a class="collapse-item <?php if (isset($arr_url[3]) && $arr_url[3] == "approve_students.php") { echo "active"; } ?>" href="approve_students.php">Approve Applications</a>
+                    <a class="collapse-item <?php if (isset($arr_url[3]) && $arr_url[3] == "approve_applicants.php") { echo "active"; } ?>" href="approve_applicants.php">Approve Applications</a>
                 </div>
             </div>
         </li>
         
-        <!-- Student Management -->
-        <div class="sidebar-heading">Student Management</div>
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "view_students.php") { echo "active"; } ?>">
-            <a class="nav-link" href="view_students.php">
-                <i class="fas fa-fw fa-user-graduate"></i>
-                <span>View Enrolled Students</span></a>
+        <hr class="sidebar-divider">
+
+     <!-- Manage Assessments -->
+     <div class="sidebar-heading">Manage Assessments</div>
+        <li class="nav-item <?php if (isset($arr_url[3]) && in_array($arr_url[3], ["assessments.php", "update_assessments.php", "edit_assessment.php"])) { echo "active"; } ?>">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#manageAssessment"
+                aria-expanded="true" aria-controls="manageAssessment">
+                <i class="fas fa-fw fa-book"></i>
+                <span>Assessments</span>
+            </a>
+            <div id="manageAssessment" class="collapse <?php if (isset($arr_url[3]) && in_array($arr_url[3], ["assessments.php", "update_assessments.php"])) { echo "show"; } ?>" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item <?php if (isset($arr_url[3]) && $arr_url[3] == "assessments.php") { echo "active"; } ?>" href="assessments.php">Create assessment</a>
+                    <a class="collapse-item <?php if (isset($arr_url[3]) && $arr_url[3] == "update_assessments.php") { echo "active"; } ?>" href="update_assessments.php">Manage the assessment</a>
+                </div>
+            </div>
         </li>
 
-       <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "issue_certificates.php") { echo "active"; } ?>">
-            <a class="nav-link" href="issue_certificates.php">
+        <hr class="sidebar-divider">
+
+        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "show_progress.php") { echo "active"; } ?>">
+            <a class="nav-link" href="show_progress.php">
+                <i class="fas fa-running"></i>
+                <span>View Progress</span></a>
+        </li>
+
+       <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "issued_certificates.php") { echo "active"; } ?>">
+            <a class="nav-link" href="issued_certificates.php">
                 <i class="fas fa-fw fa-certificate"></i>
-                <span>Issue Certificates</span></a>
+                <span>Issued Certificates</span></a>
         </li>
-        
-        <!-- Create & Evaluate Assessments -->
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "assessments.php") { echo "active"; } ?>">
-            <a class="nav-link" href="assessments.php">
-                <i class="fas fa-fw fa-clipboard-check"></i>
-                <span>Create & Evaluate Assessments</span></a>
-        </li>
-        
+    
         <!-- Training Reports & Analytics -->
         <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "reports.php") { echo "active"; } ?>">
             <a class="nav-link" href="reports.php">

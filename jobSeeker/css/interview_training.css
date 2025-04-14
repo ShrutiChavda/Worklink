@@ -1,0 +1,183 @@
+/* Global resets and font */
+body, h1, h2, h3, h4, p, ul {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: #2c3e50;
+}
+
+.interview-skill-training {
+    padding: 30px 20px;
+    background-color: #f9fbfd;
+}
+
+/* Banner */
+.intro-banner {
+    background: linear-gradient(90deg, #4a90e2, #007bff);
+    color: white;
+    padding: 40px 30px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.intro-banner h1 {
+    font-size: 32px;
+    font-weight: bold;
+}
+.intro-banner p {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Sections */
+section {
+    margin-bottom: 40px;
+}
+section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
+/* Card layouts */
+.cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+.card, .govt-card, .track-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+    padding: 15px;
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card img, .track-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.card h3, .track-card h4 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+}
+.card p, .track-card p, .govt-card p {
+    font-size: 14px;
+    color: #6c757d;
+}
+.rating {
+    font-size: 14px;
+    margin-top: 5px;
+    color: #f39c12;
+}
+.card .btn {
+    margin-top: 10px;
+    background: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+}
+.card .btn:hover {
+    background: #0056b3;
+}
+
+/* Learning track */
+.progress-bar {
+    background: #e0e0e0;
+    border-radius: 5px;
+    height: 18px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+.progress-bar div {
+    background: #28a745;
+    height: 100%;
+    color: white;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+}
+
+/* Skills grid */
+.skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+.skill-box {
+    background: white;
+    border: 1px solid #dce3ea;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.skill-box small {
+    display: block;
+    margin-top: 5px;
+    color: #7f8c8d;
+}
+
+/* Government cards */
+.govt-section .govt-card {
+    padding: 20px;
+    background: #f1f6fb;
+    border-left: 5px solid #007bff;
+}
+.govt-card h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.govt-card a {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+}
+.govt-card a:hover {
+    text-decoration: underline;
+}
+
+/* Extras section */
+.extras-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+.extras-section > div {
+    flex: 1 1 300px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.extras-section h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+.extras-section ul {
+    list-style-type: none;
+}
+.extras-section li {
+    padding: 6px 0;
+    font-size: 14px;
+}
+.extras-section a {
+    color: #007bff;
+    text-decoration: none;
+}
+.extras-section a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .cards, .extras-section {
+        flex-direction: column;
+    }
+}
