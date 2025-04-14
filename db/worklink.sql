@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2025 at 06:00 PM
+-- Generation Time: Apr 14, 2025 at 03:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -85,7 +85,8 @@ CREATE TABLE `assessments` (
 
 INSERT INTO `assessments` (`id`, `provider_id`, `course_id`, `title`, `type`, `questions`, `timer_minutes`, `due_date`, `status`, `created_at`) VALUES
 (1, 3, 1, 'Quiz 1', 'MCQ', '[{\"q\":\"What does the term \\\"Full Stack Development\\\" refer to?\",\"options\":[\"Development that involves stack data structures\",\"Development that involves front-end and back-end programming\",\"Development that involves only backend programming\",\"None of the above\"],\"answer\":\"2\"},{\"q\":\"Which of the following is not a front-end technology?\",\"options\":[\"HTML\",\"CSS\",\"JavaScript\",\"SQL\"],\"answer\":\"4\"},{\"q\":\"The purpose of the Front-end framework in Full stack development is ____.\",\"options\":[\"To provide the client-side interface\",\"To manage database\",\"To reduce the server load\",\"To send http requests\"],\"answer\":\"1\"},{\"q\":\"Amongst which of the following programming language is used as a server-side language?\",\"options\":[\"Python\",\"C++\",\"JavaScript\",\"Both A and C\"],\"answer\":\"4\"}]', 100, '2025-04-14', 'Open', '2025-04-13 13:49:32'),
-(2, 3, 2, 'Quiz 2', 'Multichoice', '[{\"q\":\"What is data science primarily concerned with?\",\"options\":[\"Analyzing and interpreting data\",\"Analyzing and interpreting data\",\"Storing data in database mentioned above\",\"All of above\"],\"answer\":\"1\"}]', 10, '2025-04-14', 'Open', '2025-04-13 13:53:47');
+(2, 3, 2, 'Quiz 2', 'Multichoice', '[{\"q\":\"What is data science primarily concerned with?\",\"options\":[\"Analyzing and interpreting data\",\"Analyzing and interpreting data\",\"Storing data in database mentioned above\",\"All of above\"],\"answer\":\"1\"}]', 10, '2025-04-14', 'Open', '2025-04-13 13:53:47'),
+(3, 3, 3, 'Quiz 3', 'MCQ', '[{\"q\":\"What does SEO stand for?\",\"options\":[\"Search Engine Operation\",\"Search Engine Optimization\",\"Site Engagement Optimization\",\"Search Engine Order\"],\"answer\":\"2\"},{\"q\":\"Which of the following is NOT a part of the digital marketing funnel?\",\"options\":[\"Awareness\",\"Consideration\",\"Purchase\",\"Manufacturing\"],\"answer\":\"4\"},{\"q\":\"In email marketing, what is the purpose of A\\/B testing?\",\"options\":[\"To send emails faster\",\"To test different subject lines or content\",\"To avoid spam filters\",\"To increase unsubscribe rate\"],\"answer\":\"2\"}]', 10, '2025-04-15', 'Open', '2025-04-14 09:56:05');
 
 -- --------------------------------------------------------
 
@@ -98,9 +99,9 @@ CREATE TABLE `assessment_submissions` (
   `assessment_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `submitted_at` datetime DEFAULT NULL,
-  `status` enum('Pending','Submitted') DEFAULT 'Pending',
+  `status` text DEFAULT 'Pending',
   `score` int(11) DEFAULT 0,
-  `answers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`answers`))
+  `answers` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -108,9 +109,9 @@ CREATE TABLE `assessment_submissions` (
 --
 
 INSERT INTO `assessment_submissions` (`id`, `assessment_id`, `user_id`, `submitted_at`, `status`, `score`, `answers`) VALUES
-(1, 1, 11, '2025-04-13 14:00:00', 'Submitted', 8, '{\r\n    \"1\": \"A\", \"2\": \"B\", \"3\": \"C\", \"4\": \"D\",\r\n    \"5\": \"A\", \"6\": \"B\", \"7\": \"C\", \"8\": \"D\"\r\n}'),
-(2, 2, 1, '2025-04-13 16:30:00', 'Submitted', 6, '{\r\n    \"1\": \"B\", \"2\": \"B\", \"3\": \"C\", \"4\": \"C\",\r\n    \"5\": \"D\", \"6\": \"D\"\r\n}'),
-(3, 1, 8, NULL, 'Pending', 0, NULL);
+(1, 1, 11, '2025-04-13 14:00:00', 'Submitted', 4, '{\n    \"1\": \"2\", \"2\": \"4\", \"3\": \"1\", \"4\": \"4\"\n}'),
+(2, 2, 1, '2025-04-13 16:30:00', 'Submitted', 1, '{\n    \"1\": \"1\"\n}'),
+(3, 3, 8, '2025-04-14 15:27:03', 'Submitted', 3, '{\n    \"1\": \"2\", \"2\": \"4\", \"3\": \"2\"\n}');
 
 -- --------------------------------------------------------
 
@@ -162,7 +163,7 @@ CREATE TABLE `certificates` (
   `training_program_id` int(11) NOT NULL,
   `issue_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `certificate_number` varchar(255) DEFAULT NULL,
-  `status` enum('Issued','Pending') DEFAULT 'Pending'
+  `status` text DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -344,7 +345,9 @@ INSERT INTO `feedback` (`id`, `user_id`, `feedback_message`, `created_at`) VALUE
 (12, 1, 'I encountered some technical issues with the course platform during the assessment phase.', '2025-04-12 09:50:00'),
 (13, 4, 'I would appreciate more practical examples in the training modules to make learning more hands-on.', '2025-04-11 03:15:00'),
 (14, 8, 'The course was excellent, but it would be great to have more interaction with the instructors.', '2025-04-10 12:20:00'),
-(15, 9, 'The overall training experience was good, but the certification process was a bit delayed.', '2025-04-09 08:40:00');
+(15, 9, 'The overall training experience was good, but the certification process was a bit delayed.', '2025-04-09 08:40:00'),
+(18, 4, 'testing', '2025-04-14 07:20:14'),
+(19, 4, 'testing', '2025-04-14 09:21:38');
 
 -- --------------------------------------------------------
 
@@ -364,7 +367,7 @@ CREATE TABLE `government_officials` (
 --
 
 INSERT INTO `government_officials` (`id`, `user_id`, `department`, `designation`) VALUES
-(2, 4, 'Skill Development Department', 'Training Manager'),
+(2, 4, 'Information Technology', 'Training Manager'),
 (3, 15, 'Labour Department', 'Labour Commissioner');
 
 -- --------------------------------------------------------
@@ -411,7 +414,7 @@ CREATE TABLE `grants` (
   `grant_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `status` text DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -439,7 +442,7 @@ CREATE TABLE `jobs` (
   `description` text NOT NULL,
   `location` varchar(255) DEFAULT NULL,
   `salary` decimal(10,2) DEFAULT NULL,
-  `status` enum('pending','approved','rejected','open','closed') DEFAULT 'pending',
+  `status` text DEFAULT 'pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -469,7 +472,7 @@ CREATE TABLE `job_applications` (
   `id` int(11) NOT NULL,
   `job_seeker_id` int(11) DEFAULT NULL,
   `job_id` int(11) DEFAULT NULL,
-  `status` enum('applied','interview','hired','rejected') DEFAULT 'applied',
+  `status` text DEFAULT 'applied',
   `applied_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -582,7 +585,7 @@ CREATE TABLE `training_programs` (
   `course_name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `duration` int(11) NOT NULL,
-  `status` enum('Approved','Rejected','Pending') NOT NULL DEFAULT 'Pending',
+  `status` text NOT NULL DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `category` varchar(100) DEFAULT NULL,
   `completion_rate` decimal(5,2) DEFAULT 0.00,
@@ -595,12 +598,13 @@ CREATE TABLE `training_programs` (
 
 INSERT INTO `training_programs` (`id`, `provider_id`, `training_provider_id`, `enrollment_count`, `course_name`, `description`, `duration`, `status`, `created_at`, `category`, `completion_rate`, `updated_at`) VALUES
 (1, 3, 1, 5, 'Full Stack Web Development', 'Learn frontend and backend web development.', 6, 'Approved', '2025-04-11 03:25:11', 'Web Development', '85.50', '2025-04-13 12:52:00'),
-(2, 3, 1, 1, 'Data Science Bootcamp', 'Comprehensive training in data analysis and machine learning.', 4, 'Approved', '2025-04-11 03:25:11', 'Data Science', '70.25', '2025-04-13 14:32:25'),
+(2, 3, 1, 1, 'Data Science Bootcamp', 'Comprehensive training in data analysis and machine learning.', 4, 'Approved', '2025-04-11 03:25:11', 'Data Science', '70.25', '2025-04-14 17:56:00'),
 (3, 3, 1, 1, 'Digital Marketing Mastery', 'Advanced strategies for SEO, PPC, and content marketing.', 3, 'Approved', '2025-04-11 03:25:11', 'Digital Marketing', '60.00', '2025-04-13 12:37:14'),
 (4, 3, 1, 1, 'Cyber Security Essentials', 'Fundamentals of network security and ethical hacking.', 5, 'Approved', '2025-04-11 03:25:11', 'Cyber Security', '65.00', '2025-04-13 14:26:27'),
 (5, 13, 2, 0, 'Graphic Design Fundamentals', 'Learn Adobe Photoshop, Illustrator, and UI/UX design.', 3, 'Pending', '2025-04-11 03:25:11', 'Design', '75.30', '2025-04-13 14:26:39'),
 (24, 3, 1, 1, 'test', 'test', 12, 'Approved', '2025-04-13 09:52:54', 'Information Technology', '0.00', '2025-04-13 16:43:49'),
-(25, 3, 1, 3, 'test2', 'test2', 12, 'Approved', '2025-04-13 11:09:24', 'Banking and Finance', '0.00', '2025-04-13 16:53:38');
+(25, 3, 1, 3, 'test2', 'test2', 12, 'Approved', '2025-04-13 11:09:24', 'Banking and Finance', '0.00', '2025-04-13 16:53:38'),
+(26, 3, 1, NULL, 'Full-Stack Web Development with AI Integration.', 'This intensive course covers front-end and back-end web development using HTML, CSS, JavaScript, Node.js, and MongoDB. Learners will also be introduced to integrating AI features like chatbots and recommendation systems using APIs and tools like OpenAI and TensorFlow.js. By the end, students will build and deploy a smart full-stack project.', 8, 'Approved', '2025-04-14 09:49:07', 'Information Technology', '0.00', '2025-04-14 18:13:01');
 
 -- --------------------------------------------------------
 
@@ -653,8 +657,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
 (1, 'jobSeeker', 'Shruti Chavda', 'chavdashruti516', 'chavdashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
 (2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'Inactive', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
-(3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '0987654321', '2003-03-11', 'undraw_profile.jpg', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
-(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2007-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
+(3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '1234567890', '2003-03-11', '67fcd63272ab3_Avatar.png', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
+(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2001-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
 (8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', 'undraw_profile.jpg', '123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
 (9, 'jobSeeker', 'abc', 'abc123', 'abc@gmail.com', 'Male', '1234567890', '2003-10-10', 'undraw_profile.jpg', 'ADmin12@', 'Inactive', '174317426d19744d3c996sdfs7f902029a67da47db47cd9843987201d40f4fed0b63'),
 (10, 'jobSeeker', 'test abc', 'testanc', 'testabc@gmail.com', 'Male', '2147483647', '2005-12-12', 'undraw_profile.jpg', 'ADmin@12', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
@@ -735,12 +739,12 @@ INSERT INTO `wage_laws` (`id`, `state`, `min_wage_rate`, `sector`, `date_of_impl
 
 CREATE TABLE `worker_complaints` (
   `id` int(11) NOT NULL,
-  `complainant_type` enum('trainingProvider','employer','jobSeeker') NOT NULL,
+  `complainant_type` text NOT NULL,
   `user_id` int(11) NOT NULL,
   `complaint_type` varchar(100) DEFAULT NULL,
   `description` text DEFAULT NULL,
-  `resolution_note` text DEFAULT 'Pending',
-  `status` enum('Pending','In Progress','Resolved') DEFAULT 'Pending',
+  `resolution_note` text DEFAULT '\'Pending\'',
+  `status` text DEFAULT 'Pending',
   `submitted_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -940,7 +944,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `assessments`
 --
 ALTER TABLE `assessments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `assessment_submissions`
@@ -982,7 +986,7 @@ ALTER TABLE `enrollments`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `government_officials`
@@ -1042,7 +1046,7 @@ ALTER TABLE `token1`
 -- AUTO_INCREMENT for table `training_programs`
 --
 ALTER TABLE `training_programs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `training_providers`

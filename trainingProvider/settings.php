@@ -2,6 +2,21 @@
 session_start();
 include('connection.php');
 
+// Check if account is deactivated
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $checkStatus = mysqli_query($con, "SELECT status FROM users WHERE id = '$user_id'");
+    $statusRow = mysqli_fetch_assoc($checkStatus);
+
+    if ($statusRow && $statusRow['status'] === 'Disabled') {
+        echo "<script>
+            alert('Your account is deactivated.');
+            window.location.href = 'http://localhost/worklink/login.php';
+        </script>";
+        exit();
+    }
+}
+
 if (isset($_POST['feedback'])) {
     $user_id = $_SESSION['user_id'];
     $feedback_message = mysqli_real_escape_string($con, $_POST['feedback']);
@@ -24,7 +39,10 @@ if (isset($_POST['deactivate_account'])) {
     if (mysqli_query($con, $query)) {
         session_unset();
         session_destroy();
-        header('Location: logout.php');
+        echo "<script>
+            alert('Your account has been deactivated.');
+            window.location.href = 'login.php';
+        </script>";
         exit();
     } else {
         $_SESSION['deactivation_error'] = "An error occurred while deactivating your account.";
@@ -61,7 +79,7 @@ if (isset($_POST['deactivate_account'])) {
             echo "<div class='alert alert-danger'>{$_SESSION['feedback_error']}</div>";
             unset($_SESSION['feedback_error']);
         }
-        
+
         if (isset($_SESSION['deactivation_error'])) {
             echo "<div class='alert alert-danger'>{$_SESSION['deactivation_error']}</div>";
             unset($_SESSION['deactivation_error']);
@@ -99,9 +117,7 @@ if (isset($_POST['deactivate_account'])) {
             </div>
         </div>
 
-        </div>
-        </div>
-
+    </div>
 
     <?php include_once('footer.php'); ?>
     <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
