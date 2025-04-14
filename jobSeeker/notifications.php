@@ -17,6 +17,7 @@
     <link href='css/sb-admin-2.min.css' rel='stylesheet'>
     <link href='vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>
     <link href='css/sb-admin-2.css' rel='stylesheet'>
+    <link href="css/notifications.css" rel="stylesheet"> 
     <script src='js/jquery-3.6.4.min.js'></script>
     <script src='js/search.js'></script>
 </head>
@@ -25,9 +26,105 @@
 <?php include('sidebar.php'); ?>
 <?php include('header.php'); ?>
 
-<div class='container-fluid'>
-    <h1 class='h3 mb-4 text-gray-800'>Blank Page</h1>
+
+<div class="container-fluid custom-notification-msg">
+    <div class="row">
+        <!-- Notifications Section -->
+        <div class="col-lg-8">
+            <div class="card notifications-card">
+                <div class="card-body">
+                    <h3 class="section-title">Notifications</h3>
+                    <div class="btn-group filter-tabs mb-3">
+                        <button class="btn btn-light active">All</button>
+                        <button class="btn btn-light">Unread</button>
+                        <button class="btn btn-light">Important</button>
+                    </div>
+
+                    <div class="notification">
+                        <div class="dot blue"></div>
+                        <div class="content">
+                            <strong>New job match found based on your profile</strong>
+                            <p>A new Senior Frontend Developer position at Tech Corp matches your skills</p>
+                            <small>10 minutes ago</small>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <div class="dot blue"></div>
+                        <div class="content">
+                            <strong>Your application was viewed</strong>
+                            <p>Tech Corp has viewed your application for Senior Developer position</p>
+                            <small>2 hours ago</small>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <div class="content">
+                            <strong>Upcoming interview reminder</strong>
+                            <p>Your interview with Design Studios is scheduled for tomorrow at 2 PM</p>
+                            <small>5 hours ago</small>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <div class="content">
+                            <strong>Profile strength update</strong>
+                            <p>Add work experience to improve your profile visibility to recruiters</p>
+                            <small>1 day ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages Section -->
+        <div class="col-lg-4">
+            <div class="card messages-card">
+                <div class="card-body">
+                    <h3 class="section-title">Messages</h3>
+                    <input type="text" class="form-control search-input mb-3" placeholder="Search messages...">
+
+                    <div class="message">
+                        <img src="https://i.pravatar.cc/40?img=1" class="avatar" alt="User">
+                        <div class="message-content">
+                            <strong>HR Team - Tech Corp</strong>
+                            <p>Thank you for your application...</p>
+                            <small>10:30 AM</small>
+                        </div>
+                    </div>
+
+                    <div class="message unread">
+                        <img src="https://i.pravatar.cc/40?img=2" class="avatar" alt="User">
+                        <div class="message-content">
+                            <strong>Career Advisor</strong>
+                            <p>Your resume review is complete...</p>
+                            <small>Yesterday</small>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <img src="https://i.pravatar.cc/40?img=3" class="avatar" alt="User">
+                        <div class="message-content">
+                            <strong>Interview Team</strong>
+                            <p>Schedule confirmation for...</p>
+                            <small>Yesterday</small>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <img src="https://i.pravatar.cc/40?img=4" class="avatar" alt="User">
+                        <div class="message-content">
+                            <strong>System Notification</strong>
+                            <p>New job recommendations are...</p>
+                            <small>2 days ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <?php include_once('footer.php'); ?>
 
