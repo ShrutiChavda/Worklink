@@ -65,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     SELECT 
     tp.*, 
     tpv.organization_name, 
-    tpv.registration_number, 
     tpv.head_office_location, 
     tpv.training_sectors,
     u.full_name, 
@@ -92,7 +91,6 @@ LEFT JOIN users u ON tpv.user_id = u.id;
                             $rate = $row['completion_rate'] ?? '0.00';
 
                             $orgName = $row['organization_name'] ?? 'N/A';
-                            $regNum = $row['registration_number'] ?? 'N/A';
                             $location = $row['head_office_location'] ?? 'N/A';
                             $sectors = $row['training_sectors'] ?? 'N/A';
 
@@ -148,7 +146,6 @@ LEFT JOIN users u ON tpv.user_id = u.id;
                                             <h5 class='text-success'>🏢 Provider Details</h5>
                                             <ul class='list-group mb-4'>
                                                 <li class='list-group-item'><strong>Organization:</strong> {$orgName}</li>
-                                                <li class='list-group-item'><strong>Reg. Number:</strong> {$regNum}</li>
                                                 <li class='list-group-item'><strong>Head Office:</strong> {$location}</li>
                                                 <li class='list-group-item'><strong>Sectors:</strong> {$sectors}</li>
                                             </ul>
