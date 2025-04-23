@@ -46,16 +46,7 @@ $arr_url = explode("/", $url);
                 <i class="fas fa-users"></i>
                 <span>Manage Applications</span></a>
         </li>
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "view_applicant.php") { echo "active"; } ?>">
-            <a class="nav-link" href="view_applicant.php">
-                <i class="fas fa-id-badge"></i>
-                <span>View Applicant Profiles</span></a>
-        </li>
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "shortlist_reject.php") { echo "active"; } ?>">
-            <a class="nav-link" href="shortlist_reject.php">
-                <i class="fas fa-check-circle"></i>
-                <span>Shortlist & Reject Candidates</span></a>
-        </li>
+      
 
         <hr class="sidebar-divider">
 
@@ -71,19 +62,7 @@ $arr_url = explode("/", $url);
                 <span>Upload Company Documents - JD</span></a>
         </li>
 
-        <hr class="sidebar-divider">
-
-        <div class="sidebar-heading">Communication</div>
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "messages.php") { echo "active"; } ?>">
-            <a class="nav-link" href="messages.php">
-                <i class="fas fa-envelope"></i>
-                <span>Messages & Communication</span></a>
-        </li>
-        <li class="nav-item <?php if (isset($arr_url[3]) && $arr_url[3] == "contact_applicants.php") { echo "active"; } ?>">
-            <a class="nav-link" href="contact_applicants.php">
-                <i class="fas fa-phone"></i>
-                <span>Contact Applicants</span></a>
-        </li>
+     
 
         <hr class="sidebar-divider">
 

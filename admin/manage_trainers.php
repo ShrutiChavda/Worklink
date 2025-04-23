@@ -1,100 +1,140 @@
-<?php  include('session.php');  ?>
+<?php include('session.php'); include('connection.php');
 
+// Handle update request
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = $_POST['id'];
+    $org = mysqli_real_escape_string($con, $_POST['organization_name']);
+    $loc = mysqli_real_escape_string($con, $_POST['head_office_location']);
+    $sectors = isset($_POST['training_sectors']) ? implode(', ', $_POST['training_sectors']) : '';
+
+    $update = mysqli_query($con, "UPDATE training_providers SET 
+        organization_name='$org',
+        head_office_location='$loc',
+        training_sectors='$sectors'
+        WHERE id='$id'
+    ");
+
+    if ($update) {
+        echo "<script>location.href='manage_trainers.php';</script>";
+    } else {
+        echo "<script>alert('Update failed!');</script>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Blank page</title>
-
-    <link href="img/favicon.png" rel="icon">
-
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <title>Manage Training Providers</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-    <script src="js/jquery-3.6.4.min.js"></script>
-    <script src="js/search.js"></script>
 </head>
-
 <body id="page-top">
-<?php  include('sidebar.php'); ?>
-
-<?php  include('header.php'); ?>
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
+<?php include('sidebar.php'); include('header.php'); ?>
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Training Providers</h1>
+    <table class="table table-bordered" id="dataTable">
+        <thead><tr>
+            <th>#</th><th>User Name</th><th>Email</th><th>Organization</th><th>Location</th><th>Sectors</th><th>Actions</th>
+        </tr></thead>
+        <tbody>
             <?php
-          include_once('footer.php');
-          ?>
+            $q = mysqli_query($con, "SELECT tp.*, u.full_name, u.email FROM training_providers tp JOIN users u ON tp.user_id = u.id");
+            $i = 1;
+            while ($row = mysqli_fetch_array($q)) {
+                echo "<tr>
+                    <td>{$i}</td>
+                    <td>{$row['full_name']}</td>
+                    <td>{$row['email']}</td>
+                    <td>{$row['organization_name']}</td>
+                    <td>{$row['head_office_location']}</td>
+                    <td>{$row['training_sectors']}</td>
+                    <td>
+                        <button class='btn btn-info btn-sm editBtn' 
+                            data-id='{$row['id']}'
+                            data-org='{$row['organization_name']}'
+                            data-loc='{$row['head_office_location']}'
+                            data-sect='{$row['training_sectors']}'
+                        >Edit</button>
+                        <a href='manage_trainers.php?id={$row['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure?\")'>Delete</a>
+                    </td>
+                </tr>";
+                $i++;
+            }
+            ?>
+        </tbody>
+    </table>
+</div>
 
+<?php
+$sectors = [
+    "Agriculture", "Apparel", "Automotive", "Banking & Finance", "Construction",
+    "Electronics", "Food Processing", "Healthcare", "IT/ITeS", "Logistics",
+    "Manufacturing", "Retail", "Telecom", "Tourism & Hospitality", "Beauty & Wellness"
+];
+?>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal">
+  <div class="modal-dialog"><form method="post" action="manage_trainers.php">
+    <div class="modal-content">
+      <div class="modal-header"><h5 class="modal-title">Edit Provider</h5></div>
+      <div class="modal-body">
+        <input type="hidden" name="id" id="editId">
+        <div class="form-group">
+            <label>Organization Name</label>
+            <input name="organization_name" id="editOrg" class="form-control" required>
         </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-success"
-                        href="http://localhost/Employee%20Management%20System/admin_panel/logout.php">Logout</a>
-                </div>
-            </div>
+        <div class="form-group">
+            <label>Head Office Location</label>
+            <input name="head_office_location" id="editLoc" class="form-control" required>
         </div>
-    </div>
+        <div class="form-group">
+            <label>Training Sectors</label>
+            <select name="training_sectors[]" id="editSect" class="form-control" multiple required>
+                <?php foreach ($sectors as $sector) {
+                    echo "<option value='$sector'>$sector</option>";
+                } ?>
+            </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div></form>
+  </div>
+</div>
 
+<?php include('footer.php'); ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#dataTable').DataTable();
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    $('.editBtn').on('click', function () {
+        let sectors = $(this).data('sect').split(', ');
+        $('#editId').val($(this).data('id'));
+        $('#editOrg').val($(this).data('org'));
+        $('#editLoc').val($(this).data('loc'));
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+        $('#editSect option').each(function () {
+            $(this).prop('selected', sectors.includes($(this).val()));
+        });
 
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        $('#editModal').modal('show');
+    });
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-
+    $('#editSect').on('change', function () {
+        if ($(this).val().includes('All')) {
+            $('#editSect option').prop('selected', true);
+        }
+    });
+});
+</script>
 </body>
-
 </html>

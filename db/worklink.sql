@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2025 at 05:29 PM
+-- Generation Time: Apr 23, 2025 at 08:23 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -46,8 +46,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `full_name`, `user_name`, `gender`, `pic`, `status`, `email`, `password`, `user_type`, `phone`, `created_at`) VALUES
-(1, 'Shruti Chavda', 'schavda684', 'Female', '67e938d4ca81f_Avatar.png', 'Inactive', 'schavda684@rku.ac.in', '123', 'admin', 1234567890, '2025-03-26 17:36:51'),
-(3, 'test admin', 'test', 'Female', '67e93b4ad9b8c_profile.jpg', 'Inactive', 'testadmin@gmail.com', 'ADmin@12', 'admin', 2147483647, '2025-03-30 12:38:34');
+(1, 'Shruti Chavda', 'schavda684', 'Female', '67e938d4ca81f_Avatar.png', 'active', 'schavda684@rku.ac.in', '123', 'admin', 1234567897, '2025-03-26 17:36:51');
 
 --
 -- Triggers `admin`
@@ -195,16 +194,24 @@ CREATE TABLE `employers` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `company_name` varchar(255) DEFAULT NULL,
-  `industry` varchar(255) DEFAULT NULL
+  `industry` varchar(255) DEFAULT NULL,
+  `company_email` varchar(255) DEFAULT '',
+  `company_phone` varchar(20) DEFAULT '',
+  `company_address` varchar(255) DEFAULT '',
+  `company_city` varchar(100) DEFAULT '',
+  `company_state` varchar(100) DEFAULT '',
+  `company_pincode` varchar(10) DEFAULT '',
+  `website` varchar(255) DEFAULT '',
+  `description` text DEFAULT '',
+  `jd_file` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employers`
 --
 
-INSERT INTO `employers` (`id`, `user_id`, `company_name`, `industry`) VALUES
-(2, 2, 'RKU', 'tech'),
-(5, 2, 'Tech Corp', 'IT');
+INSERT INTO `employers` (`id`, `user_id`, `company_name`, `industry`, `company_email`, `company_phone`, `company_address`, `company_city`, `company_state`, `company_pincode`, `website`, `description`, `jd_file`) VALUES
+(2, 2, 'RK University', 'IT', 'test@gmail.com', '1234567890', 'abc', 'Rajkot', 'Gujarat', '360007', 'https://worklink.my-board.org', 'testing', 'Worklink.pdf');
 
 -- --------------------------------------------------------
 
@@ -347,7 +354,8 @@ INSERT INTO `feedback` (`id`, `user_id`, `feedback_message`, `created_at`) VALUE
 (14, 8, 'The course was excellent, but it would be great to have more interaction with the instructors.', '2025-04-10 12:20:00'),
 (15, 9, 'The overall training experience was good, but the certification process was a bit delayed.', '2025-04-09 08:40:00'),
 (18, 4, 'testing', '2025-04-14 07:20:14'),
-(19, 4, 'testing', '2025-04-14 09:21:38');
+(19, 4, 'testing', '2025-04-14 09:21:38'),
+(20, 1, 'helllo', '2025-04-23 14:34:38');
 
 -- --------------------------------------------------------
 
@@ -452,13 +460,8 @@ CREATE TABLE `jobs` (
 
 INSERT INTO `jobs` (`id`, `employer_id`, `title`, `description`, `location`, `salary`, `status`, `created_at`) VALUES
 (12, 2, 'Software Developer', 'Develop and maintain web applications.', 'Ahmedabad', '600000.00', 'approved', '2025-03-30 14:52:01'),
-(13, 5, 'Data Analyst', 'Analyze large datasets and generate reports.', 'Mumbai', '500000.00', 'open', '2025-03-30 14:52:01'),
 (14, 2, 'Graphic Designer', 'Create visual concepts and branding materials.', 'Delhi', '400000.00', 'open', '2025-03-30 14:52:01'),
-(15, 5, 'HR Executive', 'Manage recruitment and employee relations.', 'Bangalore', '450000.00', 'open', '2025-03-30 14:52:01'),
 (16, 2, 'Digital Marketing Specialist', 'Plan and execute digital marketing campaigns.', 'Pune', '550000.00', 'rejected', '2025-03-30 14:52:01'),
-(17, 5, 'Mechanical Engineer', 'Design and develop mechanical systems.', 'Chennai', '650000.00', 'open', '2025-03-30 14:52:01'),
-(18, 5, 'Cyber Security Analyst', 'Ensure security of IT infrastructure.', 'Hyderabad', '700000.00', 'open', '2025-03-30 14:52:01'),
-(19, 5, 'AI/ML Engineer', 'Develop AI-based solutions and models.', 'Noida', '800000.00', 'rejected', '2025-03-30 14:52:01'),
 (20, 2, 'Project Manager', 'Manage and oversee IT projects.', 'Kolkata', '900000.00', 'open', '2025-03-30 14:52:01'),
 (21, 2, 'Content Writer', 'Write blogs, articles, and marketing copies.', 'Surat', '350000.00', 'open', '2025-03-30 14:52:01');
 
@@ -481,8 +484,7 @@ CREATE TABLE `job_applications` (
 --
 
 INSERT INTO `job_applications` (`id`, `job_seeker_id`, `job_id`, `status`, `applied_at`) VALUES
-(1, 2, 12, 'applied', '2025-03-30 14:58:16'),
-(2, 7, 13, 'hired', '2025-03-30 14:58:16'),
+(1, 2, 12, 'hired', '2025-03-30 14:58:16'),
 (3, 8, 14, 'rejected', '2025-03-30 14:58:16');
 
 -- --------------------------------------------------------
@@ -504,7 +506,8 @@ CREATE TABLE `job_seekers` (
 INSERT INTO `job_seekers` (`id`, `user_id`, `resume`) VALUES
 (2, 1, '67e9099576d5a_Practical time table for BTECH_VI_RG.pdf'),
 (7, 8, '67e929199fd8d_Practical time table for BTECH_VI_RG.pdf'),
-(8, 1, 'alice_resume.pdf');
+(8, 1, 'alice_resume.pdf'),
+(9, 16, '6807163bcd7c6_SRS.pdf');
 
 -- --------------------------------------------------------
 
@@ -597,6 +600,47 @@ CREATE TABLE `token1` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `totaljobs`
+--
+
+CREATE TABLE `totaljobs` (
+  `id` int(11) NOT NULL,
+  `job_id` varchar(100) NOT NULL,
+  `salary` varchar(100) DEFAULT NULL,
+  `openings` int(11) DEFAULT NULL,
+  `posted_on` date DEFAULT NULL,
+  `last_date` date DEFAULT NULL,
+  `company_name` varchar(255) DEFAULT NULL,
+  `job_title` varchar(255) DEFAULT NULL,
+  `organisation_type` varchar(100) DEFAULT NULL,
+  `functional_area` varchar(100) DEFAULT NULL,
+  `functional_role` varchar(100) DEFAULT NULL,
+  `job_description` text DEFAULT NULL,
+  `requirements` text DEFAULT NULL,
+  `qualification` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `occupation` varchar(100) DEFAULT NULL,
+  `job_type` varchar(50) DEFAULT NULL,
+  `gender_preference` varchar(20) DEFAULT NULL,
+  `ex_servicemen_preferred` enum('Yes','No') DEFAULT 'No',
+  `status` varchar(20) DEFAULT 'Active',
+  `category` varchar(100) NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `added_by` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `totaljobs`
+--
+
+INSERT INTO `totaljobs` (`id`, `job_id`, `salary`, `openings`, `posted_on`, `last_date`, `company_name`, `job_title`, `organisation_type`, `functional_area`, `functional_role`, `job_description`, `requirements`, `qualification`, `country`, `occupation`, `job_type`, `gender_preference`, `ex_servicemen_preferred`, `status`, `category`, `employee_id`, `added_by`) VALUES
+(6, '103', '10000', 10, '2025-04-23', '2025-04-16', 'abc', 'xyz', 'qwertyuio', 'rajkot', 'technicion', 'qwertyuiop[p;lkjhgfdsazxcvbnm,', NULL, '12th', 'india', 'plm', 'Full Time', 'Male', 'Yes', 'Active', 'Healthcare', 2, 'Rutika Vaghasiya'),
+(7, '106', '9000', 9, '2025-04-08', '2025-04-01', 'mlp', 'lab assitance', 'university', 'rajkot', 'lab incharge', 'qwertyuioplkjhgfdsazxcvbnm', NULL, '12th', 'india', 'qwertyuiop', 'Full Time', 'Male', 'Yes', 'Active', 'Technology', 6, 'Kashish Koshiya'),
+(8, '8', '12000', 2, '2025-04-15', '2025-04-25', 'RKU', 'TEST', 'TEST', 'TEST', 'TEST', 'TEST', NULL, '12TH', 'INDIA', 'TEST', 'Full Time', 'Female', 'Yes', 'Active', 'Healthcare', 2, 'Rutika Vaghasiya');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `training_programs`
 --
 
@@ -623,7 +667,7 @@ INSERT INTO `training_programs` (`id`, `provider_id`, `training_provider_id`, `e
 (1, 3, 1, 5, 'Full Stack Web Development', 'Learn frontend and backend web development.', 6, 'Approved', '2025-04-11 03:25:11', 'Web Development', '85.50', '2025-04-13 12:52:00'),
 (2, 3, 1, 1, 'Data Science Bootcamp', 'Comprehensive training in data analysis and machine learning.', 4, 'Approved', '2025-04-11 03:25:11', 'Data Science', '70.25', '2025-04-14 17:56:00'),
 (3, 3, 1, 1, 'Digital Marketing Mastery', 'Advanced strategies for SEO, PPC, and content marketing.', 3, 'Approved', '2025-04-11 03:25:11', 'Digital Marketing', '60.00', '2025-04-13 12:37:14'),
-(4, 3, 1, 1, 'Cyber Security Essentials', 'Fundamentals of network security and ethical hacking.', 5, 'Approved', '2025-04-11 03:25:11', 'Cyber Security', '65.00', '2025-04-13 14:26:27'),
+(4, 3, 1, 1, 'Cyber Security Essentials', 'Fundamentals of network security and ethical hacking.', 5, 'Rejected', '2025-04-11 03:25:11', 'Cyber Security', '65.00', '2025-04-15 09:12:27'),
 (5, 13, 2, 0, 'Graphic Design Fundamentals', 'Learn Adobe Photoshop, Illustrator, and UI/UX design.', 3, 'Pending', '2025-04-11 03:25:11', 'Design', '75.30', '2025-04-13 14:26:39'),
 (24, 3, 1, 1, 'test', 'test', 12, 'Approved', '2025-04-13 09:52:54', 'Information Technology', '0.00', '2025-04-13 16:43:49'),
 (25, 3, 1, 3, 'test2', 'test2', 12, 'Approved', '2025-04-13 11:09:24', 'Banking and Finance', '0.00', '2025-04-13 16:53:38'),
@@ -669,25 +713,32 @@ CREATE TABLE `users` (
   `pic` varchar(50) DEFAULT 'undraw_profile.jpg',
   `password` varchar(255) NOT NULL,
   `status` varchar(255) DEFAULT 'inactive',
-  `token` varchar(255) NOT NULL
+  `token` varchar(255) NOT NULL,
+  `aadhar` varchar(30) DEFAULT NULL,
+  `qualification` varchar(50) DEFAULT NULL,
+  `address` varchar(12000) DEFAULT NULL,
+  `state` varchar(100) DEFAULT 'Gujarat',
+  `district` varchar(100) DEFAULT 'Rajkot',
+  `pincode` varchar(6) DEFAULT '360012'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`) VALUES
-(1, 'jobSeeker', 'Shruti Chavda', 'chavdashruti516', 'chavdashruti516@gmail.com', 'Female', '1234567890', '2005-03-10', 'undraw_profile.jpg', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c'),
-(2, 'employer', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'active', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c'),
-(3, 'trainingProvider', 'Urvisha Baldha', 'ubaldha434', 'ubaldha434@rku.ac.in', 'Female', '1234567890', '2003-03-11', '67fcd63272ab3_Avatar.png', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6'),
-(4, 'governmentOfficial', 'Pari Chavda', 'pchavda866', 'pchavda866@gmail.com', 'Female', '2435267534', '2001-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849'),
-(8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', 'undraw_profile.jpg', '123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
-(9, 'jobSeeker', 'abc', 'abc123', 'abc@gmail.com', 'Male', '1234567890', '2003-10-10', 'undraw_profile.jpg', 'ADmin12@', 'Inactive', '174317426d19744d3c996sdfs7f902029a67da47db47cd9843987201d40f4fed0b63'),
-(10, 'jobSeeker', 'test abc', 'testanc', 'testabc@gmail.com', 'Male', '2147483647', '2005-12-12', 'undraw_profile.jpg', 'ADmin@12', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
-(11, 'jobSeeker', 'Alice Johnson', 'alice', 'alice@gmail.com', 'Female', '1234567890', '2001-01-01', 'undraw_profile.jpg', 'pass123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
-(12, 'employer', 'Tech Corp', 'techcorp', 'techcorp@gmail.com', 'Male', '9876543210', '2001-08-09', 'undraw_profile.jpg', 'pass456', 'Inactive', '174317426d19744d3c9967f90202sdfs9a67da47db47cd9843987201d40f4fed0b63'),
-(13, 'trainingProvider', 'Skill Academy', 'skillacademy', 'skillacademy@gmail.com', 'Male', '5555555555', '2002-10-10', 'undraw_profile.jpg', 'pass789', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63'),
-(15, 'governmentOfficial', 'Kashish Koshiya', 'temp1', 'temp1@gmail.com', 'Female', '7654567896', '2005-01-01', 'undraw_profile.jpg', '123', 'Inactive', '809afba46cad8464a247d0dd3f1c9db4dce45f5e40852950aa2428a794f147e5');
+INSERT INTO `users` (`id`, `user_type`, `full_name`, `user_name`, `email`, `gender`, `phone`, `birthday`, `pic`, `password`, `status`, `token`, `aadhar`, `qualification`, `address`, `state`, `district`, `pincode`) VALUES
+(1, 'jobSeeker', 'Rutika Vaghasiya', 'rvaghasiya328', 'rvaghasiya328@rku.ac.in', 'Female', '1234567890', '2005-03-10', '680673ae764a2_Avatar.png', '123', 'Inactive', 'a11412c35b7cbc7c38c47477661ca3d4a893b3ac14a5933fc9a89f4ea153580c', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(2, 'employer', 'Kashish Koshiya', 'kkoshiya123', 'kkoshiya123@rku.ac.in', 'Female', '2345678901', '2005-02-01', 'undraw_profile.jpg', '123', 'Inactive', 'c975888b25342f7ffd912da2fb5da148f37098e5684a90738cba02b7b76ca87c', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(3, 'trainingProvider', 'Shruti Chavda', 'chavdashruti516', 'chavdashruti516@gmail.com', 'Female', '1234567890', '2003-03-11', '67fcd63272ab3_Avatar.png', '123', 'Inactive', '0de6f7f6acd96b5acb13fcbd5dc47cd875c7e6e549af1ea161721d7ccc0d7cd6', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(4, 'governmentOfficial', 'Shruti Chavda', 'schavda684', 'schavda684@rku.ac.in', 'Female', '2435267534', '2001-06-22', 'undraw_profile.jpg', '123', 'Inactive', '89851898a0464608839f2f64da147c5ed055bfa480a47430892116c312ed7849', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(8, 'jobSeeker', 'testttt', 'test', 'test@gmail.com', 'Female', '0987654512', '2004-12-12', 'undraw_profile.jpg', '123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(9, 'jobSeeker', 'abc', 'abc123', 'abc@gmail.com', 'Male', '1234567890', '2003-10-10', 'undraw_profile.jpg', 'ADmin12@', 'Inactive', '174317426d19744d3c996sdfs7f902029a67da47db47cd9843987201d40f4fed0b63', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(10, 'jobSeeker', 'test abc', 'testanc', 'testabc@gmail.com', 'Male', '2147483647', '2005-12-12', 'undraw_profile.jpg', 'ADmin@12', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(11, 'jobSeeker', 'Alice Johnson', 'alice', 'alice@gmail.com', 'Female', '1234567890', '2001-01-01', 'undraw_profile.jpg', 'pass123', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(12, 'employer', 'Tech Corp', 'techcorp', 'techcorp@gmail.com', 'Male', '9876543210', '2001-08-09', 'undraw_profile.jpg', 'pass456', 'Inactive', '174317426d19744d3c9967f90202sdfs9a67da47db47cd9843987201d40f4fed0b63', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(13, 'trainingProvider', 'Skill Academy', 'skillacademy', 'skillacademy@gmail.com', 'Male', '5555555555', '2002-10-10', 'undraw_profile.jpg', 'pass789', 'Inactive', '174317426d19744d3c9967f902029a67da47db47cd9843987201d40f4fed0b63', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(15, 'governmentOfficial', 'Kashish Koshiya', 'temp1', 'temp1@gmail.com', 'Female', '7654567896', '2005-01-01', 'undraw_profile.jpg', '123', 'Inactive', '809afba46cad8464a247d0dd3f1c9db4dce45f5e40852950aa2428a794f147e5', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012'),
+(16, 'jobSeeker', 'Shruti Chavda', 'er', 'er@serf.edf', 'Female', '8574732721', '2005-12-12', 'undraw_profile.jpg', '123', 'active', 'bbe3928940560c21e6736f2fc3a79531762dccb4f9b0e99fb6af6129ba2aa210', '123456789012', '10th Pass', 'address 123', 'Gujarat', 'Rajkot', '360012');
 
 --
 -- Triggers `users`
@@ -924,6 +975,12 @@ ALTER TABLE `token1`
   ADD PRIMARY KEY (`token_id`);
 
 --
+-- Indexes for table `totaljobs`
+--
+ALTER TABLE `totaljobs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `training_programs`
 --
 ALTER TABLE `training_programs`
@@ -1014,7 +1071,7 @@ ALTER TABLE `enrollments`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `government_officials`
@@ -1050,7 +1107,7 @@ ALTER TABLE `job_applications`
 -- AUTO_INCREMENT for table `job_seekers`
 --
 ALTER TABLE `job_seekers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -1077,6 +1134,12 @@ ALTER TABLE `token1`
   MODIFY `token_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `totaljobs`
+--
+ALTER TABLE `totaljobs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `training_programs`
 --
 ALTER TABLE `training_programs`
@@ -1092,7 +1155,7 @@ ALTER TABLE `training_providers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `wage_laws`

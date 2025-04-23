@@ -1,11 +1,11 @@
-<?php  include('session.php');  ?>
+<?php include('session.php'); ?>
 
 <?php
 include('connection.php');
 if(isset($_GET['edit']))
 {
     $a=$_GET['edit'];
-    $res=mysqli_query($con,"select * from users where id='$a'");
+    $res=mysqli_query($con,"SELECT u.*, e.company_name, e.industry FROM users u LEFT JOIN employers e ON u.id = e.user_id WHERE u.id='$a'");
     $rec=mysqli_fetch_array($res);
 }
 ?>
@@ -43,9 +43,9 @@ if(isset($_GET['edit']))
 
 <body id="page-top">
 
-    <?php  include('sidebar.php'); ?>
+    <?php include('sidebar.php'); ?>
 
-    <?php  include('header.php'); ?>
+    <?php include('header.php'); ?>
 
     <div class="container-fluid">
         <form id="registrationForm" method="POST" enctype="multipart/form-data">
@@ -64,6 +64,12 @@ if(isset($_GET['edit']))
                                     <span id="fn_err" class="error1 p-1"></span>
                                 </div>
 
+                                <p>User Name</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" placeholder="User Name" name="un"
+                                        value="<?php echo $rec['user_name']; ?>" readonly />
+                                    <span id="un_err" class="error1 p-1"></span>
+                                </div>
 
                                 <p>Email</p>
                                 <div class="input-group1">
@@ -71,7 +77,6 @@ if(isset($_GET['edit']))
                                         value="<?php echo $rec['email']; ?>" readonly/>
                                     <span id="em_err" class="error1 p-1"></span>
                                 </div>
-
 
                                 <p>Gender</p>
                                 <div class="input-group1">
@@ -85,9 +90,7 @@ if(isset($_GET['edit']))
                                             <?php if($rec['gender'] == 'Female') echo 'checked'; ?>>
                                         <span class="checkmark"></span>
                                     </label>
-
                                 </div>
-
 
                                 <p>Contact Number</p>
                                 <div class="input-group1">
@@ -96,6 +99,57 @@ if(isset($_GET['edit']))
                                     <span id="pn_err" class="error1 p-1"></span>
                                 </div>
 
+                                <p>Qualification</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" value="<?php echo $rec['qualification']; ?>"
+                                        placeholder="Qualification" name="ql" />
+                                    <span id="ql_err" class="error1 p-1"></span>
+                                </div>
+
+                                <p>Address</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" value="<?php echo $rec['address']; ?>"
+                                        placeholder="Address" name="ad" />
+                                    <span id="ad_err" class="error1 p-1"></span>
+                                </div>
+
+                                <p>State</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" value="<?php echo $rec['state']; ?>"
+                                        placeholder="State" name="st" />
+                                    <span id="st_err" class="error1 p-1"></span>
+                                </div>
+
+                                <p>District</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" value="<?php echo $rec['district']; ?>"
+                                        placeholder="District" name="di" />
+                                    <span id="di_err" class="error1 p-1"></span>
+                                </div>
+
+                                <p>Pincode</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" value="<?php echo $rec['pincode']; ?>"
+                                        placeholder="Pincode" name="pi" />
+                                    <span id="pi_err" class="error1 p-1"></span>
+                                </div>
+
+                                <?php if($rec['user_type'] == 'employer') { ?>
+                                <p>Company Name</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" placeholder="Company Name" name="cn"
+                                        value="<?php echo $rec['company_name']; ?>" />
+                                    <span id="cn_err" class="error1 p-1"></span>
+                                </div>
+
+                                <p>Industry</p>
+                                <div class="input-group1">
+                                    <input class="input--style-1" type="text" placeholder="Industry" name="ind"
+                                        value="<?php echo $rec['industry']; ?>" />
+                                    <span id="ind_err" class="error1 p-1"></span>
+                                </div>
+                                <?php } ?>
+
                                 <p>Profile picture</p>
 
                                 <?php
@@ -103,10 +157,10 @@ if(isset($_GET['edit']))
 if(isset($_GET['edit']))
 {
 $id= $_GET['edit'];
-$q = "select * from users where id='$id'";
+$q = "select pic from users where id='$id'";
 $res = mysqli_query($con, $q);
 while ($row = mysqli_fetch_array($res)) { ?>
-<img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['8']; ?>"/><?php  }}  ?>
+<img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['pic']; ?>"/><?php  }}  ?>
 
 <div class="input-group1">
     <input class="input--style-1" type="file" placeholder="Upload Image" name="f1"
@@ -118,27 +172,22 @@ $dir = "img/Uploads/";
 if (isset($_POST['submit'])) {
     $file_uploaded = false;
 
-    // Check if a file is selected
     if (!empty($_FILES['f1']['name'])) {
-        // Process file upload if a file is selected
         if (!is_dir($dir)) {
             mkdir($dir);
         }
 
         $total_files = is_array($_FILES['f1']['name']) ? count($_FILES['f1']['name']) : 1;
 
-        // Loop through each uploaded file
         for ($i = 0; $i < $total_files; $i++) {
             $file_name = is_array($_FILES['f1']['name']) ? $_FILES['f1']['name'][$i] : $_FILES['f1']['name'];
             $file_type = is_array($_FILES['f1']['type']) ? $_FILES['f1']['type'][$i] : $_FILES['f1']['type'];
             $tmp_name = is_array($_FILES['f1']['tmp_name']) ? $_FILES['f1']['tmp_name'][$i] : $_FILES['f1']['tmp_name'];
 
             if ($file_type == 'image/jpeg' || $file_type == 'image/png') {
-                // Generate unique filename
                 $unique_filename = uniqid() . '_' . $file_name;
                 $target_path = $dir . "/" . $unique_filename;
 
-                // Move uploaded file to target directory
                 if (move_uploaded_file($tmp_name, $target_path)) {
                     $file_uploaded = true;
                 } else {
@@ -149,29 +198,43 @@ if (isset($_POST['submit'])) {
             }
         }
     } else {
-        // No file selected, proceed with form submission without updating the image
         $file_uploaded = true;
     }
-   
+
     if ($file_uploaded) {
         $un1 = $_POST['fn'];
         $em1 = $_POST['em'];
         $cn1 = $_POST['pn'];
         $gen1 = $_POST['gender'];
+        $ql1 = $_POST['ql'];
+        $ad1 = $_POST['ad'];
+        $st1 = $_POST['st'];
+        $di1 = $_POST['di'];
+        $pi1 = $_POST['pi'];
 
-        // Include the code to update other fields in the database
-        $ins = "UPDATE users SET `full_name`='$un1', `email`='$em1', `gender`='$gen1', `phone`='$cn1'";
+        $ins = "UPDATE users SET `full_name`='$un1', `email`='$em1', `gender`='$gen1', `phone`='$cn1', `qualification`='$ql1', `address`='$ad1', `state`='$st1', `district`='$di1', `pincode`='$pi1'";
         if (!empty($unique_filename)) {
-            // If a new file is uploaded, include it in the update query
             $ins .= ", `pic`='$unique_filename'";
         }
         $ins .= " WHERE `id`='$a'";
 
         if (mysqli_query($con, $ins)) {
-            echo "<script>alert('Form updated successfully!');</script>";
-            echo "<script>window.location.href='http://localhost/worklink/employer/Manage_profile.php';</script>";
+            if($rec['user_type'] == 'employer') {
+                $cn_emp = $_POST['cn'];
+                $ind_emp = $_POST['ind'];
+                $q_emp = "UPDATE employers SET `company_name`='$cn_emp', `industry`='$ind_emp' WHERE `user_id`='$a'";
+                if (mysqli_query($con, $q_emp)) {
+                    echo "<script>alert('Form updated successfully!');</script>";
+                    echo "<script>window.location.href='http://localhost/worklink/employer/Manage_profile.php';</script>";
+                } else {
+                    echo "Error updating employer info: " . mysqli_error($con);
+                }
+            } else {
+                echo "<script>alert('Form updated successfully!');</script>";
+                echo "<script>window.location.href='http://localhost/worklink/employer/Manage_profile.php';</script>";
+            }
         } else {
-            echo "Error: ";
+            echo "Error updating user info: " . mysqli_error($con);
         }
     }
 }
@@ -187,7 +250,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                 </div>
-                </div>
+            </div>
         </form>
     </div>
 
@@ -196,7 +259,7 @@ if (isset($_POST['submit'])) {
 
     <?php
         include_once('footer.php');
-          ?>
+        ?>
 
     </div>
 
@@ -206,7 +269,6 @@ if (isset($_POST['submit'])) {
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

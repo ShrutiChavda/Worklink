@@ -1,65 +1,95 @@
-<?php  include('session.php');  ?>
+<?php include('session.php'); ?>
+<?php
+include('connection.php');
+
+$employers_id = $_SESSION['user_id'];
+$success = $error = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['jd_file'])) {
+    $target_dir = "uploads/jds/";
+    if (!file_exists($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
+    $jd_file = $_FILES['jd_file']['name'];
+    $target_file = $target_dir . basename($jd_file);
+
+    if (move_uploaded_file($_FILES['jd_file']['tmp_name'], $target_file)) {
+        $stmt = $con->prepare("UPDATE employers SET jd_file = ? WHERE user_id = ?");
+        $stmt->bind_param("si", $jd_file, $employers_id);
+        if ($stmt->execute()) {
+            $success = "JD uploaded successfully!";
+        } else {
+            $error = "Error updating JD!";
+        }
+    } else {
+        $error = "Error uploading file!";
+    }
+}
+
+// Fetch employers JD
+$jd = "";
+$res = $con->query("SELECT jd_file FROM employers WHERE user_id = $employers_id");
+if ($res->num_rows > 0) {
+    $jd = $res->fetch_assoc()['jd_file'];
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Blank page</title>
-    <link href="img/favicon.png" rel="icon">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <title>Upload JD</title>
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-    <script src="js/jquery-3.6.4.min.js"></script>
-    <script src="js/search.js"></script>
 </head>
+<body>
+<?php include('sidebar.php'); ?>
+<?php include('header.php'); ?>
 
-<body id="page-top">
-<?php  include('sidebar.php'); ?>
-<?php  include('header.php'); ?>
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Upload Job Description</h1>
+    <?php if ($success): ?>
+        <div class="alert alert-success"><?= $success ?></div>
+    <?php endif; ?>
+    <?php if ($error): ?>
+        <div class="alert alert-danger"><?= $error ?></div>
+    <?php endif; ?>
 
-    <div class="container-fluid">
-        <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-    </div>
-
-<?php include_once('footer.php'); ?>
-
-    </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-success" href="http://localhost/worklink/jobSeeker/logout.php">Logout</a>
-                </div>
-            </div>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Upload JD (PDF/DOC)</label>
+            <input type="file" name="jd_file" class="form-control" required>
         </div>
-    </div>
+        <button class="btn btn-success" type="submit">Upload</button>
+    </form>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="js/sb-admin-2.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-    <script src="js/demo/datatables-demo.js"></script>
+    <hr>
 
+    <h4 class="mt-4">Current JD Preview:</h4>
+    <?php if ($jd): ?>
+        <iframe src="uploads/jds/<?= $jd ?>" width="100%" height="500px"></iframe>
+        <br>
+        <a class="btn btn-danger mt-2" href="?delete=1" onclick="return confirm('Are you sure to delete JD?')">Delete JD</a>
+    <?php else: ?>
+        <p>No JD uploaded yet.</p>
+    <?php endif; ?>
+</div>
+
+<?php include('footer.php'); ?>
 </body>
 </html>
+
+<?php
+// Delete JD file
+if (isset($_GET['delete'])) {
+    $res = $con->query("SELECT jd_file FROM employers WHERE user_id = $employers_id");
+    if ($res->num_rows > 0) {
+        $row = $res->fetch_assoc();
+        $file = "uploads/jds/" . $row['jd_file'];
+        if (file_exists($file)) {
+            unlink($file);
+        }
+        $con->query("UPDATE employers SET jd_file = NULL WHERE user_id = $employers_id");
+        header("Location: upload_company_documents.php");
+        exit;
+    }
+}
+?>

@@ -7,8 +7,6 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Labour, Skill Development & Employment</title>
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -81,7 +79,7 @@ session_start();
                     <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
                     <h3>Job Search</h3>
                     <p>Find government and private sector jobs matching your skills.</p>
-                    <a href="pages/job-search.php" class="btn btn-primary">Explore</a>
+                    <a href="pages/login.php" class="btn btn-primary">Explore</a>
                 </div>
             </div>
         </div>
@@ -91,7 +89,7 @@ session_start();
                     <i class="fas fa-chalkboard-teacher fa-3x text-success mb-3"></i>
                     <h3>Skill Development</h3>
                     <p>Enroll in certified skill development programs and vocational training.</p>
-                    <a href="pages/training-programs.php" class="btn btn-success">Learn More</a>
+                    <a href="pages/login.php" class="btn btn-success">Learn More</a>
                 </div>
             </div>
         </div>
@@ -101,7 +99,7 @@ session_start();
                     <i class="fas fa-balance-scale fa-3x text-warning mb-3"></i>
                     <h3>Labour Welfare</h3>
                     <p>Get support for workplace rights, wages, and safety regulations.</p>
-                    <a href="pages/labour.php" class="btn btn-warning">Read More</a>
+                    <a href="pages/login.php" class="btn btn-warning">Read More</a>
                 </div>
             </div>
         </div>
@@ -133,10 +131,10 @@ session_start();
 <section class="resources container wow fadeIn" data-wow-duration="1s">
     <h2>Resources</h2>
     <ul>
-        <li><a href="pages/labour-laws.php">Labour Laws & Regulations</a></li>
-        <li><a href="pages/skill-policies.php">Skill Development Policies</a></li>
-        <li><a href="pages/financial-aid.php">Financial Aid for Training</a></li>
-        <li><a href="pages/reports.php">Employment Reports & Statistics</a></li>
+        <li><a href="pages/login.php">Labour Laws & Regulations</a></li>
+        <li><a href="pages/login.php">Skill Development Policies</a></li>
+        <li><a href="pages/login.php">Financial Aid for Training</a></li>
+        <li><a href="pages/login.php">Employment Reports & Statistics</a></li>
     </ul>
 </section>
 

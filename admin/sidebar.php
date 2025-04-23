@@ -65,32 +65,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <span>Training & Education</span></a>
         </li>
 
-        <!-- System Analytics & Reports -->
-        <li class="nav-item <?php echo ($current_page == 'system_reports.php') ? 'active' : ''; ?>">
-            <a class="nav-link" href="system_reports.php">
-                <i class="fas fa-chart-line"></i>
-                <span>System Analytics & Reports</span></a>
-        </li>
-
+    
         <!-- Government Policy Implementation -->
         <li class="nav-item <?php echo ($current_page == 'policy_implementation.php') ? 'active' : ''; ?>">
             <a class="nav-link" href="policy_implementation.php">
                 <i class="fas fa-balance-scale"></i>
                 <span>Government Policy Implementation</span></a>
-        </li>
-
-        <!-- Content Management -->
-        <li class="nav-item <?php echo ($current_page == 'content_management.php') ? 'active' : ''; ?>">
-            <a class="nav-link" href="content_management.php">
-                <i class="fas fa-newspaper"></i>
-                <span>Content Management</span></a>
-        </li>
-
-        <!-- Security & Access Control -->
-        <li class="nav-item <?php echo ($current_page == 'security_settings.php') ? 'active' : ''; ?>">
-            <a class="nav-link" href="security_settings.php">
-                <i class="fas fa-shield-alt"></i>
-                <span>Security & Access Control</span></a>
         </li>
 
         <!-- Settings & Support -->

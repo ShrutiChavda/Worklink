@@ -15,7 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $birthday = $_POST['birthday'];
-$gender = $_POST['gender'];
+    $gender = $_POST['gender'];
+    $aadhar = $_POST['aadhar']; 
+    $qualification = $_POST['qualification'];
+    $address = $_POST['address'];
+    $state = $_POST['state'];
+    $district = $_POST['district'];
+    $pincode = $_POST['pincode'];
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirmPassword'];
     
@@ -29,6 +35,10 @@ $gender = $_POST['gender'];
         echo "<script>alert('Invalid phone number! Only 10 digits allowed.'); window.history.back();</script>";
         exit;
     }
+    if (!preg_match('/^\d{12}$/', $aadhar)) {
+        echo "<script>alert('Invalid Aadhaar number! It must be a 12-digit number.'); window.history.back();</script>";
+        exit;
+    }    
 
     $checkEmail = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $checkEmail->bind_param("s", $email);
@@ -53,8 +63,8 @@ $gender = $_POST['gender'];
     // $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $token = bin2hex(random_bytes(32));
 
-    $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password, birthday, gender, status, token) VALUES (?, ?, ?, ?, ?, ?, ?, 'inactive', ?)");
-    $stmt->bind_param("ssssssss", $userType, $fullName, $email, $phone, $password, $birthday, $gender, $token);
+    $stmt = $conn->prepare("INSERT INTO users (user_type, full_name, email, phone, password, birthday, gender, aadhar, qualification, address, state, district, pincode, status, token) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'inactive', ?)");
+    $stmt->bind_param("ssssssssssssss", $userType, $fullName, $email, $phone, $password, $birthday, $gender, $aadhar, $qualification, $address, $state, $district, $pincode, $token);
     
 
     if ($stmt->execute()) {
@@ -233,12 +243,97 @@ $gender = $_POST['gender'];
                 </div>
 
                 <div class="mb-3">
+                    <label for="aadhar" class="form-label">Aadhar Number</label>
+                    <input type="text" class="form-control" id="aadhar" name="aadhar" pattern="\d{12}" maxlength="12"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="qualification" class="form-label">Educational Qualification</label>
+                    <select class="form-select" id="qualification" name="qualification" required>
+                        <option value="">Select Qualification</option>
+                        <option value="10th">10th Pass</option>
+                        <option value="12th">12th Pass</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Postgraduate">Postgraduate</option>
+                        <option value="PhD">PhD</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <select class="form-select" id="state" name="state" required>
+                        <option value="">Select State</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and
+                            Diu</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Puducherry">Puducherry</option>
+                    </select>
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="district" class="form-label">District</label>
+                    <select class="form-select" id="district" name="district" required>
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <input type="text" class="form-control" id="pincode" name="pincode" pattern="\d{6}" maxlength="6"
+                        required placeholder="Enter 6-digit Pincode">
+                    <div class="form-text">Pincode must be a 6-digit number.</div>
+                </div>
+
+
+                <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <div class="input-group">
                         <input type="password" class="form-control" id="password" name="password" required>
                         <span class="input-group-text"><i class="fa fa-eye" id="togglePassword"></i></span>
                     </div>
                 </div>
+
                 <div class="mb-3">
                     <label for="confirmPassword" class="form-label">Confirm Password</label>
                     <div class="input-group">
@@ -259,6 +354,68 @@ $gender = $_POST['gender'];
 
         </form>
     </div>
+    <script>
+    document.getElementById("pincode").addEventListener("input", function() {
+        const pin = this.value;
+        this.setCustomValidity(/^\d{6}$/.test(pin) ? "" : "Please enter a valid 6-digit Pincode");
+    });
+    </script>
+
+    <script>
+    const stateDistricts = {
+        "Andhra Pradesh": ["Anantapur", "Chittoor", "Guntur", "Kadapa", "Kurnool"],
+        "Arunachal Pradesh": ["Tawang", "Itanagar", "Ziro", "Pasighat"],
+        "Assam": ["Guwahati", "Silchar", "Dibrugarh", "Jorhat"],
+        "Bihar": ["Patna", "Gaya", "Muzaffarpur", "Bhagalpur"],
+        "Chhattisgarh": ["Raipur", "Bilaspur", "Durg", "Korba"],
+        "Goa": ["North Goa", "South Goa"],
+        "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar"],
+        "Haryana": ["Gurgaon", "Faridabad", "Panipat", "Rohtak"],
+        "Himachal Pradesh": ["Shimla", "Kullu", "Dharamshala", "Mandi"],
+        "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro"],
+        "Karnataka": ["Bengaluru", "Mysuru", "Mangaluru", "Hubballi"],
+        "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur"],
+        "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur"],
+        "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Thane"],
+        "Manipur": ["Imphal", "Thoubal", "Churachandpur"],
+        "Meghalaya": ["Shillong", "Tura", "Nongpoh"],
+        "Mizoram": ["Aizawl", "Lunglei", "Champhai"],
+        "Nagaland": ["Kohima", "Dimapur", "Mokokchung"],
+        "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Puri"],
+        "Punjab": ["Amritsar", "Ludhiana", "Jalandhar", "Patiala"],
+        "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Ajmer"],
+        "Sikkim": ["Gangtok", "Namchi", "Gyalshing"],
+        "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli"],
+        "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
+        "Tripura": ["Agartala", "Dharmanagar", "Udaipur"],
+        "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Meerut"],
+        "Uttarakhand": ["Dehradun", "Haridwar", "Nainital", "Roorkee"],
+        "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Siliguri"],
+        "Andaman and Nicobar Islands": ["Port Blair"],
+        "Chandigarh": ["Chandigarh"],
+        "Dadra and Nagar Haveli and Daman and Diu": ["Daman", "Diu", "Silvassa"],
+        "Delhi": ["New Delhi", "Central Delhi", "North Delhi", "South Delhi"],
+        "Jammu and Kashmir": ["Srinagar", "Jammu", "Baramulla", "Anantnag"],
+        "Ladakh": ["Leh", "Kargil"],
+        "Lakshadweep": ["Kavaratti"],
+        "Puducherry": ["Puducherry", "Karaikal", "Mahe", "Yanam"]
+    };
+
+    document.getElementById('state').addEventListener('change', function() {
+        const selectedState = this.value;
+        const districtSelect = document.getElementById('district');
+        districtSelect.innerHTML = '<option value="">Select District</option>';
+
+        if (stateDistricts[selectedState]) {
+            stateDistricts[selectedState].forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            });
+        }
+    });
+    </script>
 
     <script>
     $(document).ready(function() {
@@ -353,11 +510,8 @@ $gender = $_POST['gender'];
         }
 
         $("#userType").on("change", handleUserTypeChange);
-
-        // Trigger change event on page load if value is pre-selected
         handleUserTypeChange();
 
-        // Toggle password visibility
         $(document).on("click", "#togglePassword, #toggleConfirmPassword", function() {
             let input = $(this).closest(".input-group").find("input");
             input.attr("type", input.attr("type") === "password" ? "text" : "password");

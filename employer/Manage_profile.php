@@ -1,4 +1,4 @@
-<?php  include('session.php');  ?>
+<?php include('session.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,6 @@
     <?php include('sidebar.php'); ?>
     <?php include('header.php'); ?>
 
-    <!-- Begin Page Content -->
     <div class="container-fluid">
 
         <form id="registrationForm" style="text-align:center">
@@ -46,101 +45,120 @@
                     <div class="card card-1">
                         <div class="card-heading"></div>
                         <div class="card-body">
-                            <!-- Other HTML code here -->
                             <h2 class="title">Profile Information</h2>
 
 
-                            <?php  
+                            <?php
                                 include('connection.php');
                                 $un=$_SESSION['username'];
 
-                                $q = "select * from users where user_name='$un'";
+                                $q = "SELECT u.*, e.company_name, e.industry FROM users u LEFT JOIN employers e ON u.id = e.user_id WHERE u.user_name='$un'";
                                 $res = mysqli_query($con, $q);
-                                While($row = mysqli_fetch_array($res)) { ?>
-                                
+                                // Fetch the data only once
+                                if ($row = mysqli_fetch_array($res)) { ?>
+
                             <div>
-                            <img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['8']; ?>"/>
-                            
+                                <img class="img-profile rounded-circle" height="100px" width="100px" src="img/Uploads/<?php echo $row['pic']; ?>"/>
+
                             </div><br>
 
                             <div class="profile-item">
                                 <label>User Name:</label>
-                                <span><?php echo $row['3']; ?></span>
+                                <span><?php echo $row['user_name']; ?></span>
                             </div>
 
                             <div class="profile-item">
                                 <label>Full Name:</label>
-                                <span><?php echo $row['2']; ?></span>
+                                <span><?php echo $row['full_name']; ?></span>
                             </div>
 
                             <div class="profile-item">
                                 <label>User Type:</label>
-                                <span><?php echo $row['1']; ?></span>
+                                <span><?php echo $row['user_type']; ?></span>
                             </div>
+
+                            <?php if($row['user_type'] == 'employer') { ?>
+                            <div class="profile-item">
+                                <label>Company Name:</label>
+                                <span><?php echo $row['company_name']; ?></span>
+                            </div>
+                            <div class="profile-item">
+                                <label>Industry:</label>
+                                <span><?php echo $row['industry']; ?></span>
+                            </div>
+                            <?php } ?>
 
                             <div class="profile-item">
                                 <label>Email:</label>
-                                <span><?php echo $row['4']; ?></span>
+                                <span><?php echo $row['email']; ?></span>
                             </div>
 
                             <div class="profile-item">
                                 <label>Gender:</label>
-                                <span><?php echo $row['5']; ?></span>
+                                <span><?php echo $row['gender']; ?></span>
                             </div>
-                            
+
                             <div class="profile-item">
                                 <label>Date Of Birth:</label>
-                                <span><?php echo $row['7']; ?></span>
+                                <span><?php echo $row['birthday']; ?></span>
                             </div>
 
                             <div class="profile-item">
                                 <label>Contact Number:</label>
-                                <span><?php echo $row['6']; ?></span>
+                                <span><?php echo $row['phone']; ?></span>
                             </div>
 
+                            <div class="profile-item">
+                                <label>Qualification:</label>
+                                <span><?php echo $row['qualification']; ?></span>
+                            </div>
+
+                            <div class="profile-item">
+                                <label>Address:</label>
+                                <span><?php echo $row['address']; ?></span>
+                            </div>
+
+                            <div class="profile-item">
+                                <label>State:</label>
+                                <span><?php echo $row['state']; ?></span>
+                            </div>
+
+                            <div class="profile-item">
+                                <label>District:</label>
+                                <span><?php echo $row['district']; ?></span>
+                            </div>
+
+                            <div class="profile-item">
+                                <label>Pincode:</label>
+                                <span><?php echo $row['pincode']; ?></span>
+                            </div><br>
+
                             <div class="p-t-20">
-                            <a href="edit_profile.php?edit=<?php echo $row['id']; ?>">
+                                <a href="edit_profile.php?edit=<?php echo $row['id']; ?>">
                                     <button class="btn btn--radius btn-success" type="button">Update Info</button>
                                 </a>
-                                <?php  }  ?>
+                                <?php } // Closing the if condition for fetching the row ?>
 
-                                <!-- Other form elements -->
+                                </form>
 
-        </form>
+        </div>
+    </div>
+    </div>
+    </div>
 
-        <!-- Other HTML code here -->
 
 
     </div>
     </div>
-    </div>
-    </div>
-   
-
-
-    </div>
-    <!-- /.container-fluid -->
-
-    </div>
-    <!-- End of Main Content -->
-
-    
-
     </div>
     <?php
-          include_once('footer.php');
-          ?>
-    <!-- End of Content Wrapper -->
-
+        include_once('footer.php');
+        ?>
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
