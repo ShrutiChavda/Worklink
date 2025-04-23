@@ -45,27 +45,15 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                include('db_connection.php'); // or whatever your connection file is
-
-                $query = "SELECT a.name, a.email, a.phone, j.job_title, a.applied_on, a.status 
-                          FROM applications a 
-                          JOIN jobs j ON a.job_id = j.id 
-                          ORDER BY a.applied_on DESC";
-
-                $result = mysqli_query($conn, $query);
-
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['job_title']) . "</td>";
-                    echo "<td>" . date('d-m-Y', strtotime($row['applied_on'])) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                    echo "</tr>";
-                }
-                ?>
+              
+                <tr>
+                    <td>abc</td>
+                    <td>abc@gmail.com</td>
+                    <td>9080706059</td>
+                    <td>xyz</td>
+                    <td>13-04-2025</td>
+                    <td>pending</td>
+                </tr>
             </tbody>
         </table>
     </div>
