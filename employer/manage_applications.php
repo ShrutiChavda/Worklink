@@ -47,27 +47,65 @@ include('header.php');
             </tr>
             </thead>
             <tbody>
-                <?php
-                include('db_connection.php'); // or whatever your connection file is
+            <?php
+            $employer_id = $_SESSION['user_id'];
+            $query = "SELECT 
+            ja.*, 
+            ja.status AS application_status,
+            j.title AS job_title, 
+            u.*, 
+            js.resume, 
+            js.id AS js_id
+          FROM job_applications ja
+          JOIN jobs j ON ja.job_id = j.id
+          JOIN job_seekers js ON ja.job_seeker_id = js.id
+          JOIN users u ON js.user_id = u.id
+          WHERE j.employer_id = '$employer_id'
+          ORDER BY ja.applied_at DESC";
 
-                $query = "SELECT a.name, a.email, a.phone, j.job_title, a.applied_on, a.status 
-                          FROM applications a 
-                          JOIN jobs j ON a.job_id = j.id 
-                          ORDER BY a.applied_on DESC";
-
-                $result = mysqli_query($conn, $query);
-
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['email']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['phone']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['job_title']) . "</td>";
-                    echo "<td>" . date('d-m-Y', strtotime($row['applied_on'])) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['status']) . "</td>";
-                    echo "</tr>";
+            $result = mysqli_query($con, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr>";
+                echo "<td>{$row['full_name']}</td>";
+                echo "<td>{$row['email']}</td>";
+                echo "<td>{$row['phone']}</td>";
+                echo "<td>{$row['job_title']}</td>";
+                echo "<td>" . date('d-m-Y', strtotime($row['applied_at'])) . "</td>";
+                echo "<td>";
+                if ($row['status'] == 'applied') {
+                    echo "<span class='badge badge-warning'>Applied</span>";
+                } elseif ($row['status'] == 'hired') {
+                    echo "<span class='badge badge-success'>Selected</span>";
+                } elseif ($row['status'] == 'rejected') {
+                    echo "<span class='badge badge-danger'>Rejected</span>";
+                } else {
+                    echo ucfirst($row['status']);
                 }
-                ?>
+
+                echo "</td>";
+                echo "<td>
+                            <button class='btn btn-primary btn-sm editBtn'
+                                    data-toggle='modal' data-target='#editModal'
+                                    data-appid='{$row['id']}'
+                                    data-uid='{$row['id']}'
+                                    data-fullname='{$row['full_name']}'
+                                    data-email='{$row['email']}'
+                                    data-gender='{$row['gender']}'
+                                    data-phone='{$row['phone']}'
+                                    data-birthday='{$row['birthday']}'
+                                    data-qualification='{$row['qualification']}'
+                                    data-address='{$row['address']}'
+                                    data-state='{$row['state']}'
+                                    data-district='{$row['district']}'
+                                    data-pincode='{$row['pincode']}'
+                                    data-resume='" . htmlspecialchars($row['resume'] ?? '') . "'
+                                    data-status='{$row['status']}'>
+                                Edit</button>
+                            <a href='delete_application.php?id={$row['id']}' class='btn btn-danger btn-sm'>Delete</a>
+                        </td>";
+                echo "</tr>";
+            }
+            ?>
             </tbody>
         </table>
     </div>
